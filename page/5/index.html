@@ -389,34 +389,36 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/10/08/devLop/jeecg-1/">
+                    <a href="/2022/10/19/docker/docker(4)/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="jeecg开源代码学习(1)">
+                            <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="docker-compose实战-jeecg为例">
                             
-                            <span class="card-title">jeecg开源代码学习(1)</span>
+                            <span class="card-title">docker-compose实战-jeecg为例</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                1. 从登录到增删查改整体流程首先在拦截器上打一个断点，分析登录的过程
-
-简单来说就是用户在请求中携带X_ACCESS_TOKEN这个参数，然后将这个参数转交给后端，后端将其解析为JWT对象进行验证，调用底层的login接口，如果没有抛ex
+                                1. 项目compose解读version: '2'#项目依赖的的compose版本
+services:
+  jeecg-boot-mysql:
+    build:
+      context: ./db#上下文,要打包过去的文件目录,d
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-19
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E5%BC%80%E5%8F%91%E5%B0%8F%E8%AE%B0/" class="post-category">
-                                    开发小记
+                                <a href="/categories/k8s/" class="post-category">
+                                    k8s
                                 </a>
                                 
                                 
@@ -440,35 +442,88 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/10/08/algorithm/labuladong/preSum/">
+                    <a href="/2022/10/19/docker/docker(3)/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="前缀和算法与差分">
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="docker网络模式基础">
                             
-                            <span class="card-title">前缀和算法与差分</span>
+                            <span class="card-title">docker网络模式基础</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                1. 一维前缀和基本形态class NumArray &#123;
-public:
-    NumArray(vector&lt;int>&amp; nums) &#123;
-        sum = new int[nums.size(
+                                1. 网络基础1.1 NAT模式NAT模式是(Network address Transfer)的缩写，其具体解释为:
+虚拟机服务为我们建立一个私有网段，这个私有网段用来分配IP地址，然后再借助于主机的公网IP与外部互联网通信。
+
+1.2 
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-19
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
-                                    数据结构与算法
+                                <a href="/categories/k8s/" class="post-category">
+                                    k8s
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
+                            <span class="chip bg-color">后端开发基础</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/10/17/Mysql-basic/Mysql-basic-02/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Mysql的日志系统">
+                            
+                            <span class="card-title">Mysql的日志系统</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                在上文的基础架构介绍中，我们明白了一条查询语句是如何工作的，接下来，我们将探究一条更新语句是如何工作的。
+先从一个表的一条更新语句来看:
+create table T(ID int primary key,c int)
+
+如果要将ID = 
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-17
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
                                 </a>
                                 
                                 
@@ -483,8 +538,8 @@ public:
                             <span class="chip bg-color">Java</span>
                         </a>
                         
-                        <a href="/tags/leetcode/">
-                            <span class="chip bg-color">leetcode</span>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                            <span class="chip bg-color">后端</span>
                         </a>
                         
                     </div>
@@ -496,85 +551,35 @@ public:
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/10/03/dbs/dbs-(3)/">
+                    <a href="/2022/10/17/Netty/Netty-02/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="数据库原理-SQL基础">
+                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="深入理解Netty源码编程-(2)NIO基础">
                             
-                            <span class="card-title">数据库原理-SQL基础</span>
+                            <span class="card-title">深入理解Netty源码编程-(2)NIO基础</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                1. SQL查询语言概览
-数据库定义语言(Data-Definition Language DDL):SQLDDL提供定义关系模式、删除关系以及修改关系模式的命令
-
-数据操纵语言(Data-Manupulation Language,DML
+                                1.Netty是什么1.1 简介
+Netty是一个Java开源框架,现为Github上的独立项目
+Netty是一个异步的、基于事件驱动的网络应用框架，用以快速开发高性能、高可靠性的网络I/O编程
+Netty主要针对在TCP协议下，面向Cli
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-17
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" class="post-category">
-                                    数据库原理
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
-                            <span class="chip bg-color">计算机基础</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/10/02/design-mode/factory/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Java工厂模式">
-                            
-                            <span class="card-title">Java工厂模式</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                1. 工厂模式简介工厂模式(Factory Pattern):这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。在工厂模式中，在创建对象的时候不会对客户端暴露创建的逻辑。
-工厂模式的解决的问题是:当目前的类的构造方法是很长一
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-02
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                                <a href="/categories/Netty/" class="post-category">
+                                    Netty
                                 </a>
                                 
                                 
@@ -598,33 +603,30 @@ public:
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/09/30/design-mode/singleton/">
+                    <a href="/2022/10/17/Netty/Netty-01/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Java单例设计模式">
+                            <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="深入理解Netty源码编程-(1)网络基础">
                             
-                            <span class="card-title">Java单例设计模式</span>
+                            <span class="card-title">深入理解Netty源码编程-(1)网络基础</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                反射与单例设计模式单例模式可以保证在一个JVM进程中某一个类只有唯一的对象实例，从而保证一些核心对象的唯一性。而单例设计模式可以分为饿汉式单例和饿汉式单例
-饿汉式单例在单例设计模式下不存在线程同步的处理问题，而懒汉式单例需要在每次返回对象前
-                            
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-17
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-category">
-                                    设计模式
+                                <a href="/categories/Netty/" class="post-category">
+                                    Netty
                                 </a>
                                 
                                 
@@ -648,39 +650,34 @@ public:
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/09/21/javaweb/http/">
+                    <a href="/2022/10/11/docker/docker(1)/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="http协议详解">
+                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="dockerr入门-镜像与容器">
                             
-                            <span class="card-title">http协议详解</span>
+                            <span class="card-title">dockerr入门-镜像与容器</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                HTTP协议详解1. 什么是HTTP协议
-协议
-
-协议是某些人或者某些组织提前指定好的一套规范，指定这套规范的目的是为了沟通通信无障碍。
-
-HTTP协议
-
-
+                                1. Docker基本架构1.1 Docker基本概念
+镜像(Image):Docker镜像(Image)就相当于是一个root的文件系统。
+容器(Container):镜像和容器的的理解就类似于Java中的类与对象的关系一样，镜像是静态的
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-11
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/javaWeb%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    javaWeb基础
+                                <a href="/categories/k8s/" class="post-category">
+                                    k8s
                                 </a>
                                 
                                 
@@ -691,8 +688,8 @@ HTTP协议
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/Java/">
-                            <span class="chip bg-color">Java</span>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
+                            <span class="chip bg-color">后端开发基础</span>
                         </a>
                         
                     </div>
@@ -718,7 +715,7 @@ HTTP协议
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">5 / 14</div>
+            <div class="center-align b-text-gray">5 / 15</div>
         </div>
         <div class="col s6 m4 l4">
             

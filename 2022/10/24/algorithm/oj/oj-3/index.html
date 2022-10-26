@@ -1,0 +1,1496 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="华南农业大学第三章部分题解, 后端工程师之路">
+    <meta name="description" content="19185 01背包问题1. 题面一个旅行者有一个最多能装 M公斤的背包，现在有 n件物品，它们的重量分别是W1，W2，...,。
+它们的价值分别为C1,C2,...,，求旅行者在不超过背包重量M的情况下，能获得最大总价值。
+PS：01背包">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>华南农业大学第三章部分题解 | 后端工程师之路</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">后端工程师之路</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">后端工程师之路</div>
+        <div class="logo-desc">
+            
+            华南农业大学软件工程学生博客
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">华南农业大学第三章部分题解</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                            <a href="/tags/leetcode/">
+                                <span class="chip bg-color">leetcode</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
+                                数据结构与算法
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-10-24
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="19185-01背包问题"><a href="#19185-01背包问题" class="headerlink" title="19185 01背包问题"></a>19185 01背包问题</h1><h2 id="1-题面"><a href="#1-题面" class="headerlink" title="1. 题面"></a>1. 题面</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">一个旅行者有一个最多能装 M公斤的背包，现在有 n件物品，它们的重量分别是W1，W2，<span class="token punctuation">..</span>.,。
+它们的价值分别为C1,C2,<span class="token punctuation">..</span>.,，求旅行者在不超过背包重量M的情况下，能获得最大总价值。
+PS：01背包问题也能用于个人的时间管理，如何分配时间在不同的任务上，才能最大化提升个人价值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p> 输入格式</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">第一行：两个整数，M<span class="token punctuation">(</span>背包容量，M<span class="token operator">&lt;=</span><span class="token number">200</span><span class="token punctuation">)</span>和N<span class="token punctuation">(</span>物品数量，N<span class="token operator">&lt;=</span><span class="token number">30</span><span class="token punctuation">)</span>；
+
+第2<span class="token punctuation">..</span>N+1行：每行二个整数Wi，Ci，表示每个物品的重量和价值。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="2-解题思路"><a href="#2-解题思路" class="headerlink" title="2. 解题思路"></a>2. 解题思路</h2><p>这道题是经典的动态规范问题，其特征是涉及到<code>状态</code>和<code>选择</code></p>
+<p>对于这道题而言，我们依照<code>动态规划</code>三部曲进行分析</p>
+<ul>
+<li>状态是什么?</li>
+</ul>
+<p>如果我们将地上的物品看作是一个个的，我们的背包从左走到右，这时候不断变化的<code>状态</code>就是我们走到了第<code>i</code>个物品前方。然后如果我们<code>选择</code>将物品装入包中，这时候不断变化的<code>状态</code>就是我们的<code>背包的剩余容量</code>。</p>
+<ul>
+<li>选择是什么?</li>
+</ul>
+<p><code>选择</code>就是当我们走到一个物品的前面，我们可以<code>将其装入背包</code>，也可以选择<code>不将其装入背包</code>，这就是选择</p>
+<ul>
+<li>怎么来定义dp数组?</li>
+</ul>
+<p><code>dp数组</code>的定义与状态量有关，一般来说，有几个状态，我们的<code>dp数组</code>就有几维。</p>
+<p>根据状态分析，我们可以这样定义<code>dp数组</code></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span> n<span class="token punctuation">;</span><span class="token comment">//可挑选物品的个数</span>
+<span class="token keyword">int</span> m<span class="token punctuation">;</span><span class="token comment">//背包的容量</span>
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">]</span> dp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">//dp[i][j]:对于前i个物品,当前背包的容量为j,这时候所能够得到的价值为dp[i][j]</span>
+<span class="token comment">//dp[n][m]:对于前n个物品,当前背包容量为m,这时候所能得到的价值为dp[n][m]</span>
+<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token keyword">return</span> dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>状态转移方程怎么写?</li>
+</ul>
+<p>状态转移方程是数学递推的过程，其特点是从<code>一般到特殊</code>，因此是我们先写出<code>base-case</code>，然后根据<code>dp-table</code>来写出遍历方向。</p>
+<p><code>base-case</code>:</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//当对于前0个物品的时候,这时候根本没有物品可以选,所以肯定价值是0</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>m<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">//对于背包容量为0的时候,这时候根本放不下物品,所以肯定价值是0</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    dp<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>初始化后的dp-table</code>:</p>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUYAAAKBCAIAAAAUaea0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAHsXSURBVHhe7d0JnE1148dxs68Gs5phxjCMJVGKbJFdqaSQbGlTypOlqFTaV2UpJYoWJYwtpZQQ2YlE9mWYxez7vv5PM7/xv8uZa5Z7595zzuf98nqe872ocbt33O/5bXalpaX1AAAAAACA0tiL/wcAAAAAAIpCpQcAAAAAQJGo9AAAAAAAKBKVHgAAAAAARaLSAwAAAACgSFR6AAAAAAAUiUoPAAAAAIAiUekBAAAAAFAkKj0AAAAAAIpEpQcAAAAAQJGo9AAAAAAAKBKVHgAAAAAARaLSAwAAAACgSFR6AAAAAAAUiUoPAAAAAIAiUekBAAAAAFAkKj0AAAAAAIpEpQcAAAAAQJGo9AAAAAAAKBKVHgAAAAAARaLSAwAAAACgSHalpaXiEgAAAKiRdRsTDh3OkC463+Q17C7/8gcBAJZGpQcAAECtzHr13J796SLUq9ejW8O3ZoeJAACwJCbeAwAAoObemnNRt89Ldu9N2/BToggAAEui0gMAAKCGFnx6ecu2FBF0/HXkv0n4AABLo9IDAACgJlauiV//I6PxAGBNVHoAAABUW35ByYrVcSIY6dzJS1wBACyJSg8AAIBqW70uPiOzSAR9t3ZvePcQPxEAAJZEpQcAAEC1rdsoP+X+xo71X3+J7e4BoI5Q6QEAAFA9639MTE0tFEFH81A3qc/b2YkIQOlKSkuLioulH9KFeAg2hkoPAACA6vnxZ/kh+mF3+dX3dBABgMJJTT4jI+vEvxelH9KFFMVPwJZQ6QEAAFAN+w+lX4jMFUFHAy/Hu+9gCT2gEqWlpdlZudu3HykqKpF+SBfZ2bnSg+KnYTOo9AAAAKiGn39NFlf6hgz2FVcAlK+kpORyVHxIsH+nTuHSD+ni8uV46UHx07AZVHoAAABUVWJSwY5dqSLoG9zfR1wBUAU7O7urw/LShRTLr2FTqPQAAACoqi3bUsSVvps7eYUEu4oAQPns7e2bNQuIjU0+cOCE9EO6aNassfSg+GnYDP6TAAAAoKp+2yo/675/H29xBUAV7Ozs3N1c+/Tt5OnpJv2QLtzdXBiot0FUegAAAFTJ0eNZkZfzRNDh6Gh3262NRACgFg4ODp4ebq1bh0g/pAspip+ALaHSAwAAoEq275CfdS/1eVcXPlUCKmRnZyc1eQnj8zaLb74AAACokm075DfG692TIXoAsA4qPQAAAK5t1960jMwiEXS4udn37NZQBABA3aLSAwAA4NoqO7tO6vNMyAUAa6HSAwAA4BqKikp37EoTQV+PrgzRA4DVUOkBAABwDbv2phUUlIigw97ervstDUQAANQ5Kj0AAACu4c898kP0Up93dubzJABYDd+CAQAAYEpJSemuSip91y4M0QOANVHpAQAAYMre/en5crPuJbfc7CWuAADWQKUHAACAKXv2p4srfe3aePj5OosAALAGKj0AAABM2bNfftb9LZ2ZdQ8AVkalBwAAQKUO/52ZmlYkgj5m3QOA1VHpAQAAUKnKhugD/J3bhHuIAACwEio9AAAAKlXZQvqbOzFEDwDWR6UHAACAvDPncmKv5Iug7+YbqfQAYH1UegAA6h09nnXs3ywRAFTYf0h+iF7S+SYqPQBYH5UeAKBpf/+T+cBDx6fMOP2/Z0+Pe+zfE6eyxU8AkCr9wQxxpa9Tx/qeHg4iAACsh0oPANCui5G5r7x14UqcmFccFZ33/vxL5dcAUlILj5+Qn73S5WaOrwMAm0ClBwBoVGpa4WvvXEjP0DudK/JS7umzOSIA2nbgkPwQvYRZ9wBgI6j0AAAtKi2t9+rbFyMv54msw85OXAAaV9lC+qZNXMKau4kAALAqKj0AQItee+fC0WOZIugIa+EW3tJdBEDbKltI3+UmZt0DgK2g0gMANGfBp5f/+DNVBB3ubg7PTQ0VAdC2g39l5OQWi6Cvy83MugcAW0GlBwBoy/KVV9b/mCiCvldmNQ9vxRA98J99B+Vn3Ts52XVhIT0A2AwqPQBAQ/YdSF/6dawI+p5/JvQWNvEGKlS2kL7LTQ3s7dlwAgBsBZUeAKAViUkFcxbIn1E36dGmg/v7iABo3rkLOdEx4nBHA8y6N5CXV1JQUCICANQ5Kj0AQCs+WHA5OaVQBB2jhgfcf1+ACAD+m89S6fF1zLq/Kie3+JW3LgwedmTg0CPvfBApHgWAukWlBwBowudfxchOJB7Qx/uJR5qKAKBMZbPuW4W5BzZ2EUHz3pt7accusdHmr1uTP6hkEhAAWBSVHgCgftt3pn63Kk4EHVI5mfpUiAgAyiSnFB77N0sEfV07s9+E8Pv2lKt9vtzWHSniCgDqEJUeAKByUTF5lY2eTX0q2MPDQQQAZfYekB+il9zSmVn3/8nLL1nyZYwIFRzYNRCANVDpAQAqJ/X57ByZ47XHjQpki3vA2N798pXez9e5fTtPEbTt8y9jEhILRKgweABbbAKwAio9AEDNPloUdfSYzBTiGzrUf+TBIBEAVMjLL9m7P00Efd26cAvsP1HReWt/SBChQoC/88SHmogAAHWISg8AUK1Nvyat22j4yVvi5GjHEnpA1t796SWl4toAlb7cqrXx4kqH1OednflcDcAK+NYDAFCn02dzKltCP+WpkNAQVxEA6KhsIb2bm323W6j09S5H5f20OUmECn16Nep3m7cIAFC3qPQAABUqKiqdM/9Sqdxg4+ABPncO9hUBgL49++Rn3ffs2lBcaduaDTITf+4b6i+uAKDOUekBACr0wYJL5y7kiKAjuIkrU+6Byuw7kJ6VLbOXpKRHNyp9vZjY/I0/J4pQ4ZabG7BrIAArotIDANRmzYaEzb8ni6Bv6lPBri783QfI213JEL2Tk11PKv1/31tkVtEPu8tPXAGANfCxBgCgKkeOZi5cHCWCvofGBd10I6dqA5XatU9+If2t3Rs5Omr90PW4+IL1PxoO0bcJ9+jKroEArIpKDwBQj6zs4g8+kt8Sr8vNXg+ODhQBgJGDhzNSUwtF0Hdrd4bo5Yfo77mTIXoAVkalBwCoxwcLLsXE5ougw8PdgSX0gGm79sjPund2tqfSJyYVGG+M1zjAefAAHxEAwEqo9AAAlVixOu6PP1NF0Cf1+aDGLiIAkLOzkkrfq0dDZt3LbnR/z51sdA/A+qj0AAA1OHg4Y8mXMSLou3uI34C+HBkNmLLvYHpls+579WgkrrQqNa0wYr1hpXd1tR86hFn3AKyPSg8AULyMjKIPK1lC3yLUbRpT7oFr+XO3/BC9h7tDrx5an3UfsS6hpKRUhApSn3dz44M0AOvjOxEAQPE+/PhyXHyBCPqmPBVip/Upw8C1/bFLftFKr55a7/MZGUURbIwHwIZR6QEAyrYiIm5HJW3k0QebdGzvKQKASuzcnZadXSyCvt6an3UfsT6hsNBwiH5wf59AtucAYBuo9AAABfv7n8wly+SX0He52WvsqMYiAKjczt3yN8UaNXLS+KHr2dnFskP0QxmiB2AzqPQAAKUqKCiZt/CyCPpcXeynTGIJPXBtefkllR0VcdutWh+iX70uPi+vRIQKt9zcoG1rDxEAwNqo9AAApZq78PKlqDwR9P1vUnCTIKbFAtcm9fmiIsOJ5eX6aLvSZ2cXr17PKnoAto5KDwBQpI0/J27ekiyCvkH9fIYM8hUBgEmVDdEHN3XtoO2tKFavi8/NNRyibxPu0e0WTS9GAGBrqPQAAOU5fyG3sin3jQOcn54ULAIAkxKTCvYdSBdBX99emh6iT88oWrmGIXoACkClBwAoz7xPLpfKzxSu9/SkEA8PBxEAmLRth/wQvaSPtiv99xFx+QWGQ/RBgS6DB/iIAAC2gUoPAFCYRV9EHz+RJYK+kfcGdGdOLGokI7No+85U6Udlx7mp0rYdKeJKX/t2nqHN3ETQnitx+bJD9Pfe7S+uAMBmUOkBAEqy70D6qrUyH7UlLVu4P/lYUxGA6pCa7Yixx15754L0Y8S4Yzt3VTp2rSZnzuacPpsjgr6+vTU9RP/N91fElY5GjZzuG0qlB2BzqPQAAMXIzy/5eHGUCEb+xxJ61EhScuG7cy9dnWWdk1v83vxLxvuiqc/WSoboJX16eYsr7Tl+IuuX32S23hxxj7+dnbgGANtBpQcAKMZHi6JiYvNF0Dd+dGBHbe/ObSw2Ln/jz4k/bU6KTywQD0HOsm9iC/RXTWdnFx86kiGCem39Q77S9+rRsFFDRxG0Z9nyWHGlw8vL8b57GKIHYIuo9AAAZfhta/KmX5NE0NeujcfD44JEQJmNmxJHP3R87seXP1hw6f7xxzb/Ln/gHw7/nfnzbzKvK9WPx+7em5aUXCiCvn63aXeIftPmJOklIYKOUcMDXJz52AzAFvG9CQCgACmphQuXRItg5H9PMOVeT1RM3lz9Q/7mzL+UmlYkAnTIDsnW93To3MlLBJWqbIi+YQPH3j01upA+N7dE9vXg5+v8wPDGIgCAjaHSAwAU4NPPozMy5BvpYxOatG3tIQLKLP8+TlxVKC4uPfy3+meSV9f6HxNkT094eHyQi4uaPyOlZxRt2ym/BaCWh+i/+DomOUVm5sLokQGsogdgs6j0AABbt/n35N+3y48odrzec8z9jJ7pOXo867etMtPs7e0pJXoyMouWfSMzJNu+neewu1S+anrLtko3xuvfR6OV/ti/WWt/SBBBR8sW7qp/PQBQNCo9AMCmJSUXflr5lPtJj3JqnaFv5c7fcnOz73yTymeSV9eiL6Izs2SOoH9obKC4Uq/K7pG1buWu2Tkvi5fFiCt94x/gpiEAm0alBwDYtE+WRGVkyk+5f2hcUJtwptzr2X8o/eBhmQn240YFeno4iIB69X75LVn2oLI7BvredKPK732cPJ196ky2CPoG9PURVxrz7co42SUYt3Zv2EurOwsAUAoqPQDAdm36NWl7JSt+27fzfHC0+kdTq2vjJpnN24MCXUaPZKTx/0XF5C34VG/7wHLOzvYPj1f/0QkmZt1rcyH9+Qu5X3wtP0T/yINNxBUA2CoqPQDARv035f7zSqfcPzWRKfeGzl3I2b0vTQQd40Zx70PPvIWX8/L1DqIv9/C4IF8fJxHUa8s2+RMN+/RqpM3j6D9bKv99ZsLYoNAQVxEAwFZR6QEANuqTJVHZ2TJLnSVSR2WXe2ObfpWpaiHBrrcP1OhsallLv4mVPXj8hg71Rw0PEEG9tmxLkd1BQKLNWffrNibIrlWRyvyEMdwLA6AAVHoAgC36fXtKZVPum4e6PfKg+mdHV1dubsmmzTKz7u8Y6CuuUK/env3py+W2D5Q8+Zgm5n1s2S4/RN84wLn7LQ1E0Iz4xIIlleyKx5R7AEpBpQcAxTh6LPPocZkNnNQnL6+kst2nJY8/xEdtGZt+TSookJlMPngAQ/RCalrh3I8viaBv4kNNwlu6i6BesVfyDxySGZGWaHOI/vMvY2SXYPTv431r94YiAIBto9IDgK3LyChavvLKiHHHpsw8M2XG6TGPHJfdmVlNFi+LTkwqEEHfkEG+XbtobiyxXERExPQy0oV4SMcvW2SG6Pvd5t2wgRZXR8v68KPLScmFIui46UYvjWwfWNnZdZKBfb1Nv8DUZ+euVNknxNnZ/jHuGwJQDrvS0lJxCQCwPUu/jv1udVxJid736uCmrss/v04E1Tn4V8aMl86KoM+rvuM3n1+nwY4aHR09cuTIvXv3ilyv3ogRI+bOndu0qZgrfuhIxrOzZJ60d19v2bWzRu+AGFi+8or0bhJB35eL2jUPdRNB1R6c+O+lqDwRdLRv53x47+O6L7Bu3bqtXr366gtMlcY9+m9UjMyzMfnx4OH3+IsAADaPUXoAsFHxCQVSs5V6iEGfl0RF5508LX+stApUtvu0ZOLDTbQ55mzQ5yURERHSgyKUnbIurnQENnahz5c7+FdGZX3+6UnBGunzR49lyvZ5yd9/fWHwApOi7gtMfb74Oka2z3e8vj59HoCyMEoPwFLs7OzEFarPx69n6+tnOzlXekb04b3jM9NPiKAioS0nNms5UQR9yYl/Hv9rmgjQ4eLq3/W2n0XQcfn8sotnPxVBw5ycGnTqvtzVTWZLxaT4bf8emSmC2rW67oWg4PtE0FFYkLJn20ARVMrg4+6FyNyHJ8l///xkbpvr2nKaBgAlYZQeAGxOSIsJ7W+ab6LPZ2eeVWWf96jfqrI+L7l4eqG4gr7GTYeKK33xVzaLK21rdd0s2T5fVJhx7uQHImiAf2P53h4X85O40oyl38hP2Rh5bwB9HoDiUOkBwIY4OTVod8N7zcMniywnK/PMqWOviaAuzcOfEldGLp3/IjvrvAjQFyhX6dNSDuVkXRBBw4Kbj/dr3E8EfWdPzsnPSxBB7fwCBzo61RdBX7zGKv32nam796aJoCPA3/lRTscEoEBUegCwFT5+t97UY0Vl9UOSmnzgxN/P/bV7dFbGKfGQigQE3eHj11MEfbnZlyPPfiYC9PkHDnZxldmtPT72F3GlYQ29O7Vo/bQI+q5ErUvQ0lNU2RB9StLebI3d+vnyW/kh+ofHBzk788EYgPLwnQsAbELz8Kfa3zTPxTVAZCPnTs755+CTiXFbRVYXOzv70FZPiGDk4tlF4gpGAoOHiSsdJSUFCZqfdW9n59iy3fMi6MvJvqSpKfdOzt6+AbeJoE9rQ/TLV165LLdHYJebvQb10+LJ/ABUgEoPAFbm6hbU4eaFIS0eEtlIYUHqP4cmx1xaJbIahbZ8Qna1syQpflti3BYRoK9Boxsaet8kgo74mE0lxfkiaFWrdjM9PFuIoO/cyTklJQUiaIB/4ABxpa8gPznhyq8iaEBKauHy7+NE0PfwOKbcA1AqKj0AWJNf4343df+2kW9XkY1kpB3/e/+jqUn7RFYjd4/QkLCHRTBykSn3lQsMvldc6YuPldkAX1MCgu6o7Mm5fOFLdb+hjPlVMutee0P0cQUFJSLoGHa3f5twdsUDoFRUegCwmhbh/2t3w3uOTl4iG5E+cB/Z91BO9iWRVSq08l3uL53/gj3eKuPq3kQqriLoyMw4mZ56RARNcnL2Dmsjf95hRtqxi2c+EUEb3D1bNGjUUQR9cbGbxJUGXIjMXb9RZjdENzf7B0cHigAACkSlBwAr+G+yfedPgls8KLKcC6c/OnXs1Xr19I5TVp9GPl38AuWHEHNz2BXPFNkzxiXx0T+KK60KazPVybmRCPrOn/pQXGmGf+P+4kpfatI+Td0v+3al/JT7cQ8ENmzgKAIAKBCVHgDqmm9A307dlzfyuUVkI/l5cf8cmhx18RuRVS0k7BFxZSTy7GJxBSP2Di5BwcNF0FFSUqDBY8Z1+QfdLjt5QRJ59rOMtOMiaIZfY/mF9JpanfH3P5nbdqSIoKNJkMvoETIHRgCAglDpAVhHqSZJf/DQlhOvu/F9J6cG5c+DsX63ef/6w6CUxL3i96jalm3Jsru7Sbrd0iA+drP0a0SuRPk/R91GjBgh/rQ6goLvc3B0F0HHsLuaFBVli9+pPZlZRT1ve1c8F/quv84z8tzn4tfpa9q0qfhFcqKiosSvU6Bj/2a6ezYXfxIdXl6OcTGbyn+NeKgS5b/G9okvtxKr1sWLK31j72fKPQDFo9IDQB3JyS1ud8N7zSpfN+7gYDdtcsjLzzWXPm2Lh9Tuu9XyU2ElD41lA2pBtnBWtvfb3Xf4iStNWvRFdHJKoQj6nnzMVG9Xqz/+TBVX+jR1YFsjny5796eLoKNlC/fbB3JwHQDFo9IDQF04dSb7yWmn/Rr3E9lIWvLBpZ+2GzpEQ31s/Y8JFyNzRdB3/30B4S1lhqBRzq9xf3ePUBF0dL+lQVgLNxG05+BfGZs2J4mgb8LYoLattbil+fad8pV+YD9vcaUBTUPHiit9D4wIEFcAoGRUegCwuK1/pDw1/XTkJfn6Kok8t+TowUmhIa4ia0BJSel3q+SH6H19nB4e//9D9KYnRUdHR4sr9QoODhZXFSrbGG/onZoeol/6Tay40tcqzH3CGFPzq42fYV1RUVHiSmn2HUyXnbPQob2n9JyIoPa3WINGN3r7dRdBR9vWHv1u09B9DQAqRqUHAMta/v2VN967WFwsv9QzJ+viPwefvHRuiciasWJ1fFKy/ATph8YGuTjz11OlGnp3aujTWQQdHa/3vOXmSvdoUL3V6+JPnckWQd8jD2p0EceOXfJD9AP6ami2eZNmo8SVvvvvY4gegErwmQkALGjOgkuVjRxK4qI3/rVnTGryAZE1Izu7+PsI+SF6qZcOGewrAuTIbnQvue9uf3GlPRmZRV+vuCKCvsEDfLp21uKdjtJS+YX0Tk52A/tqZXTa0ytcdrlT+3aet90qf8whACgOlR4ALELqGDNeOlvZyl7JmX/fPn389ZKSApG1MYe83Pdr4rJzikXQN2GM4YCqWidFV53uvGgPzzDZY/zbtvbo1VO7FeWbFVeys2VeUfb2dlXZZ1GVM8+lPp+bWyKCjoF9fVxctPLxLyhY5rQICUP0ANSESg8A5ncpKm/ac2cO/pUhsr7M9BOH94y7ErVOZI1JSS1cuUb+QKnB/X1u7FhfBFTQLZxBzUaKK33D79HuEL30dluzIUEEfQ+NDQzwdxZBYyqfda+VIXoX14DA4GEi6Oh4veet3RuKAADKR6UHADP7+5/MqTNPn78ovxleXPTGw/smZGacFFl7Vq2NLyqS31lgvMk9zODi6i+7MV54S3ctb/S1co38Io6gxi7jHqjSK0p9o/Q5ucWylb55qNsNHbRy1ywoRH6Jysh7GaIHoCpUegAwp52706Y/fyY1rUhkfUlXlp4+/nq9UpnZsBqRkFggVXoR9EntS+pgIlSZdlYrSIJC5IfotVxRzl3I+eW3ZBH0jRnVWFxpz44/00rl7psN6KOVWz929k6y9786Xu/ZoytD9ABUhUoPAGazaXPS7DfPl8h9kvb1cZrzVqv05B9F1qrV6+T7vPT8jK9kQNX0CKoWlO8m4ODo3qTZ/eWP6MrPvdBfMz3N2Jr18lPu27b2GDJIu/ss7tgtP+teOy8Vqc87OnmJoGPkMIboAagNlR4AzCNiffycBZdE0HdDh/qfzGvTuZPM50tNiU8oqGzN87gHAp2c7ESAnCYh9zs4uImgIy35B3GlPZei8jb/XskQ/f3VGKJX2RaMqWmF+w6ki6CjR7eG/n5a2VkgKPhecaWjfTtP6UkQAQDUgkoPAGbwzYornyyRnwF+x0Df+e+FB2jmk7QJlQ3RtwpzHzrETwQjqtyNvFrKn4EmchvjZWacPHX8OxG0Z90P8neIOt/k1VPDzW3HrjRxpU87s+59A/q6e7YQQYeWd5EEoGJUegCorS++jlm2XP7w+UfGB82c1kwEbZ/HFp9YsLaSAjZWw2ueqygoZKSzi8xdj+iL34or7UlKLvxhU6II+saM1PQraqfcxniNGjpWdhK7+r4vyW50H97KnbPoAagSlR4AamXRF9HfrpTfcPv5Z0KruOG2FkRUMkR/cyev3ho+UL2K5Ifo0/9NuPKrCNqz4Sf5O0TSy6m6m7qraSZIfELB4aOZIujo38dHXKld/QbtvH27iaDjvqEM0QNQJyo9ANTcwsVRsvu3e3k5fvh2q8H9tfIZ+pqSkgsrW0V/zQFVLU9tKPfb1mR3j1ARdERpeIi+qKj0h5/kh+hHDdf0/meVHUevnY3xApveI650hAS7DurHN2QA6kSlB4Aa+mhRlGxNDQ1xnf9e+E03an0zPF0R6+WH6Pv0anRjR62ckl1j63+U6a4Zaf8kxm0pv9bUSX7lNv6cmJlVLIIO6RXVtrWHCGairKd3526ZhfTSc9K6lbsIqubk3FB21v29dzNED0C1qPQAUBMLF0et2yjT5zte7znvvdYtQmV2JtestPSiylbRj9b2mueq2L037eTpbBF0aHkVvWTjz0niSl/NjuhXzUGJUdF5x09kiaBDS0P0Up83PDsjPy/hnjsr3YATAJSOSg8A1bboi2jZ8fme3RrOfSe8UUNHkVFm7YaEoiKZw/qHDPZtFaaJkcPaWCc3RJ+e+ndi/DYRtLH6QNefe9IiL+WKoKN3T/MP0SsLe93LzrqPvbxaXAGAGlHpAShYfGLB8u+vSD+kC/GQ5S39JlZ2/fzg/j5vzg5zcDB1uLoGz2PLyS1e84P8rPsqbkuu5UPsjhzN/OtIhgg6oiM1PUT/4y/yq+gttP+Zgu6Y7Nwts5C+b69GXl6auM/oFzjQ1b2JCBWKi3NiLlHpAagZlR6AUiUlF06ackoq2NIP6SIqJk/8hCWtWB23/PsrIugYdpff88/IbGCGtT8k5OaWiKBj+D3+QYEuIqASsos70lIOJ8X/IUIZTa2lP3Mu58AhmdscXbs06NDeU4RqMr0Fo1Kcv5ArPTki6OjfVyvbwskP0V+KkFq9CACgRlR6AEq19Y+UlNTC8mvp4o13L+blyVRHM9rwU+KSL2NE0HH/fQFTngwRwVYlJRd+HxG3am18RkaReMjySkpK18mtondwsHtgRFVX0Wt2lP7M2Zw/98jMo9b4EP1Pm+VX0d+n+f3PdsgN0fv7OXe/pYEIdU76zrxyTbz0bSc1zeLfduo3aNfIp4sIOmIurxJXAKBSVHoASmUwxf3MuZw33rsoggVs25Ey/5PLIugYNypw0qO2vrdWQmLBxP+dXLwsZtEX0Y9POSW73ZolrNuYKPtR/oERAT7eTiKgEvJD9MkHkxN2ilBBO6P0GZlFP/0iU+k7Xu/Z+SZLnTGhlKd3p9zxdf1vu/YqegvdNZP6/BNTTn22NFr6tvPElJNp6ZZt9WUb4xm6ErUuP09+b04AUA0qPQClGjzAp0mQ3szt3fvSVqyOE8Gs/jqS8fq7MvcLHhwd+MiDQSLYsF+3Jl+d0XAlLv/pZ0/LnnRldrJD9G5u9qOGs9H9NURF523+PVkEHVGRy8WVJv20OamkRGarxWF31WqIXgU73p88nR15WWbxUf++VtsYb8u2lISKXU7iEwq2bJN5PZtLekZRYLDMrPsYNsYDoAFUegBK5enhMPv5Fi7Oet/HlnwZs0NuqKo2LkbmvlZJn39onAL6vMRO/1SnwqLS2W+e//ekZcfqN/2aFBuXL4IOqc9L/+1EQCVkh+hTk/alJO4RQYd2dryXHaIPa+F2262NRNCqP/6U+b7Xob2nFQ/UNDjnwqJz7zf9txzDcGvSxLgt2ZnnRAAA9aLSA1Cw1q3cZz/fXIQKr7x1Yf+hdBFqLT2jSOrzxuvPx45qXIM+b61l4YMH+Pj6GE50X7tBfiN6c9kgd/qaV33HUfdV7+Rw01uXqbLNJiYVrJd79qIuanqIfvvO1NgrMjeJ7q3dEL06yM67se5x9J6eenfusrKKxZUFyN7rYaN7ABpBpQegbD26NRxzv+Es7udePrdyjXn66mvvXDA+AXvkvQGPPmh4VJItk/r8R3NatwnXO7J7287U8xdkDvc2i527Us+el9ll+v77Alxc+KvnGtbKLVhITtyVmrxfBE2S3RivcYDzkMG+ImjV3/9kXjGaEePgYGfdSl9fv9JnZllqlH7bjhTjCUGpSfvSU4+IAACqxucqAIr32IQmxls6f7Y0esZLZ2UPu6q6t96/ePjvTBEq3D3E78nHlLfyNijQ5aM54VL/EbnMD5vkz/euvfU/yfyTGzV0lCq9CKhERmaRbKWPrnyIXgvb4506ky17RH8tV9HXjeQUsfG7hbaIk11t1P82b3c3a65wadhQb2aQ7FJ/s5AfomcVPQDNoNIDUIM3Z4d16lhfhAoH/8qY+fLZqc+d2XewJvPwP1oUtWV7iggVBvTxnj7Z1s+rq4yzs71B/9n6R0qpzF5jtXXkaKb0QwQdI+4NcHQ0XO96TVo7xG7thoTCQsP/Kte1KUlL+UsEI1qo9LJD9J4eDsPu8hOhdiz3MpP6/ONPnyzf+H3S1FOWOEVyxy65WffW2xivXLNgV3FV5mJkbn6B+c8ZPXEq+7DRd5vM9H+ND4YAALWi0gNQA3t7uzdmh13XVm9iebm//8l8fva56u6Zt/TrWOP9yXp0bfjiTMOl+8oydIifvU6nzs4pllq9COazQXaIvpHT/fcyRH8NeXkla+SG6G/tZsF1yLYvLV3+7Lphd/s762+QaYN+25qclPz/5038ts3M77h9B9OvnmdxVdMmLp07WepUvyry8Xby8nIUoczZczKLcWqpklX0nEUPQEOo9ABUwsPd4ZO5bUYNly+N1dozb8mXMctXXhGhwg0d6r/+UgsRFMvV1f7WHnp7g/9u7kp/ITJX9gbKyGH+Dg7VHqK3BQmJBdLr4duVcVeLmeVEbIjPzjZs7317ezcLNjWbwkJ7BCYmFUh/aumHdCEespKy/cxl3Hu3eYboLapEf2Q6Ll5mh7/a2Ck7RN/HR1xVgeVmKISG6A3U//Nvlrgyk5TUwp9/M3xt5GRfio/9WQQA0AAqPQBVeeKRpnPebBXe0l1kHS+/cUF2u2wD8z+5bHy4fZtwjzdeDlNoIzXQq0dDcVVm34H0+ARzFjb5IfqGjiOVOUQv1fgnppxa+nXsF1/HPDHlpPFwqBkVFZWuWS8zRP/AiADT2/5bQnJK4aSpp6Q/tfRDujh3wfzjq1UnO+t+2N3+jfRXa9eG5Q5W8G6k90XGxZv5/khlC+nFlVW1bqU3c+qYuSu97BB9LEP0ADSGSg9AbTrf5LXk47azng0Na6F3IHNBQclnS00NN509nzP5mdPGjTS8pfs7r4UZ7N5cM7ZwHluvHo2cnPTuTcj2pZqReuBGuS33RtwboNAbIlu2JV+t8VK937wlufzaEiLWx6cbLbS+faBPqzCZW1SW9vv2lKuzEqSLF145f/6ipc5HMG3bjhTj7dwl95ppFb2leXvrTT6/YtZR+p27UrNzDKd1SN8DmzZxEcGq2oTrvXSPHM007+Ydxt+7CvKT2RgPgNZQ6QGo08B+Ph+81cpg2ufO3WmylUwqokuWxTw2+eTxE4aDSC1buL/9akszDgZandTnpVYvQpkNP8rsx1Yzsn2+gZfjyGFKXUVvr7v3QL16f+6RmeRsFsXFpavlhuhHj/zvjMa63yPQXv8DQmJSwQuvnLsQaYVWv+lXmffsgL7ewU313t02y9dH75iJ8xdyY2LN1ur/kJ91bxND9BKDUfq8vJI/d1dvWxMTft2anJBoOOUh5jJD9AA0h0oPQLWkHv7KC4ar39+dG/l9RNz+Q+l796f//FvSsuWxL7x6bvjYf1ZEGE62l9xyc4MFc8J9fdTT58tJdUhclcnMKl7/o0yZrK7SUvlT8YYP86/BRve6rLjpffeueucjnjydHRVtkbO4ItYnpBrN6r9vqH9wE+sU18EDfA1GeqX69Pzsc1IjFblOnD6bI3t23b13m/nsOsu9xsKauxl8D6n6vh6mFRaWGjdkD3eHATZT6aWXkPTHF6GMGW+KGc+6LynOY2M8ABpEpQegZs1D3R6b0ESECouXxTz38jmpyb8/79I3K65I3V52LuiQQb7vvdFS+nwssop07dzAYFXC6nXxtZ8QK/V542O3PT0clDtEL5Eadbs2eiONxkcb1t5/Q/Tr4kWo4OBg98CI/4boraK+p8M7r7UMCjRs9c/NPluXrX7TrzKrQrrd0qBta5njLWzWjfpHbMquAK+BHbtSC4sM37f9+ngbTC2xrltu1rspJr19zLIhxT/Hs4xX5sdcXl1clC0CAGgGlR6Ayo25v3F1P/17eTk+/0zojKnNRFajOwfrrUNOSi5cuUZmnkK1/Piz3BD9Pf4uLsr+u6Znd70NBS2xnH7VunjjniO9dK07QyS4ieu7r7UMbKzX6qWXyvOvnKubdfU5ucW/GO1nLrnnTvOvorfoTBCDSn8hMnej3JulumRHvG1kY7yrut2iV+klv/xmhneQ7A4gDNED0CYqPQD1e/m55rJH1ssa2M/n68XtBvevxhFQSiSVokYN9XbtWr0uvshoxK/qdu1NM655Ls72wy0/RG/pbQUH9tV7MSQkFhifm1Ub0tMeYTRE38DLcUzZKvqrrLL6ICTY9Z1Xw/z99FaDJyYVPDvrzNFjmSJbjNT9jHd5kN7LBgO/tu+Ogb4G+97P/fjywcMyCwqqLr+gRHrTiVCheahbh/aeItiG66/zNJgTVPv9OKVX4G9bDe8LXIlal59n+D4CAC2g0gNQv6BAl4UftjG9vtTV1f7++wK+W9p+1rOhltsMz4prwg3Y2RmuRk5NK4pYX/MPxLKjjsOH+Xt6WPykAEvz9XEy2G9s/UYzDLFetXJNvPTki1Bh7KjGNjK7IbSZ2zuvtvTx1ntTSF/wtOfO7JQ7Ps2MZIdzhw5Rxkb3Bu4barj4/633L9Zmn7w/d6cVFxvNuu9tW0P05QwmDlyJy/+xdksPNjFEDwA6qPQANEFqsC/ObP7m7LAJY4Okbt+2tUfnTl4D+/mMGh4wY2qzJR+33bz+xkmPNm0SZBMnP9UNqdK7OOv9LRCxPqGkpCYD9WfO5hw4ZDjkKD3nxjVGoYYM8hVXZc6ez/njT/O02fz8EuNV9MFNXUcYzW6w4gmIYS3+a/UG48zSK2X2WxfWbDDDxoqyjh7LND4MP6ixi/S2FcGsLP30Dh9muNNhWnrR+/MjRai+PftkZt33vU3vMIsqsvSffYD+PBfJmlrcPZQYj/P37dUoO+u8CACgMVR6wGyKi4tjY2O3b9/+4YcfPvHEE3379m3durVdBWdn55CQkB49ekg/9emnn+7YsePKlSvid6Ku9OzWcMKYQKnbL5rfZs5brWY9G/rEI02lthbe0grnfludh4fDPfone6ekFq6r0fjzj7/I/C6pzxuUQOW6sWN9g7UbtZnRoGvl2viMTJkhenFlM8Jbub/7Wkvjtf0LF0d9ssQis0t+/V1mG8K7lTlEL3Fxtp85zXB7jqPHsuYtvCxCdZSW1tuz33Db/Js7eQXpb3xgI6SXjcFNsUtReTXeTWDLtpSkZMONJ+65SyV3DwGgBqj0gBmUlpZmZGRIZX7+/PnTp09/9tlnFy9eLMUzZ86IX/HfaUOFUVFRe/bskX5q2rRpkydPXrhw4a5du9LTzXOaEVADxtuM/fBTtT9nZ2QUyc6Dvdd8Q/S2sGDBYEPBf09m79xd2+O4srOLV60xvDVw/XWeg6o/EF0HT4LU6t9/s5XBHviSiPXxL752Piu7WGRzyC8o2bLNcNa9k6PdXbfrNUNlkf7LTv9fiAgVftiUuH1ntWd87NmflpdfIkKFPrfWZIi+btx1h+F/uJVr4vON/ghVYXwIQudOXra2gwAA1CUqPVBbJSUlsbGxX3755YwZM+bMmfP333+Ln6hcQUHB8ePHP/jgA6nbR0REJCRYauYqYFpgYxeD9hgVk1fdBdLSJ2zj2fpDBvna5oBhjd0+0KdxgN4ucbU/I2Dl2vicXMMmXNkQven7GnWjRajbB2+1kv5X5Aq796U9Ne3UqTNmOz9s2x8yx7Pdebuvhzm2ZpBVN7eN7r7DT/pTiFBh2fJYcVVl+w/KbK3Xq6ftVvo24R699b+82Cv5CxdXe0r/ydPZf/9juC+jwWwjANAaKj1QK0VFRadOnfr0009feOGFqpR5XVKxP3To0Jtvvvndd9/R6mEtdwwyHBDeuqPalV5c6TDYe6+WbGRbwXvu1PtDnTiVXZsD7TIyi1avNRyiv7V7w8q2c7eRJyEo0GXee+EGp7JJLkXlTX7m9LYd5jm0f/ufMv+cIYMVPER/1fTJIQY7wEdF5331XfXWYR34y3B6l/TKqe9pqfsdZjFimOH3hB9/Sdr6R/VeMMY7Joa3dO/RVe+YSQDQGio9UHMlJSXSx+i5c+fOmzcvN9fw+C5nZ+ewsLBOFa677jovLy/xczouXbr00Ucfff/99ykp5vkoDFtmI61MV8fr67cK09tKYMeuVOMN2Cuze29adIzhrt29ezYyKC3qcM+dfgYb+H+3quYD9avXxecXGE48HjcqUFzZsAZejvPeDb/NaJp3UVHp6+9eXGm0lKC6MjKLjHdb7NSxfssWFtzzos7em/b2dk9NNNyO7ruVV9LSq/qmO3s+Jy6+QIQKUqUXV7aqfTtP49MK3v4g8uTpqk7uyM4uNj4/cqjR6iEA0BoqPVBDpaWlUgn//PPPV6xYodvn7ezspOrerVu3cePGvfDCC29UmD179uOPPz5w4MDGjQ1n1UZGRn7yySc//fRTYaHhlj9AHTAuA3/IjZHK+kVumNp4ib46lJ90KEKZqJi8b1fWpNWnZxStMhqiv/sOv/BWlbZWK+54L+vVWS2G3yMzF+OzpdGffxUjQo3sNdr4TTKov0U2ureKTh3rD9b/4xQWlRpP2ajMX0cMZ55LFDFSPW1yiMENxOLi0nc+jDTeIVKW9N2mSH85hr+fs8HGewCgQVR6oIby8/M3bdpkMD7v4ODQrFmzCRMmvPvuux999NEjjzxyR4WRI0e+9dZb0q9/4oknOnbsKH5DhQsXLnz99dcnTpwQGahDvXoYloEdu6q08VtsXP6uvYa/8oYO9Y1nZavGyHsDDKY3f/VdbEKi4ZDpNa1eF19YqFdO7OzqjbG9je5Nm/x48MSHm4ig47tVcQs+rclG7uWM93J3dLS7rZftLhSvgQfHGE7HWL0+/vxFw9lesowXk3e7pYHldhkwL6nVi6sKl6PypFYvgknGa3yMh/0BQIOo9EBNlJSUSCV8/vz5Bn2+RYsWTz/99KuvvtqrVy93d8PRNicnp3bt2k2bNm3mzJkGrb64uPjYsWPff/89G+Cj7oU2czOYJy91BuOZvca2bJMZzL/baGvr2rOdAWoXF/sHRugV76Ki0upub5aRWRSx3nD7jDH3Nw7w09t+TxFGj2j8wrOhIuhY/2PiR4tq+N/liFFlve3WRi7Olv3EUsevscDGLtJ/cRHKSC+ktz+4mJd37U3gjxw1fH4q23/BBrVr4/HcNMMXzN796dc8CnHfwfSLkXq3PJwc7ZR7qCEAmBGVHqgJqcmvW7dOdz88Ozs7X1/fhx566PHHH2/UyNRokpeX15133ikVe6n/i4fKJCYmbtmy5eDBgyIDdah7F+O599feJO93o0rfJMilb29vEVRq9MjGBlvfb96SvP9QNW7GSX2+QH8VvZeX49j7r7GK3gY3Yig3qJ/P+2+0kvqVyBXWbUyo2ZbmGRmG07Btf6F4DUj/xb3qO4pQ5vyF3JfeOJ+dY+o4wOMnsoy3YOhys8xGLVVXxy+t2wf6TDCapBCxPv7XraY2m/zZeIj+Tj8b3xEQAOoGlR6otpKSkkuXLi1fvlzkMm5ubn379pUqvfHgvDGp1Q8aNOiBBx5wcnISD5W5ePHi5s2bjXfaAyytaxfDUb5rVvpDRzKiYvJEqHCnKvYkvyap1YurCku/rupAfXZ2sdReRKgwZmRjV9dr/I1ss5VeIlXK999s5e5m2K/WbEhYva56u+X9czxLXOnocpNiRqGrzs3N/qFxQSJUOHQ445kXzppYynH8hOFmci1buCvuwMgJY4OM7/19sjg6KVl+Q5mLkbk7dxuu8WFjPAAoR6UHqi0/P/+nn346c+aMyGVD9P7+/o8++qjx1neV8fPzk1p9u3btRC6Tmpr6119/RUZWaVUhYEbXtfUI1G8Fp85kn79g6u7Sdrmz7u6wzFZVttZm777Dr21rDxHKnDmXs3xllc4hi9iQYDC5WupjBrvuKdGNHeu/83pLJyfDsfpPP4/euasaxyKeO58jrip0vslLar8iWIxVXmPD7vIba7SBgvTWe372ucpm4B8/YXjLQ6FbV8yY0iwk2FWEMhmZRZVN69j4i+EQ/YA+3sFN9H47AGgWlR6ontLS0rS0tO+++07kMq6urj179uzWrZvIVeDg4NCmTZt77rlH5AoxMTEHDhwQAapja5uW6+rR1XAg9PfKj4wuLa23fadhT7tjoG8DL72JxCr24GjDmcNLv469FGU4bcFATm5xhNGo9Wj9NdU1Y90XT7mO7T3feDlMBB3vzb8Ue8XwpMPKnDWq9B3ae4orNXr0wSbGe7ZfiMytbMc44yPfFFrp3dzspVYvQoU//kw13gMvKblww4+Ge0/cO1TmtAUA0CYqPVA9xcXFJ0+e/Oeff0Qu06BBg7Fjx7q5Ve8gbm9v7+7duwcF6U28lCr9nj17mHuPutfd6BCsLdsqXdoqffKW2qkIFQYNUM8xY9fUtUuDPkZ7sH/+5TUOb1u9Nt5gpXRYC7cqrlYwfT/IRnTt3GCW0W552dnFH35cpQ3w8/NLIi8b3ha5ro2aK71kxtRmQ4xeAzt2pRqv5oiNy09OMZyafmMHpR4wcf11nsZrWD793HD6/aq18aV6p0PU69mtocE0GQDQMio9UD0FBQW///67CGUcHByaNGnSpUsXkatM+o2hoaE9evQQuUxOTs758+etuywW2tSpY/0Af71d36QP1n/ukT/NTuob4qpCqzD3jhYbTbXNZeQTxhouhN61N032FIByGZlFq9cZDjaO1t8/XwUG9vMx7ml/Hcn44utrH1YflyCzhrxdG/WXtxlTmhmfx7Z85ZUz5/TmLJwyGqKXnpw6WJVgORMfatIiVO9ueHZ28aIv/v8dHRWTZ7z3xPB7GKIHgP9HpQeqp3whvQhlyjfGM73LfWX8/PyM7wUkJyfrLtQH6kzvnoYv481bZAbq8/JKjLeqGthP5RvdG2sW7GpwDplEKq5FRfpDihWWfx9nMLXhhg71+91W1efNlrfHMyD1NOM92L9dGbfvwDXOBYg3OjoxsLHLNTcOVIdpk0M6GU2h//o7vQ0aTp5W4aqEJx4xfGFv/SPl6rqeRZ8bvrD79mokvXFEAABQ6YFqKSkpkT43Hzt2TOQyHh4eAwcOFKGavLy8wsPDpX+CyGWSkpKo9LCKXj0M597v3pcWE2u4Cnrn7tSSEsPW2r+P5iq95KGxQX6+elMb4hMKvvpOZvf7i5G5Mhvdm2MVvW16+okQZ6OT5Od/etn4gDpdcfGGL7bgpnW3l7vVb5o8O6WZwals0htQd6aM8UL6ju0VX2673Ow17C7DGQpLvvzv1tiaDQl79hveBhoz6hrHPQKA1lDpgWooKirav3+/CBVcXFyuv/56EarJwcEhICAgLExvQ6mUlJQLFy6IANSh9u08w5obbgmxZbvhTHLjIfrePRs1aqh3IqN52ey2go6OdhPGGhaMb1fGGe+Tt3CJYSHsd5t35061Ok7cljVt4vL0JMP/anHxBXMWXBJBTkam4QYNTQIVdjxbbQQFuoy53/DltGaDuBNUWlrvxCnDSt/hejVsNPD4w00NTty4Epf/yZIo4w3w778vwPh7FABoHJUeqAap0h8+fFiEMo6Ojs2aNZNqucjV16BBg1atWolQJicnR6ooqanVOPYJSmH7c6eN54Hv2a9X4LOyi3ftNaz0/XrXZOGJOgwZ5Gu85fhX3+oN1C///spfRzJEqPCw0ZnkKnPnYN/bbjV8Yfy5J+0r/cnkujKzDMfwvb0teKvIBo0aHmBQbo8eyypfsHD47wyD2THt2nh4uOuN6teM1b8vubraPzXR8GtY/2OiuKrQJtxj0qOmvlQA0CYqPVANUqU/deqUCGWcnZ07duwoQo3Ur1+/WTPDg3yys7MTEgy30QLqQN/ehpX+zNmc6Jj/nw69bYfhoH2jRk69jBbha8oj4w3L+fadqbv3iRsfEevjl35jOBVf+i1Ngqo9/qyg5fTlJj8e7Olh2Dm/+jbW+KCyclnZhqP03o3qrtLbyGQQ473fIjb899fB4aOZ5fGqTjeoZ0l5z24N77nTcPq9AeN5HwAACZUeqIbi4uLTp0+LUMbJyamWJ0u5ubn5+xt+gMvNzWWUHlbROMDZeI+u/Yf+fznr1j8MX5lWH6K3epVt385z2N2G7+IXXzu/cHHU7DfPf2I05b7zTV7jHtDEemBfH6epT4WIoGPO/EvGcz0kubkl4qqCRRd02KahQ/wMVtT/dSTjwKGMg4cNJ3p07dxAXKnC/54Ibq6/+72uV15ooYWzDwCgBqj0QDVINTs2Vm+0zcHBwfS42TVJld7X1/BE4uzs7KQk+VEswNJ6G02WPnpMDA9GXs67en3VwL4WP46+lu+yOvDI+KCGDRxFqLBmQ4LxvgNe9R2f+Z/hxJwqstk9BUzo38dbdvT1pdfP694qKpefb1jpveqbYWK5sjg62g01esYi1sefOau33b2Pt1P7dqo6sd/BwW6K3Di89Pg7r7bs00vTU4EAwAQqPVANxoOBjo6OgYG1Gm2rbJQ+Pf0apz0BFtKjq+G+938fyyq/2PCj4XqQGzrUD2/lLoKGeXo4PPJgExFMmjG1WeMAvU3yVW/qUyFtW8uMr77wyvm9+vuZ5xlV+vr1DW+UWI7trGu4507DvxSMh+iNj5xUAen7yRsvh0n/K9V4KTo7299zp9/nC9t2u0VV8xEAwLyo9EA1JCcbntFtb29fv35tVzM6OTl5euoNtrCWHlbk6+PUJlyvgGVkFB0/kZWcUrjhJ8MNq24fYPEheqW463bfO283nHGjq76nw9x3wm/tbnjHxFxscC39VbNmhDbwMiznJSWlL7x67o8//38pR5bR9njGv0sLpPfg0CHXWFhu+sWmXNIbZP574Vs23rhsUbsfIzpOfSqkReWz8QEAEio9UA0Gs+4lDg4OtRyll3h4eDRurHc8dXFxcUFBgQhAnTM+XG3PvvRlRnu8NQlyGdSfSv//nn262bNTmtnb/zfAaKB9O8+574bXcj8z21+AUJngJq4vzmgugr5X375w9VZRpv4hdo6OdsbLGSzHpnYfNN6dQVf3Wxqou+hKbyLpD+jizMdUALg2vlcC1ZCYaDhE6ejo2KRJlWbbmuDs7Fz7oX7AjHoajSTv3pdmvEv5yHtrfnyjWt052Pfzj9sO6OvdJtwjwN/Z3c2hy81e777WcuGHrVuF1XaFgk11zuqSnoeXZsq3+vmfXF6yLEa6yMjUG6X30dgJdrpCQ1yNt76/irceAOAqKj0AwFDrVu5hLfTGAC9F5YmrCkGBLtecG2xGCmqz0lP34ozmny1os+rr639ed8P7b7Tq2oWVwP/p38d7+mSZDfAlKyLiXnvngsEhdo0Dqn3On5qMfyBQ9tj5Rx9sckMH7gIDAAQqPQBAxm1G+94bmPw4Z0TXNSXueG/g7iF+z08PFUHf9p2G5yOGt6zTnRdt7en18nJ8cIzhwq5buzccO0pvoVbtqeB1BQBaZldaWiouAVzLq6+++tprr4lQplmzZpGRkSLU1P79+ydNmnTkyBGR69ULDAycMmXKc889J7Iy2dnJrCiupRqvJTb9mbUyNf7XmfiN8+bNE1dy5s6dK66qwxJfZ1a23TvznEoMNyAXbh/gPmZktccJa/x1SqT/giaG4qXWUZt/uFJIL57p06eLYGTatGk1e/3UPam9v/HexZKSa3wCeXFG8wF9vUWwPNt8erdsS9mxK/Wff7PcXO2H3eU/arj5p9xL7ywT3yGld5YiWr3pv3H4uAtAxaj0QDVQ6avFEpUedalF66eDm48XQUdK0p5jh54WwYbVrOTX7O6PpMb3FKr+Gw8fPrxjxw4RjPTu3Xvo0KEiVKI2Nz7M+3xevFS0eFl6dKzhFve6vlvavklQ3c29V80dk+qi0gOAolHpgWqg0lcLlV7pnJ29O9+61tFJbzQ+LubH08f03gVAzTg4uLe+/hW/xv1E1pcYt+XE3y+IYHlScc3NzTU+qfQqNzc3Hx/D8x1qdgPIdm6slEtLS3v99ddFMCL9qRctWiRClVni66xM+b+LSg9As6j0QDVQ6auFSq8CXg2vDwl72MfvVuk6O+tCfOymqAtfl/8UYBYhLR5uHv6kCDqOHngiLeWQCECtTZs2rVu3biNGjBAZANSC7fEAAJXKSDt2/K9pu7f23b/j7kO7RtLnYXaXLyw79teUzPR/RS4THbmCPg/zmjdv3sgyNn7cIwBUF5UeAHANRYUZebmxIgDmlpK4+/DeB/duG3jy6KyLZz45duh/50+pc9U6rC4iIkJq9SIAgCpQ6QFb5ODg4OzsLAIAaEBBQUrCld8uX/gyJWmveAiwgL1790rFXgQAUD4qPVArxcXF8fHxItRUVlaWwTxAT0/PgADzn1QE1fP26xHWZrr0w9u3u3gIAKCPufcA1IRKD1RDSEiIuKpQVFQUFxcnQk3l5OQkJiaKUMbV1dXLy0sEoAq8GnZof9P8629a0DR0tPTj+ps/CmszTfwcAAAAVIpKD1RD48aNxVWF0tLSrKwsEWqkoKAgMzNThAoeHh7+/v4iACY5u/i2uf7VG7su8/HrKR4q0zR0TCPfriIAACrU5hxBALA1HGIHVMOhQ4c6d+4sQhkfH59PPvnk/vvvF7n6MjIyvvzyy6lTp4pc5vbbb1+8eHHNTui1HZY4JbjGsyWjoqLEVXXU+F9n4jd+9NFHJg4+HDVqVGBgoAhVkJff4Hx0r/wC+Tkd7s4HPF22iyCnZn/Amj2ZEia7ArC6ESNGrF69WgQAUD4qPVANV65cCQsLy83NFblePS8vr1mzZtXmAHnpn7lgwYL33ntP5DLDhw//5ptv3NzcRFYmS1R6FejevfvevZXu/rVnz55u3bqJcC3HT2S98taF5JRCkY2MGh7wxCMqGYyaN2/e9OnTRTAybdq0uXMN90hXyg2Lav1GE0+CRHoexFUlanNXpS6fz9p8nYAJ9HkA6kOlB6ohPT391ltvPXbsmMj16kmte9SoUcuWLRO5+s6fP//6669LBV7kstsEEydOnDNnjsiKRaWXZa5K/+vvye98WOlof7kP3251040q2ZShBpVelYKDg03UXak/M6O4ZsqfVdNzo4xvT9T9DQsL3ViR3l/iSo5Ug8VVlVno65RVxX+X9C1C+oPwBgGgPlR6oBqys7MnTZq0fPlykevVs7e3v/HGGw8dOiRy9f3111+TJ0/et2+fyPXqhYeHv/jii+PHjxdZsaj0ssxS6b/4OubbldfYl/GBEY0ff7iJCMpHpS9HpbcozX7XUsEfnL9xAGgW2+MB1eDo6HjzzTeLUKakpCQ+Pt7E0mjTiouLY2NjT5w4IXIZb2/vsLAwEQB9qWmFL7523nSf79De8/03Wqmpz19TbYY9laW6w8gAAEDdqPRANRhXeklubu7u3btFqKasrKzz589nZGSIXMbPz69t27YiADoOHMp4/OlTu/eliWzExdn+xRnNP5rTusvNajsEkcFnWJ127hwBABSESg9Ug4ODQ/PmzQ1Op8/Jyfn1119FqKakpKQjR46IUMbb27tDhw7S/4oM1TFdTU10hu9Wxc18+WxCYoHIRtzdHN57o+WAvrx4tIvOWUvcOQIAKA6VHqie+vXrDxkyRIQy+fn5hw4dqsHc++Li4vPnz2/btk3kMtIHyi5duogAlEnPKJr95vnPv4oRWU5gY5cP32l1Q4f6IqtOjW+FqAydEwAA6KLSA9Xj4uJy++23i1CmpKTkypUrq1atErnKkpKS/vzzT90q4ujoGBYWVvUzzKAFBw5lTPzfyZ27K51sL2nfznPB++FtW3uIDPXi1gYAANBFpQeqR2rdN9xww0033SRymczMzLVr1168eFHkKiguLj516tT69etFLhMUFNSvXz8/Pz+RoXnLv78y8+Wz8QmVTraXDOjj/fEHrf39nEUGUFPsPggAUBwqPVA9dnZ2vr6+Y8aMEbmM1M/PnDmzbNmynJwc8dC1REdHr1ix4vTp0yKX3Sy47rrrBg0aJDK0LSu7+JW3Liz9JlbkSowfHfjizOYmD29SCbpWVfA8AACgNVR6oNpcXFzuuOOOdu3aiVwmKytr9erVGzduFNmk9PT0zZs3b9iwoaioSDxUNkQ/ePDg0NBQkaFSVZk4ffR41hNTTu7YlVr+oCx7e7uXZjZ/eFyQyNAG07c2AACA1lDpgWqzt7cPCQl5/PHHRS5TXFx88eLF+fPnR0REmB6rT01NXbVq1YIFCxISEsRD9ep5eHj06tXrvvvuc3R0FA9BqzZuSpwy43R0TL7IckKbuX06r3X/PmxuD5gTWxUAABSHSg/UhKur69ChQ4cNGyZymcLCwiNHjrz55puvvfba33//LR7VIVX9Xbt2ST/7wQcfnDx5UjxaplWrVhMmTGjSpInI0Kpjp8LmLrwsQiV692y0aF6bNuFshqdFdE4AAKDLrrS0VFwCqI6ioqKDBw8++uijJ06cEA+Vsbe3b9SoUbsy119/fXlLl9p+TEzM0aNHpV989uzZ1FS9CdUtWrSYOXPmuHHj3N3dxUOqYGdyhbdmv/lMnz593rx5IuhwdvFpff2r3r7XOO9g/OhAzU625xUl2bt3b/fu3UUw0q1btz179oiA6qvs7Vlu7ty506ZNE0FdVPDm4vsDAM1ilB6oIUdHxxtvvPGll15q1qyZeKhMSUlJcnLyrl27li9fPmfOHOkXSF555ZUPP/xw1apVBw4cMOjzzZs3lz5EDh8+XGV9HtXSwLvTjV2/NN3nnZ3tX36OxfMAzI/ZHwCgXFR6oObK98l74403DLbKk5SWlubk5Fy6dOnfMidPnpQ+EuXm5oqfLuPg4NC2bdtnnnlm1KhRPj4+4lFoT+Omd9/QZYmrm6mu3ibcY9H8Nv1uY/E8TGHHewAAtIZKD9ScnZ2dl5fXsGHD5s2bZ7Cu/prq169ffjuAPq9xzcMnt24/W4RKDBnk+9mCNmHN3USGhrHjvUVxViIAQHGo9ECtSK3e09OzT58+r7/+ulTse/XqJX6icm5ubt27d3/llVfeeeed22+/nT6vNVc7g729c7sb3g1pMaE8VmbKk8Ezpuot7gAAAADKUekBM3BycrruuuseeughqdV/+eWXU6ZMGThwYNu2bcVPl+2QL/0CqcDPnDlz0aJFH3/88YQJE6RHWD+vWe6eLW7susyvcX+R5YQEu340p/Wwu/xFBljzDAAA9LHjPQBLYf9hWfPmzXvrnfVtOrzm6OQlHpLT7zbvZ59u5ubGjdf/FxwcbKKyRkVFma67qsE7y3IiIiJGjhwpgpERI0asXr1aBHVRwZuL9wUAzeLDIgDUqQuXg9rfNM90n3/ikaYvP9ecPg8AAADT+LwIAHXn08+jj51qKYIcZ6fsOW+1GjU8QGQAdYh1DQAAxaHSA0BdyC8omf3m+dXr4kWWk5z4Z5vmv3buZGoAX8vYjbwctRMAAFxFpQcAi7sclfe/Z0/v3J0mspzLF5Yd/2uao0OuyABgGzi9DwBsGZUeACzr4OEMqc+fOZsjspGS4ryTR2ddPPOpdM0QK66J2QqWo9nn1vQfHABgy6j0AGBBmzYnzXjxbHpGkchGMtKOH977YMKV30RGTXE3BAAAaBCVHgAs5cvlsXMWXBJBTlz0xiP7JmRnnRcZJmnkjLpa4tYGAACaQqUHAIt4b17k1yuuiCDn/Kl5p4+/LgJQZdzasBy2HgQAKA6VHgDMLD2j6NkXz/7yW7LIRgryk44dejo68juRUTXUrXI8DwAA4CoqPQCY0/kLuVNmnD50OENkI2HNSw/vnZCStEdkffQxAAAAVB2VHgDM5sChjKdnno68nCeykWF3+T06rjA/L05kwNzY8R4AAE2h0gOAefz8W9LMl89mZxeLbGTKkyHSDxFQfRzeVo7zxgAAwFVUegAwg29Xxr0/r9LN7f18nT98u9Wwu/xEBmCr2KoAAKAsVHoAqK2PP4v64usYEYx06lj/k7mtb7rRS2SgduicMDteVACgXFR6AKiV19+5sPaHBBGM3D3Eb+674f5+ziIDtUb7AgAAV1HpAaCGMjKKpj9/ZtvOVJGNPPlY0+mTWTxvNlRZ1AG2bAAAKAuVHgBqIiomb9rzZw4fzRRZn6eHw1uvhI28N0BkHRQGAAAAmAuVHgCq7d+T2dOeO3P+Yq7I+sJbuS+c26ZH14Yiw0wYpS/HXSEAAHAVlR4AqmffwfTpz59JSi4UWd9ttzZa+EHr0BBXkQEoCneOAADKQqUHgGr4fXvK87PP5ReUiKzvgRGNX53VwtmZb62wIDonAAC4is+dAFBVP2xKfPP9iyIYmTY55PGHm4gAQJm4YwIAUBYqPQBUyYrVcfMWXhZBn4eHw7uvtRw6xE9kWAZryAEL4UYGACgXlR4Aru3zr2KWfBkjgr4WoW4ff9C6a5cGIgMAAAB1hUoPANewYFHUd6viRNDX5WavBXNaS61e5CpgNAy1x6vIcpgMAgBQFio9AJjy7oeR6zcmiKBvyCDf999oVd/TQWRYGD0WAADAAJUegG1JSi78PiJu1br49Iwi8ZD1vPLWhc2/J4ugb/zowBlTm4kA1C1GkgEAQDkqPQAbIvX5J6acXLwsZtHn0ZOmnEpNkz/7vQ7k5ZXMePHsjl2pIuubNjnk4XFBIgBQESaDAACUhUoPwIb8+nuy1OrLr2Pj8t+ff6n8uo6lpBY+M+vMwcMZIutwcrR74+UwNrcHAACALaDSA7Ahdnbiotze/emV7TNvOVExec/MOvvvyWyRdQT4O89/v/Wt3RuKDFgJI8mWw3MLAFAWKj0AGzKov493IycRyqxYHbf2B/nd6SzhzNmcZ2edvRiZK7KONuEe898Lv66th8iA9VA7AQBAOSo9ABvi4+0002jPuY8/i/p9e4oIlnTkaOYzs87EJxSIrKP7LQ0WvB8e2NhFZFgJVRawBDZcBADlotIDsC1duzSY+FATESq8+f7FiPXxIljG7n1pz8w6m5lVLLKOIYN93361pYsL3zChDBSw2qDcAgCUhU+oAGzO6JGNjfef+2RJ9MLFlvow/fv2lBdfO19SUiqyjnEPBM6YwmF1sC2maycAANAOKj0AWzRtckjfXo1EqLBmQ8Lr71wQwXw2/pz45vsXRdA39amQR8ZzWJ0NYQQVAABAF5UegI2a/UKLnt0M95bftjN16nNn0jOKRK611evi5358WQQdjo52r78Uds+dHFYHW8SeAtbCcwsAsDVUegC2683ZYUMG+YpQ4e9/Mme+dDY5RRxfXxvfroz79HOZD+gB/s4L3m/dq4elDqujj6GWeAlZjunnFgAAW0OlB2DTZkxt9sCIxiJUOH02Z+bLZ+MTZbamr7qvvo394muZQ+/btuawOgAAACgDlR6ArXv84SYPjzNc0H7+Qu7Lr5/PqOkM/GXLY7/67ooIOrrf0kDq8xxWZ7MYnQYAANBFpQegAONHBz410bDLnTmX89Ib5wsKSkSuMqnPf7NCps/fMZDD6qAMbBMIAADK8ckVgDKMGBYw8WHD8+r/OZ712jvym9VX5tuVcbJ9/oERjWdO47A6W8coPaxOlS8z3lkAoFxUegCKMXpEY+MZ+Lv3pcluWS9r9bp42fXzEx9q8rjR/QLAZlHALIod8gAACkKlB6Ak40cHDrvL8GC5jT8nrlgdJ0LlftuaLLu//ZQnQ0aPNNyBz4qYNQ0AAIAqotIDUBipgffu2UiECku+jNm5O00EOQf/ynj7g0gRdDw/PdT4HoGlmV4IDcCWcdMNAGBTqPQAlOeVF5q3b+cpQoV3P4yMic0XQV9UTN6b78ssuZ/1bOjgAT4iQAnYFg51gJtuAAAFodIDUB57e7vZzzcP8HcWuUxObvGiL2Tm1ZeW1nt7TmS60XF3L85oPrAffR5KxXJ6AAAgodIDUCR/P2epk4tQYdfetI2bEkWo8M6HkSdPZ4tQ4Zmnmw3o6y0CAAAAoExUegBK1aG95wvPhIpQYclXMTk5xSLUq/d9RNxvW5NFqPDkY03vut1XBCgKQ9NXsQbBcniZAQAUhEoPQMEG9fe5e4je5nZZWcUrIsTu9/sOpC9eZnhk3f33BYy8N0AEAAB3MQBAyaj0AJRtyqTg0BBXEcqsWBWXmFRwOSrPeIv7AX28Jz1q/ROn+fRsITx1MAveoQAABaHSA1A2Bwe7h8cFiVCmpLTeT78kSX0+I1NvS7z27TxnGS2/h7KY7lqaQu0EAAASKj0AxevVs1GPrg1FKPP7HymnzuhtiefdyGnWjFA7OxEBpaPSAwAACZUegBo8MEJvebzxAfWzn28e1NhFBACoHFsPAgAUhEoPQA3at/O8rq2HCEakPn9Dh/oiQMnoWlXEUwEAgEZQ6QGoxB0D5c+le+bpZn17cwQ91Mb03Q0AAKARVHoAKjFksG/3WxqIUMbBwe6Nl8Ns8Ah6VkEDtox3KABAQaj0ANTj7VdbPjulmb+fs3TdtUuDBe+H39pdb9s8KB1d6yqeCgAAIKHSA1CVOwf7rv7m+t9+uPHd11q2b+cpHgVUh0pvOTy3AAAFodIDUCFnZ765AUBVsfEkACgXn3oBAAAAAFAkKj0AAMrDsKrl8NwCABSESg8AdY3CAAAAALOg0gMAlISty8rxPAAAAAmVHgAA4P9xuwQAoCBUegAAAAAAFIlKDwAAAACAIlHpAQBKwuaCVzE/HAAAUOkBAAA0jdtDAKBcVHoAqGt8eoZZMGHBcniTAgCUgkoPAFASuhYAAMBVVHoAAAAAABSJSg8AUA9NjdIzYcFyWNQAAFAKKj0AQElM91hNodIDAAC70tJScQkAZmVnZyeu5JR/89m7d29ERMS8efPKH1So6pbM3Nzc5ORkEYy4ubn5+PiIYCamhxxtRBWfxqNHj545c0YEIx07dgwPDxfBAmzqhsKOHTsOHz4sgpGhQ4f27t1bBBtj+/dlXnrpJRMvsyVLlrRv314EazPXu9tyExPq5j93Vf7GAQBVotIDsBTTH7CkD4gjR46UKr3IAABYBh93AagYE+8BWAd9HgBQN7p3785SFABqxSg9AEsxPUoPAECd6dat2549e0QAABVhlB4AAAAqV751iwgAoCJUegAAAKgfq70AqBKVHgAAAOqniLM/AKC6qPQArMP2T7ECAKgJf+8AUCUqPQDr2Lt3b7du3UQAAMCSRpQRAQBUhB3vAViK6R3vy7/5REREREdHT58+vfxBAADMTirzq1evFgEA1IVKD8BSqlLp1aG6xx1fuXKlS5cuIhgJDAw8cOCACGYSFRUlrmxYFZ/GM2fOvPTSSyIYCQ8Pf/PNN0WwAFs72tr07bBp06aJKxtj+yeES1+hia3UfHx8pFeaCNZmrne36f8otZmybgv/ufm4C0DFqPQALEU7lb66pA+4JnZpkj46K6KBWwvPni7eZRYi9fnu3buLYESVJ5xLbysT3Vt6W9n4QnTeCwA0i7X0AAAAAAAoEpUeAAAAAABFotIDQF0zPX/VFtadQil4LVmI6QPMWRoDALAdVHoAgJJQYgEAAK6i0gMAoFQMJgMAoHFUegAAAD1MBgEAKAWVHgAAAAAARaLSAwCgVAwmAwCgcVR6AACUikoPc2FfBgBQKCo9AEBh6LEAAADlqPQAAKgTI6uWw50jAICNoNIDAKBUpidLozZMTwYBAMBGUOkBAArDol8AAIByVHoAAJSKbQWshTtHAAAbQaUHACugicEseCFZDosaAACKQKUHAKgKPRYAAGgHlR4AoDDsWwar484RAMBGUOkBAFAqdgq0HO4cAQAUgUoPAFAYFpADZsfbCgAUikoPAIBSUcMsh+cWAKAIVHoAAAAAABSJSg8AVsAS6Nrg2QMAAChHpQcAADDEnSMAgCJQ6QEAUDCWfAMAoGVUegAAAAAAFIlKDwBmk5hUkJRcKAIshnFpXcwPtxBeZgAARaDSA4AZXInLn/b8mRHjjg0f+88Lr57LyCgSPwEASsAtDABQKCo9AJjBu3MvHTmaWX69d3/6+/MvlV/XDJ+eTaN7oA7wMgMAKAKVHgBq6/ftKUePiT5fbtfetJycYhHkmG4LQNXRPAEA0DIqPQDU1ner48SVLjvx/4BFUekBANAyKj0A1Mr6HxMuRuaKUKF3z0bubg4iAFAg9h0EACgClR4Aaq6goGT59zJD9GPubyyuYAF0rarj2QAAQN2o9ABQc8tXxqWkGp5ad9ftvuEt3UUALMz0DQ4AAKBuVHoAqKGc3OI1G+JF0DHm/kBxVTnWPwM2jjcpAEARqPQAUENrNyTk5paIUGHkvQGNA5xFgGXQtXTxbAAAoGVUegCoobU/JIgrHfffFyCugDpBpYdZsEUFACgUlR4AauLn35LS0otEqHDX7b4+3k4iAAAAABZGpQeAmvjlt2RxpeOuO/zEFQAAAGB5VHoAqLaTp7OP/ZslQoUuN3ux0T3qHvOlLYdFDQAA20elB4Bqkx2iv32Ar7gCAAAA6gSVHgCqJy+v5JctSSJU8PN17tOrkQhVwMhqLTF8ehVPBQAAWkalB4Dq+XVrcmFhqQgVBvf3EVcA1IJbbwAA20elB4Dq2fy7zKz7gf29xRUAAABQV6j0AFANJ09nnzyVLUKFLjd7BTdxFQF1guFTAAAACZUeAKph6x8p4krHwL7Muoc1sZzeQjT1xPIqAgCFotIDQDX8vt2w0jfwcuzfh1n3AAAAsAIqPQBU1R9/pqalF4lQ4faBNRmiZ0AMZsQyBAvhfQoAsH1UegCoKuMhesntAzmO3groWgAAABIqPQBUSXxiwa69aSJU6NalQbNgNsYDAACAdVDpAaBKfpM7u44hemthlF4Xz4aFsKIBAGD7qPQAUCW/bjWs9E2CXHr1aCgCYD1UegAANItKDwDXtmd/enRMvggV7hzMED0AAACsiUoPANf2869J4qqCvb3dnbf7iVB9DKuizjA/vMY09T7lmxIAKBSVHgCuISY233hjvLtu963v6SAC6hyLnHWZfjYAAICKUekB4Bp+/CVRXOm4e0jNh+gBKAID1wAA20elBwBTCgtLf/zFcNb9rd0bhjV3EwGwNponAACaRaUHAFM2/pyYnV0sQoV77mSI3soosbp4NgAA0CwqPQDlSUgs+G5V3IqIuNS0QvGQxWz40XDWfaeO9W+60UsEAOrFlg0AANtHpQegMFKff3zKqc+/ilmyLGbS1FMZGUXiJyzg163JUTF5IlS4d6i/uIKtYlwaAABoBJUegML8tjUlNVUMzsfFF2z82XChuxmt/SFBXFVo386zZ7eGItQCo3+1ZHqqudbwcgIAQLOo9AAUxl7/5LjNv1uq0m/fmXrmbI4IFUYOY4ge0Ao2KQAA2D4qPQCF6XNrI3FVJjomf/c+w0PjzWL1+nhxVaF9O89ePfX+7YAtoHnC0pjrAQA2i0oPQGECG7vc2l1v6vvmLcniyny27Ug5eSpbhAqjRzYWV7A2ppoD5mX6PQUAsFlUegDKM3iAj7gq8+eetCtx+SKYycq1hkP0XW726n5LAxEAAAAAG0ClB6A8Pbo2bNrERYQyP/9mzoH6X7cmG6+iH8MQPQAAAGwMlR6AIg3qrzdQv/z7K3HxBSLU2so1hkP0A/p4d7y+vgjmwOLnWuIJNMATYhU8sQAAq6PSA1Ck2wf4iqsK36y4Iq5q58dfki5G5opQYewDgeIKgJaYvlcCAIDVUekBKJKvj5PBZnU//5a09Y8UEWrh+4g4cVVh5L0BzYJdRQAUiP0CAQBQKyo9AKV6cHRgo4aOIpSZ98nlWk6/X/tDQuwVvZ32PD0dxo9miB62ju3KrYJ7JQAAq6PSA1AqFxd7g7KdlVX8/rxIEWpkldFG9+MeCPT0cBABgMZwrwQAYOOo9AAUbNhd/r166J1Rf/ho5pwFl0SoptXr4hMS9Qb5mwW73n9vgAiADWN7PAAAtIlKD0DZJj8eXN9TbxR90+ak5d/XZKs8qdKLqwrj2BXPhlFidfFsWIWanlheQgCgUFR6AMrm7+c8/X/NRKiw9JvYn39LEqFqItbHJyUXilDmhg71+/fxFgGAJrHjPQDAxlHpAShen16Nxo0yHE5/f96l/YfSRaiCNRsSxFWFMffr7agPKBe7uFkIY9cAAKuj0gNQg0ceDOrZTW9RveT1dy+ev2B4wrysjZsS4xP0VtHf2r1h505eIgA2j13cLIRRegCAjaPSA1CJWc+GhjZzE6FMdnbx6+9eSEsvErlya34wHKI3OPQeNsh0iWVcGgAAaAGVHoBKuLs7SK3eyclO5DKXovLefP+iCJX4dWvy5ag8EcoM6OPdtrWHCIASsLcZAADaRKUHoB7hLd1nPdtchAqHDmfMmW/qWLu1RkP0o4YzRA9VodLXGJNBAAA2jkoPQFX69Gr0yPggESps+jVp0RfylebXrclnzuaIUOaOgb5hLfQm8FsIw6q1xBOoiyXfAABoE5UegNqMeyBwUD8fESqsWhv/xdcxIuhYsSpOXFUYNTxAXAEAAAC2jUoPQIWefya0bRvDxfDfroz7+DO9WbJffXflkv4q+nvv9g8JdhUBSqa1UXrmh1sIk0EAADaOSg9Ahezs6s16JtTXx0nkCmt/SHj17QvRsfnS9cG/Mr76Nrb88XIe7g4Txhiebw+bxVRzAAAAKj0AdQpu6vrGy2EeHg4iV/jjz9Sxjxx/6/2LM146Kx6qMH5MoJeXowiAojCYbCE8sQAAG0elB6BabVt7vDU7zOBYu3JbtqeIqwrdb2lw/72sogcAAICSUOkBqNkNHeov/LBNaMg1lsc3DnCeOTVUhLrC4uda4gkEAACg0gNQudat3BfObdP9lgYiG2nU0HHmtNCGDZlyD8AQd44AADaOSg9A/Tw9HN5+teWsZ0PDW7mLhyp07dxgycdtO3WsLzKgWKz6BgBAg6j0ALRiYD+fJR+1fXVWiwF9vIcM8h03KvDFGc3ffb2ln6+z+BVQFBosAAAAlR6Attx2a6MXZzafMbXZIw8GDejrLR4F1I4p4jWjqTtH3CYDACWi0gMAoAamV30DAABVotIDABSJEUUAAAAqPQBYB40U5sUrCgAADaLSAwCgBlR6AAA0iEoPAFAkDgxH3eBeCQDAllHpAQAAAABQJCo9AABqwLQFAAA0iEoPANbBbF5AEbhXAgCwZXalpaXiEgDMys7OTlzJ4ZvP9OnT582bJ4KRuXPnTps2TQRUgteYroiIiJEjR4pgZMSIEatXrxZBe2p2j6y8rk+cOPH48ePljxhbsmRJ+/btRahQg39dbb7CGpD9123bti05OVkEI9Ifs379+iJUmXm/whrjbxwAKkalB2Ap1C3TqPS1Z/o1VsUuUbPKUWedTVLFr/DMmTObNm0SwYiPj0/fvn1FqISlv0ID5u1sgAn8jQNAxaj0ACzFEpW+Zh2gLvtG1X/XDz/8sGPHDhGM9O7du1OnTiJUrgZfZF0+h5Ka/esAwIz4uAtAxaj0ACzFdKUHAKBuREVFmd6+BACUi+3xAAAAoGYRERHiCgBUh0oPAAAAAIAiUekBAACgZsy6B6BirKUHYCmspQcA2AI+7gJQMUbpAQAAAABQJCo9AAAAAACKxMR7AJbCxHsANqJmS6mDg4Ol/01OTj5z5kz5I8Z8fHzCw8NFqFCDf11tvsIakP3XzZs3b+/evSIYefPNN/v27StClZn3KzTB9N84fNwFoGJUegCWQqWHdfn7+zs7O4tQuZpVjjrrbJKqf4Wvv/56WlqaCEYWLVok9U8RKlGXxbLGT0gdi4iIGDlypAhGRowYsXr1ahEUTvpjmjjsTfpjSn9YEWwPlR6AZlHpAViKJSp9XfYNiUVr2+HDh3fs2CGCkd69ew8dOlSEyln0K9RVl89h1XXv3t3EoKKNNxBLkP4zRUdHi2Bkz5493bp1EwFVJr3GpFeaCEakp1R6YkVQOCo9ACgRlR6ApfAByzTtDP1ZjqIbiCWYvsdBpa8ZKn05Kj0A2Ca2xwMAAAAAQJGo9AAApTI9q9/EFHS14gmxBNOrTqKiosQVAADWQKUHAEAlqPQAAGgNlR4AAAAAAEWi0gOAdTCgWnvMiEYd0M5blW9KAKBEVHoAAFSCexwAAGgNlR4ALOhSVF5UTJ4IAAAAgFlR6QHAIi5G5k6aeurBif+Oe/Tfqc+diU8sED8BWAwTpwEA0BoqPQCYX1Z28evvXTx5Ors8/v1P5gfzL5Vfw4xosNXCEwIAgPpQ6QHA/N56/+LFyFwRyhw8nJGWViQCYBmm73Ggxrh5BACwWVR6ADCzBZ9e3nsgXQQddnzHNTeKFgAA0Dg+YAKAOa1cE7/+x0QRdPTo2rCBl6MIZdicHGbHiwoAAK2h0gOA2ezZn/7ZUpmR4eAmrjOmNBMBgLpwrwQAYEVUegAwj8LC0k+WyHyyd3K0mzUjtGFDvSF6wBJYiWAhpqc/qAazPABAiaj0AGAeCxdHxcTmi6DjxZnN27b2EAFmRQMBAAAaR6UHADPYvS/th00yS+ifeKTpbbc2EgGAGjH9AQBgRVR6AKit4uLSRV/IfKbv29t71PAAEQAoFqcDAgBsFpUeAGpL6vPRMYZT7p2d7R9/uIkIsAyWjhvjOal7PKsAACui0gNArRw5mrlmQ4IIOiY+1CTA31kEOVQvQCkYpQcA2CwqPQDUyuJlMeJKR6eO9Yff4y8CYDPYMhAAAJWh0gNAzX2z4sqpM9ki6JjIlHtYiUaOW7Mp3CgBAFgRlR4Aaujs+Zxly2NF0DHugcA24ZxaB6gHN0oAADaLSg8ANSQ75T6sudsj44NEAOocezSgxnjxAIASUekBoCbW/5h46HCGCDoef5httOoUJcQATwgAAJpCpQeAaouLL1i8VKYaDR3i1+VmLxEAqAU3SgAANotKDwDV9unnUXn5JSJU8PVxevwRdsUDAABA3aHSA0D1/LQ5aefuNBF0PDUx2N3NQQTUFdP7lmlwK3KeEEtglB4AYLOo9ABQDZej8hZ8elkEHUMG+/bp1UgEAAAAoE5Q6QGgGj76LKqwsFSECsFNXadM4owr2ATGkwEA0BQqPQBU1dJvYmV3uZ/yZLCzM99OoQBU+pphOQMAwGbxGRQAquTPPWnLv78igo4JY4NuvrGGu9wzoFp7PIcGTD8hgAm8mwBAiaj0AHBt0bH5Hyy4JIKO7rc0mDAmUAQAAACgblHpAeDa3v0wMj2jSIQKfr7OzzzdTARYCeOKBpgibgm8zAAANotKDwDX8N68yOMnskTQ8fz0Zj7eTiIAAAAAdY5KD8B2paQWrlwTv2ptfFqa4Qh5nVm2PPaX35JF0DHlyeCbarqEHrAcxpMBANAUKj0AGyX1+SemnPpsafSiL6IffvLEn3vSxE/UoZ82J32zQmZLvOH3+A+7y18EAAAAwEqo9ABs1G9bUxISC8qvpXr/8hvnpW5fHuvGgUMZslvi9ezWcPLjdXEKPcueq4Kl4wAAQMuo9ABslJ2duLhq1dr4dz+MFMHCIi/lvvn+RRF0tApzf2lmcxFqzXQdBWA7WNEAALBNVHoANmpQP58Af2cRKmz+PfmjRRYfd83PL3lrTmRGpuEC/oYNHF9+rrmrK985YdMonwAAaAcfTAHYqIYNHT+d16bbLQ1ErrBuY8JX38aKYBlvfxB59nyOCDqkPh8S7CoCbAP1FTAXlrEAgBJR6QHYLh9vp3debfng6ECRK3z13RXZXejNYsmymB27UkXQMevZULa4hwpQzGqGugsAsE1UegC27qFxQSOGBYhQ4b15kUeOZopgPlu2payIiBNBxxOPNB3Yz0cEKIc2R+nZowEAAO2g0gNQgKcmNu3b21uECm/NuXglLl8Eczh3Ief9eTLb740YFjBquOE9BdgI0xPvAQAA1I1KD0AZnpveLKy5mwhlkpIL35pjzg3w5358ubCoVIQKfXo1emqipUoj68BhCbyuLIFnFQBgm6j0AJTBxdn+uemhjo56R9sdP5H11hyZo+ZqYOHiqBOnskWo0K6Nx8vPme3IOqBuUD4BANAOKj0AxQhv6T5zajMRKmzZlrJseW03wN+xK3XNhgQRKjRq5PTijOb29kbn48OWsGkZ6gY3SgAAtolKD0BJBvbzGT2isQgVvllRqw3wM7OKP/5MpvjNeja0SZCLCAAAAIDtodIDUJiJDzfp0bWhCBXemxf59z813AB/4eKopORCESpMeqxp504cWQdFYuYCAADaQaUHoDzPPxMa3NRVhApvzYlMzygSocq27Uj59XfDEf7B/X3uv5ct7pWB6dCoG9woAQDYJio9AOWp7+nwwjOhBovcE5MKFsrNnzchJ7d40RcxIlQICXad9r8QESyMOgpL4HWFmuGVAwBKRKUHoEjt2ni88KzhXvRbtqdUa1H9Z0tjEpMKRKgw7akQF2e+N0K1KGYAAKgJH1sBKNWAvt4TxgSKUGHxsujc3BIRTNp/KH3jpkQRKjw8LujGjvVFAJTJ9FgraoYRbACAbaLSA1CwCWODOt2g18DT0ou++f6KCCYtXmo45V4q8+NHG94jAAAAAGwWlR6Asj09KcTBQW9V/fcRcZGXckWoxJJlMRciDX/N/54wtf0VoBRs5GYJjNIDAGwTlR6AsoWGuD4yPkiECvM/NVVa/v4nc0VEnAgVJj8e3CLUTQQoCl0LAABoFpUegOKNHtk4tJleG5dK+9JvYkXQV1pab+Fiw47X7ZYGw+/xF6EOMZoKS+AeBwAA2kGlB6AGD48zXAO//Psrq9bFi6Djg48unbuQI0IZdzcHptwDMI0bcAAA20SlB6AGvXo0GnlvgAgVFn0evWZDgghl1v+YuGlzkggVpjwZHNTYRQQAAABAOaj0AFTiyceatm/nKUKFhYujlq8UG+Bv2Zay4NPL5ddX3XW776D+PiJAmRg+BQAAmkWlB6AeM6c2axzgLEKFpV/HLlkWs3FT4ltzLoqHKnRo7/nM081EAFSE5fRmx1MKALBNVHoA6hES7Pr2qy19fZxErrAiIm7uQsPxeS8vx+emhYoAAAAAKBCVHoCqtAh1k1q98Vi9AVdX+zdeDmsSxBJ6NWD4tLpYjAAAgGpQ6QGoTXhL9/nvtW7bxkNkI05Odu+82rJje8OF93WPLgoLMb2/AAAAUA0qPQAVahzgPP+98J7dGoqso2UL9w/eDr+xY32RoXbcGQEAACpGpQdgHSmphSvXxH+5PFb68fWKK2t/SPh1a/Ke/emXo/JKSkrFL6oFF2f7N2eHzZzWrIGXo3ioXr377wv44pO2tjA+DzMyPdlBm5gAYgk8qwAAG0SlB2AFzi4+T0w59dnSaKnMSz+kVv/xZ1HvfBA569Vz4yf+23fI4bGPHn/93Yur1sZnZBSJ31Mjdwz0/W5Z+5dmNn/ntZa/brhx0qN0P2gC5RMAAI2g0gOwgoCgIQmJBSLIiY7J37YjZdEX0ZOmncrJKRaP1oinh0P/Pt7dujRwceE7HgCYws0gAFAcPuACsIqqTq2Pic3fsj1FBECO6a3g2N0d5sIrDQBgg6j0AKwgLmZTgP81zpm7yk78vwoxIAYLoXwCAKARVHoAVlBYkLL4o7ZPTWz68Lgg6ce4BwKH3e0/oK/3jR3r+/o4iV9Uplmw66D+PiIAAAAA0EGlB2AdDRs4jhgWMH50oPTjkfFBUyYFvzij+bx3w9d82+HndTcsmNNaKvxPTwpetKANa+BhGpMdjPGc1D2eVQCAVfBBGYDNcXdz6NjeUyr8997tL12LRwGYCeWzZkzfKAEAwCqo9AAAqA3ls+5xowQAYBVUegCAsjHJHHWDGyUAABtEpQcAq2FbclgILy0AADSCSg8AAFBb6rhRws0gAFAcu9LSUnEJAGZlZ2fqRHm++Uiio6NNfIBu2rQpH6CrgqfRQPlaA/N2M7M/h2ZfEGH2f6DxH/nw4cM7duwQwUinTp169+4tghxF/JETEhIKCgpENuLv7+/s7CxC1Zj9izQ2bdq0bt26jRw5UmQ5/I0DQMWo9AAsxbyV3hKfC63eUpKTkydNmiSCkYYNG86ePVsEM1FlMZMayF9//SWCEQcHh8DAQBHMoQ4qCgDz4uMuABWj0gOwFNOVHgCAusHHXQAqxlp6AAAAAAAUiUoPAAAAAIAiUekBAAAAAFAkKj0AAAAAAIrE9ngALEWD2+PVb9CucdOhfgH9pOv42J/On5pf/jgAwIr4uAtAxaj0ACxFU5Xex79X09CxDb07iVwm6uI3F05/JAIAwEr4uAtAxZh4DwC11aL1lPad5hr0eUlA0B3iCgBgGXPnzt2zZ48IAKA9jNIDsBQtjNI7OnpeJ1fmy+XnJez7g1aPuta0aVPpf9PS0rKyssofMdawYUNPT08RqiA4OFhcmUn5F2lGZv8HGv+Rpaf09ddfF8GI9JTOnj1bBDmK+CNPmjTpp59+EtnIokWL7rzzThGqxuxfZGVM/43Dx10AKkalB2Ap5q30lvhcWMuWYmfn5ej+mJ1jqMhG3J33errsFKESERER4krOtGnTxJWZqLWY3XPPPQkJCSIYOXDgQGBgoAi1VmcVpZamT58+b948EYzMnTvX7K8uLVB9bxw5cqSJb0qrV68eMWKECDaGSg9As6j0ACxF3R+wUtMKn33x7PkLuSLr8/R0GDrE77EJTUSuHB9DzSI4ODg6OloEI1FRUUrp4WZEpbcEKj2VHgBsDWvpAaDaiopLX3nrgmyfbxXmPmNKs42rOlalz8NcTM8+kCq9uNISnhMAALSASg8A1ZOfXzLr1XP/HJdZpTxksO+Sj9tK/2tvb2q8CAAAADALKj0AVENiUsEzs84eOJQhso577vSbMaWZybmfQN0xvdbAxDoFAACgIFR6AKiqU2eyp8w4c/yEzPj83UP8pj4VIgLqHPW1unhOakb1rzTeSgCgOFR6AKiSfQfSp848ExuXL7KObrc0mD65hn2eD9CwENMvLQAAoA5UegC4tq1/pDz/yrm8/BKRdbRr4/HyzOYiAAAAAHWISg8A1/DT5qQ33rsogr7rr/N8741W7u4OIsNKmOxgjB3vLYFnFQBga6j0AGDKhp8SP1hwSQR9nW/ymvNmq/qe9HkAAABYB5UeACq19oeE+Z9cFkHfbbc2kvq8qyvfRWGjmLkAAIAW8GEUAOSt2ZDw8Wfy02jvHuL36qwWIsAGMB0adYMbJQAAW0OlBwAZUp9fuFi+B04YG1Tj/e0BAAAAM6LSA7A5ScmF30fErV4Xn5pWKB6qWyb6/NSnQiaMCRTBHBheBhSEUXoAgK2h0gOwLQmJBRP/d3LxsphPP48e9sA/Cz69fDkqT/xcnTDR51+a2fyeO/1EAGwe/RMAANWj0gOwLb9uTU5J/f/B+fU/Jo6f+O+3q+JEtrCVa+Jl+7y9vd3br7bs38dbZNgYuitgFswbAgDFodIDsC12dnbiSscXX8WsXhcvgsUsX3nls6Uy3c/D3eGDt1t1v6WByIAqUM9qgMYLALA1VHoAtmVwfx9fHycRdHz6efSGnxJFsIDPv4pZ+nWsCDqkL0bq85061hcZNolRelmm+ycAAFABKj0A2yJV6CUftx1zf2MPdwfxUIUFn16OirbIuvp5Cy9/Jze3v2kTlw/eatW2tYfIAAAAgC2h0gOwOd6NnB6b0GTdig5Dh+jtRVdaWu+zpTEimElOTvELr577YZPM+H/rVu4fvh0e2sxNZGtgEThqg8kLZsdTCgCwNVR6ADbKxcV+2uSQwQN8RC6ze1/aps1JItTa6bM5/5txeu/+dJF13NzJa9674QH+ziJbjOmGALPQ7Apn+icAAKpHpQdg06Y+GeLjrbe0/tPPoxOTCkSohV9+S5405eT5C7ki6+jfx/uDt1q5G838h81i0TjqBndJAAC2hkoPwKa5uto/Mj5IhDLZOcVSqxehRgoKSj786NJ78yJLSsUjuu6/L+Clmc1FAAAAAGwYlR6ArbtjkG/nm7xEKLN9Z+o3K66IUE37DqQ//OSJH3+Rn73/zP9CJj3KTHioBCeuAQCgelR6AArw2IQm4qrCsuWxv29PEaFqUlIL35sX+fwr56Jj8sVDOgIbu8x/L/yuO/Q25INSMB0adUP1d0l4KwGA4lDpAShAeEv3saMai1Dhzfcv/nM8S4RrWRERN+7Rf3/5LVlkff37eH+xsO0NHaxw+DwfoGE5vLoAAFA9Kj0AZXj0wSadO+lNv5dIrT4u/hpb5W3anDT64eNLlsVk5xSLh3Q4Oto9PSn4pZnNPTzYDA/aQqUHAEAFqPQAFGPmtGa+Pnq73yckFrzx3oWiIplt7qQH121MGPPI8TkLLsVekZlpL+nZreHXi6+7925/kQF1MT1Kjxpg4gMAwNZQ6QEohp+v83PTQ0Wo8O/J7NfeuZCSWihyvXpnz+d8/FnU3SOPfrQoKiZWvsw3DnB+fnrom7PDmgS5iIcAAAAApaHSA1CSzp28Xn7O8IS5P/ekjXv033kLLy9YFDX64eOPTT659oeEnFyZafYSO7t640cHfv/l9YMH+IiHAJVix3sAAFSPSg9AYfrd5j3lyRARKmTnFP+wKXH9xoTK5tiXG36Pf8TyDg+PC5KKPVSGGdEAAECDqPQAlGfYXX6jRxpugG+Cu5vDqOEBq76+fvLjwQar8QHN4jYHAAAqQKUHoEgTH2py95BrnyHfKsxdqvHrV3Z44pGmAf7O4lFbwtRoWA7b41mCuueDMNsFABSHSg9AqaZPDpn/XrjsYfJNglyG3e3/ydw2ny9sO/wefxdnvtepHzdHAACABvExF4CCSX1eavWzn28+7oHA8aMDJ4wJnDY5ZPnn1323tP2UScHXtfUQvw4AAABQIyo9AMXr29v7kfFBD48LmjA2aOgQv+CmruInAM1jHrXZMR8EAGBTqPQAAAAAACgSlR4AoAYMR9cAQ8oAACgdlR4ArIkiCosyPUscNcB7FgBgU6j0AAA1oGgBAAANotIDAKBa3OmoYzylAIA6RqUHAECj6J81YPouidKxnz8AKA6VHgCgfpqtIurunwAAgEoPAFAD9oGDLWAcGwBQx6j0AGBNLHWGRTGP2uy4eQQAsClUegAAAAAAFIlKDwBQA+Y7yOJpqWM8pQCAOkalBwBAo+ifNcCOgwAAm0KlBwCoH6P0qBvcJQEA1DEqPQBADeiuqBu80gAANoVKDwCAarHjPaqFzRcAQHGo9ABgTTQuAAAA1BiVHgCgBtwcqQEGXWuAVxoAwKbYlZaWiksAMCs7OztxBQCA9fBxF4CKMUoPAAAAAIAiUekBAAAAAFAkKj0AAAAAAIpEpQcAAAAAQJGo9AAAAAAAKBKVHgAAAAAARaLSAwAAAACgSFR6AAAAAAAUiUoPAAAAAIAi2ZWWlopLAIA17N27t3v37iLoW7169YgRI0QAAAAA9FHpAcD6goODo6OjRagglXmp0osAAAAAGGHiPQBY3969e7t16yZCGfo8AAAArolRegCwFREREeVj9VKfb9q0afmDAAAAQGWo9AAAAAAAKBIT7wEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAABFotIDAAAAAKBIVHoAAAAAABSJSg8AAAAAgCJR6QEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAABFotIDAAAAAKBIVHoAAAAAABSJSg8AAAAAgCJR6QEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAABFotIDAAAAAKBIVHoAAAAAABSJSg8AAAAAgCJR6QEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAABFotIDAAAAAKBIVHoAAAAAABSJSg8AAAAAgCJR6QEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAABFotIDAAAAAKBIVHoAAAAAABSJSg8AAAAAgCJR6QEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAABFotIDAAAAAKBIVHoAAAAAABSJSg8AAAAAgCJR6QEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAABFotIDAAAAAKBIVHoAAAAAABSJSg8AAAAAgCJR6QEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAABFotIDAAAAAKBIVHoAAAAAABSJSg8AAAAAgCJR6QEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAABFotIDAAAAAKBIVHoAAAAAABSJSg8AAAAAgCJR6QEAAAAAUCQqPQAAAAAAikSlBwAAAABAkaj0AAAAAAAoEpUeAAAAAAAFqlfv/wAbw5uH4kEbbgAAAABJRU5ErkJggg=="></p>
+<p>如图所示，经过base-case之后，<code>dp-table</code>就变成了这样，这将会是我们后续推导遍历方向的重要依据</p>
+<p><code>其中打钩的地方代表已知,其他表示未知</code></p>
+<p>现在来思考一下<code>状态是如何转移的</code>?</p>
+<blockquote>
+<p>一般来说,<code>状态转移</code>依赖于<code>选择</code>。</p>
+<ul>
+<li>当我们走到<code>i</code>位置的时候,我们可以选择将<code>i</code>物品装入包中,前提是<code>包有足够空间</code></li>
+<li>或者是不将<code>i</code>物品装入包中。</li>
+</ul>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//将第i件物品装入包中</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">-</span>w<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">>=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//包中有足够空间</span>
+    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span>w<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span>v<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">//如果我们将这个物品装入包中,那么当前的收益就是选择前i-1个物品,而且背包容量为j的时候最大收益加上再装一个物品	  的收益</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//不将第i个物品放入包中</span>
+dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">//不把这个物品放入包中,那么就会继承之前选择i-1个物品时,而且背包容量为j的最大收益</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>通过上面的分析</p>
+<p>我们知道<code>dp[i][j]</code>依赖于<code>dp[i-1][...]</code>的结果,也就是依赖于上一行的计算结果，…是表示这一行所需要的下标是不确定的，因此我们需要计算出一整行数据。</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//选择前i个物品,i∈[1,n]</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>j <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//背包容量为j,j∈[1,m],计算每一行</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">-</span>w<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token comment">//只能选择</span>
+            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>  <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token keyword">continue</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span>w<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">+</span>v<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>至此,这道题的核心就全部分析出来了,接下来就是编码检验</p>
+<h2 id="3-AC代码"><a href="#3-AC代码" class="headerlink" title="3. AC代码"></a>3. AC代码</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//</span>
+<span class="token comment">// Created by 12743 on 2022/10/7.</span>
+<span class="token comment">//</span>
+#include <span class="token generics"><span class="token punctuation">&lt;</span>iostream<span class="token punctuation">></span></span>
+
+<span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token class-name">N</span> <span class="token operator">=</span> <span class="token number">30</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token class-name">M</span> <span class="token operator">=</span> <span class="token number">200</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> dp<span class="token punctuation">[</span><span class="token class-name">N</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token class-name">M</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> w<span class="token punctuation">[</span><span class="token class-name">M</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> v<span class="token punctuation">[</span><span class="token class-name">N</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+using namespace std<span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">void</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> m<span class="token punctuation">,</span>n<span class="token punctuation">;</span>cin<span class="token operator">>></span>m<span class="token operator">>></span>n<span class="token punctuation">;</span>
+        <span class="token comment">//base-case</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            cin<span class="token operator">>></span>w<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>cin<span class="token operator">>></span>v<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>j <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">//状态转移</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j<span class="token operator">=</span><span class="token number">1</span> <span class="token punctuation">;</span>j <span class="token operator">&lt;=</span> m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>j<span class="token operator">-</span> w<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token keyword">continue</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+                dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">-</span>w<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token operator">+</span>v<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        cout<span class="token operator">&lt;&lt;</span>dp<span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    ios<span class="token operator">::</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Solution</span> solution<span class="token punctuation">;</span>
+    solution<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h1 id="18708-最大子段和"><a href="#18708-最大子段和" class="headerlink" title="18708 最大子段和"></a><strong>18708 最大子段和</strong></h1><h2 id="1-题面-1"><a href="#1-题面-1" class="headerlink" title="1. 题面"></a>1. 题面</h2><p>一个整数序列，选出其中连续且非空的一段使得这段和最大。</p>
+<p>注意当题目要求输入输出的数据量很大时，尽量使用scanf和printf。 c++提供的cin和cout速度比较慢，有可能在读取数据和输出数据时导致超时。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">第一行是一个正整数N，表示了序列的长度（0<span class="token operator">=</span><span class="token operator">&lt;</span>N<span class="token operator">&lt;=</span><span class="token number">200000</span>）。
+第二行包含N个绝对值不大于10000的整数ai。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">一个整数，为最大的子段和。子段的最小长度为1。数据确保结果在类型int范围内。
+<span class="token number">7</span>
+<span class="token number">2</span> <span class="token parameter variable">-4</span> <span class="token number">3</span> <span class="token parameter variable">-1</span> <span class="token number">2</span> <span class="token parameter variable">-4</span> <span class="token number">3</span>
+<span class="token number">4</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="2-题目分析"><a href="#2-题目分析" class="headerlink" title="2. 题目分析"></a>2. 题目分析</h2><p>首先我们来思考一下暴力解，首先理解一下什么叫子数组:<code>子数组</code>是连续的，也就是从<code>[i,j]</code>一段连续的数组和，那么如果我们能够得到所有的<code>[i,j]</code>区间的和，并且进行比较迭代的话就可以解出这道题。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//求解前缀和</span>
+<span class="token keyword">int</span> n <span class="token operator">=</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+<span class="token comment">//前i个数的和</span>
+<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> preSum <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+preSum<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    preSum<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> preSum<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>nums<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> max <span class="token operator">=</span> <span class="token class-name">Integer</span><span class="token punctuation">.</span><span class="token constant">MIN_VALUE</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> i<span class="token punctuation">;</span>j<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        max <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>max<span class="token punctuation">,</span>preSum<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">-</span>preSum<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">return</span> max<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>思考一下时间复杂度</p>
+<p>对于两层for循环而言，肯定是<code>n方</code>的复杂度了，然后题目给的样例是<code>2e5</code>, n方的算法将会超时。</p>
+<p>那么就要考虑优化了。</p>
+<blockquote>
+<p>一般来说,优化无非就是剪枝，或者用备忘录来减少重复计算的时间</p>
+</blockquote>
+<p>从题目的计算逻辑，我们在计算<code>[i,j]</code>的最大子数组和的时候，其<code>[0...i-1]</code>中的最大子数组和已经求出来了。</p>
+<p>根据求和的性质，我们要求一个和的最大值，那么这个和的最大值肯定是在之前某一段的最大值，加上当前的值求出来的。</p>
+<ul>
+<li>状态:当前遍历到的第<code>i</code>个元素</li>
+<li>选择:是否将当前遍历到的第<code>i</code>个元素与前面的子数组连成一个形成子数组和</li>
+</ul>
+<p>我们可以这样来定义<code>dp数组</code>，<code>dp[i]:以nums[i]为结尾的最大子数组的和</code>，这样定义的原因是:</p>
+<p>子数组的连续的，如果我们想要求出一个最大子数组，肯定是之前的一个最大子数组，加上后边的那一个数，这样就能够很好的完成递推。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> dp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">//base-case</span>
+<span class="token comment">//注意,如果题目说:子段和可以为空,那么这时候dp[i]的初始化可以为0(当nums[i]为负数的时候)</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> maxIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">+</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        maxIndex <span class="token operator">=</span> i<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">return</span> dp<span class="token punctuation">[</span>maxIndex<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="3-AC代码-1"><a href="#3-AC代码-1" class="headerlink" title="3.AC代码"></a>3.AC代码</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//</span>
+<span class="token comment">// Created by 12743 on 2022/10/7.</span>
+<span class="token comment">//</span>
+#include <span class="token generics"><span class="token punctuation">&lt;</span>iostream<span class="token punctuation">></span></span>
+
+using namespace std<span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">const</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token class-name">N</span> <span class="token operator">=</span> <span class="token number">200000</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> nums<span class="token punctuation">[</span><span class="token class-name">N</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> dp<span class="token punctuation">[</span><span class="token class-name">N</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> n<span class="token punctuation">;</span>cin<span class="token operator">>></span>n<span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            cin<span class="token operator">>></span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">int</span> maxIndex <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token comment">//nums[i]&lt;dp[i-1]+nums[i]</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> dp<span class="token punctuation">[</span>maxIndex<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                maxIndex <span class="token operator">=</span> i<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        cout<span class="token operator">&lt;&lt;</span>dp<span class="token punctuation">[</span>maxIndex<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    ios<span class="token operator">::</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Solution</span> solution<span class="token punctuation">;</span>
+    solution<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h1 id="11080-游泳圈的最大子矩阵和"><a href="#11080-游泳圈的最大子矩阵和" class="headerlink" title="11080 游泳圈的最大子矩阵和"></a>11080 游泳圈的最大子矩阵和</h1><h2 id="1-题面-2"><a href="#1-题面-2" class="headerlink" title="1. 题面"></a>1. 题面</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">二维数组首尾相连，上下也相连，像个游泳圈或轮胎，又如何求最大子矩阵和？
+如游泳圈展开成3行3列的二维矩阵：
+<span class="token parameter variable">-18</span> <span class="token number">10</span> <span class="token number">7</span>
+<span class="token number">1</span> <span class="token parameter variable">-20</span> <span class="token number">2</span>
+<span class="token number">1</span> <span class="token number">38</span> <span class="token parameter variable">-2</span>
+那么最大的子矩阵和为：10+7+38-2<span class="token operator">=</span><span class="token number">53</span>
+
+若：
+<span class="token number">3</span> <span class="token number">3</span> 
+<span class="token number">2</span> <span class="token number">10</span> <span class="token number">7</span>
+<span class="token number">1</span> <span class="token parameter variable">-20</span> <span class="token number">2</span>
+<span class="token number">1</span> <span class="token number">38</span> <span class="token parameter variable">-2</span>
+那么最大的子矩阵和为：10+7+2+38-2+1<span class="token operator">=</span><span class="token number">56</span>
+提示:
+<span class="token number">1</span>）先编写一维环形（一圈的形状）长度为len的数据中的最大子段和，且子段长不超过n。 
+————注意要先调试通过这个程序段，要小心编写，用书上动态规划那段程序修改的话
+        比较麻烦且易出错，用简单算法改倒是很容易做到的。
+
+<span class="token number">2</span>）将游泳圈水平方向上扩展n-1列，垂直方向上扩展m-1行，形成2m-1行2n-1列的扩展矩阵，
+在扩展矩阵上求解最大不超过m*n的最大矩阵和。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="2-解题思路-1"><a href="#2-解题思路-1" class="headerlink" title="2. 解题思路"></a>2. 解题思路</h2><p>首先分析一下题面，题目要求的是求解一个最大子矩阵和，一个最简单的想法就是<code>枚举</code>所有的子矩阵和，也就 是说从<code>(0,0)-&gt;(n,m)</code>这个矩阵中的所有子矩阵,取最大值就可以了。</p>
+<p>但是其实来分析一下，是否有必要每次都枚举计算每个子矩阵呢?如果我已经计算出了某个范围的子数组，那么我能不能复用它，然后用它来计算新的最大值呢?</p>
+<ul>
+<li>能不能贪心?</li>
+</ul>
+<p>根据上面的分析，我们会有一个直观的想法，就是在<code>扩大子矩阵规模的时候，考察扩大的子矩阵后的和是否会比原来的子矩阵和会更大</code>，这样的想法看似是正确的，但是其实这会导致漏解。</p>
+<p>为什么呢？这是因为我们知道<code>子矩阵</code>是<code>一定范围</code>内连续的，如果我们没有选择某一部分的元素，那么与其相连的其他元素就不能被选择了。</p>
+<blockquote>
+<p>理解:</p>
+<p>比如说我选择了<code>nums[0][0]到nums[3][3]</code>为我们的子矩阵，然后我们想要扩大规模成 <code>nums[0][0]到nums[4][4]</code>，但是我们不选，因为这时候扩大了之后变小了，但是要注意，一旦做出了这个选择，之后的<code>nums[0][0]到nums[5...n][5..n]</code>的子矩阵就永远不可能被计算到了，而有没有可能之后的值是更大的呢?是完全有可能的。</p>
+</blockquote>
+<p>因此这样的话，我们就了解到了，子矩阵的和是和上一次<code>计算的状态</code>相关的，因此简单的贪心不能得到正确的答案。那么由于提到了<code>选择</code>、<code>状态</code>，那么大概率就要上动态规划了</p>
+<h2 id="3-解题过程"><a href="#3-解题过程" class="headerlink" title="3. 解题过程"></a>3. 解题过程</h2><p>这道题比较复杂，但是对于二维的问题而言，我们有一个常规的做法就是<code>降维</code>，我们先从一维的角度去理解这个问题。</p>
+<blockquote>
+<p>一维子数组的最大和</p>
+<p>具体的解法见上文，这里的话只提出关键的思路来过渡</p>
+<p>对于一维而言，我们求解的是以<code>nums[i]</code>结尾的最大子数组和</p>
+<p>那么对于二维而言，如果我们想要<code>降维</code>，一个常见的手段就是<code>定一议二</code>。</p>
+<p>我们知道子矩阵是由行列上的元素组成的。</p>
+<p>对于任意的一个子矩阵，其被取得行是<code>[i,j]</code>，也就是从第<code>i</code>行到第<code>j</code>行的元素，以下面这个矩阵为例</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">	<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>	<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>  <span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token parameter variable">-18</span> <span class="token number">10</span>    <span class="token number">7</span>
+<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token number">1</span>   <span class="token parameter variable">-20</span>   <span class="token number">2</span>
+<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token number">1</span>   <span class="token number">38</span>    <span class="token parameter variable">-2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果我们想要得到所有的矩阵，那么就要取遍<code>[i,j]</code>内的所有的行组合，其中<code>i∈[0,n-1],j∈[i,n-1]</code></p>
+<p>如果我们定下来了行，那么我们只需要选定列就可以枚举出所有的矩阵了。</p>
+<p>同理，我们要取遍<code>[k,z]</code>内所有的列组合，其中<code>k∈[0,m-1],z∈[k,m-1]</code></p>
+<p>最后就是求和的阶段，求和的过程要求我们求和<code>[i,j]</code>这些行内的<code>[k,z]</code>的和</p>
+<p>最后将每一列的和列成一个一维数组，转为一维的最大子数组和即可求解。</p>
+</blockquote>
+<p>对于这道题而言，还有一个难点就是有环</p>
+<blockquote>
+<p>环的解决</p>
+<p>一般来说，环的解决办法有两种</p>
+<ul>
+<li>对于数据量不大的情景，可以使用拼接数据的方法，模拟这个环，优点是直观，清晰易懂，但是有额外的开销，但可以几乎不计</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> n<span class="token punctuation">;</span>i<span class="token operator">&lt;</span> <span class="token number">2</span><span class="token operator">*</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span><span class="token number">2</span><span class="token operator">*</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token operator">%</span>n<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">%</span>m<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>对于数据量大的情景，可以使用取模的方法来对指针进行重置，同时限定边界，优点是没有额外的开销，空间复杂度最优。但是就是容易写错。</li>
+</ul>
+</blockquote>
+<p>至此，整道题的核心就已经分析完了，详细的请看通过的代码示例</p>
+<h2 id="4-AC代码"><a href="#4-AC代码" class="headerlink" title="4. AC代码"></a>4. AC代码</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//</span>
+<span class="token comment">// Created by 12743 on 2022/10/7.</span>
+<span class="token comment">//</span>
+#include <span class="token generics"><span class="token punctuation">&lt;</span>iostream<span class="token punctuation">></span></span>
+#include <span class="token generics"><span class="token punctuation">&lt;</span>cstring<span class="token punctuation">></span></span>
+
+using namespace std<span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+    <span class="token keyword">const</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token class-name">N</span> <span class="token operator">=</span> <span class="token number">100</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token class-name">M</span> <span class="token operator">=</span> <span class="token number">100</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> dp<span class="token punctuation">[</span><span class="token class-name">M</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> nums<span class="token punctuation">[</span><span class="token class-name">N</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token class-name">M</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> memo<span class="token punctuation">[</span><span class="token class-name">N</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token class-name">M</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> preSum<span class="token punctuation">[</span><span class="token class-name">N</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token class-name">M</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> n<span class="token punctuation">,</span>m<span class="token punctuation">;</span>cin<span class="token operator">>></span>n<span class="token operator">>></span>m<span class="token punctuation">;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>preSum<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>sizeof preSum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">&lt;=</span>m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                cin<span class="token operator">>></span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                nums<span class="token punctuation">[</span>n<span class="token operator">+</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                nums<span class="token punctuation">[</span>n<span class="token operator">+</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>m<span class="token operator">+</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token operator">+</span>m<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span><span class="token number">2</span><span class="token operator">*</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">&lt;=</span><span class="token number">2</span><span class="token operator">*</span>m<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                preSum<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> preSum<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">/*
+        //debug here pass
+        for(int i = 1;i &lt;= 2*n;i++)&#123;
+            for(int j = 1;j&lt;=2*m;j++)&#123;
+                cout&lt;&lt;nums[i][j]&lt;&lt;" ";
+            &#125;
+            cout&lt;&lt;endl;
+        &#125;
+        cout&lt;&lt;endl;
+        for(int i = 1;i &lt;= 2*n;i++)&#123;
+            for(int j = 1;j &lt;= 2*m;j++)&#123;
+                cout&lt;&lt;preSum[i][j]&lt;&lt;" ";
+            &#125;
+            cout&lt;&lt;endl;
+        &#125;
+        */</span>
+        <span class="token keyword">int</span> <span class="token class-name">Max</span> <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">2147483648</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i <span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>j <span class="token operator">&lt;</span> n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                <span class="token function">memset</span><span class="token punctuation">(</span>dp<span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>sizeof dp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>k<span class="token operator">&lt;=</span>m<span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                    <span class="token comment">//base-case</span>
+                    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> z <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>z<span class="token operator">&lt;</span>m<span class="token punctuation">;</span>z<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                        dp<span class="token punctuation">[</span>z<span class="token punctuation">]</span> <span class="token operator">=</span> preSum<span class="token punctuation">[</span>i<span class="token operator">+</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token operator">+</span>z<span class="token punctuation">]</span><span class="token operator">-</span>preSum<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token operator">+</span>z<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> z <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>z<span class="token operator">&lt;</span>m<span class="token punctuation">;</span>z<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                        <span class="token keyword">if</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>z<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                            dp<span class="token punctuation">[</span>z<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>z<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>preSum<span class="token punctuation">[</span>i<span class="token operator">+</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token operator">+</span>z<span class="token punctuation">]</span><span class="token operator">-</span>preSum<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token operator">+</span>z<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">&#125;</span>
+                        <span class="token class-name">Max</span> <span class="token operator">=</span> std<span class="token operator">::</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token class-name">Max</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>z<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        cout<span class="token operator">&lt;&lt;</span><span class="token class-name">Max</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    ios<span class="token operator">::</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Solution</span> solution<span class="token punctuation">;</span>
+    solution<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">穿山甲</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lumxi.github.io/2022/10/24/algorithm/oj/oj-3/">https://lumxi.github.io/2022/10/24/algorithm/oj/oj-3/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">穿山甲</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                                <a href="/tags/leetcode/">
+                                    <span class="chip bg-color">leetcode</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/10/25/dbs/dbs-(5)/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="数据库原理-高级SQL">
+                        
+                        <span class="card-title">数据库原理-高级SQL</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-25
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" class="post-category">
+                                    数据库原理
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">计算机基础</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/10/24/dbs/dbs-(4)/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="数据库原理-中级SQL">
+                        
+                        <span class="card-title">数据库原理-中级SQL</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-24
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" class="post-category">
+                                    数据库原理
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">计算机基础</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2022</span>
+            
+            <a href="/about" target="_blank">穿山甲</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
