@@ -1,0 +1,1425 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="JSP原理解析, 后端工程师之路">
+    <meta name="description" content="JSP原理解析1. Servlet的基本问题以及解决思路Servlet对页面的输出控制等都是通过out.print()输出流进行打印的,这是一种耦合度非常高的开发方式。我们有一个思路,能不能生成一段功能代码,将html/css/js代码输出">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>JSP原理解析 | 后端工程师之路</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">后端工程师之路</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">后端工程师之路</div>
+        <div class="logo-desc">
+            
+            华南农业大学软件工程学生博客
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">JSP原理解析</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/javaWeb%E5%9F%BA%E7%A1%80/" class="post-category">
+                                javaWeb基础
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2022-11-02
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="JSP原理解析"><a href="#JSP原理解析" class="headerlink" title="JSP原理解析"></a>JSP原理解析</h1><h2 id="1-Servlet的基本问题以及解决思路"><a href="#1-Servlet的基本问题以及解决思路" class="headerlink" title="1. Servlet的基本问题以及解决思路"></a>1. Servlet的基本问题以及解决思路</h2><p><code>Servlet</code>对页面的输出控制等都是通过<code>out.print()</code>输出流进行打印的,这是一种耦合度非常高的开发方式。我们有一个思路,能不能生成一段功能代码,将<code>html/css/js</code>代码输出到<code>out.print()</code>,让机器将我们写的前端代码自动翻译生成<code>Servlet</code>这种<code>java</code>程序,然后机器自动将这段<code>java</code>编译生成<code>class</code>文件,再让<code>jvm</code>去加载这些<code>class</code></p>
+<p>那么其实可以看到了,其实本质的底层实现还是没有在变的,只是方便了程序员进行了代码编写。</p>
+<h2 id="2-启动jsp时发生了什么"><a href="#2-启动jsp时发生了什么" class="headerlink" title="2. 启动jsp时发生了什么?"></a>2. 启动jsp时发生了什么?</h2><p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABT8AAADfCAYAAAAwTKcfAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAEvjSURBVHhe7d0PmB1VneD9X17RyciO8y4CTTckZNkEWcRmTfgzSQAFJUKbVf5ERIK2mc0kj87QHUHX+IRxZpSs4VF40h1efYjZDc1DUBhQZg0dJjj+g4SBmPDSIO9AMg7yp5MWB5nZFeMupN/6nTrn3nPrVtWte2/dTt/q7wcqfW/dqlNVp07Vrfrdc05N+81rvx0XTAmvvPKKHHXUUfYdgFZq5Hh7/o5e+djXn5WTP32XbL56ph0b7+Evz5f/9u8SpnvoS7Lwv50k37rtaklPxS7z+xcG054nD33yz0W+NCRLa82EtjIVz/37f/26uIubf3p+vxz45a/l997yZhkfHzfDwd/9HznjP54sb/s3b5VDhw7JoWDcoUM6HJLX33hDHtvzjFxx0X+0KQSevkv+/E6Rj93wUTn15R/JLQMPylj3UvnyFafaCTzm8yflXf3XyHuOseMck85I8KJburtHZERfWt1XrZWPxCQXzCR/ff0W0Uk7LuyXPzv16eT05Zfy41sG5JcXhGk9ffca+ZZZnL+umt7fybFu/lrbUwPXFpMT+wUAAKCM4OcUwoUwMHHqOt6ev0OWXfn/yLMn/6l867YT5fYF/0W2ycny6W8nByLzCH5qGp//R12mm+4huSFYttz4iFx/rhmBApjqwc9Xfv2v8sqr/1N++atXTQD0tYO/k9NPPUmOPuoPTbBz7OVX5e3/9g/kjUNhYPTXwbT/+NyLctmF5eCnBhF/dtpa+cgxYaCwIxKoLAUZLROkfM+x5nXFZ4kBxnKAs8RNa4KTY3KBBl7tR9HlVTjuQun/s/fKL3UaccsLg6LfPxBO4qY52r41XGC2ziAo1xaTE/sFAACgjODnFMKFMDBxshxvrqanyMVy484vyjnh6JALiAYv42qCNhP8NEHPbcFSE4Kc4efpwVe0j6l47n/i2f1yzNFHmwDo8Ue92Yzb89Qv5P/7p1/KH/zBkXLSzOPkD/7NW+UtbzlCfvbML+Qd/36GjI8fMrU//9+f/aOcPPMoOXV2l5kP6bi2mJzYLwAAAGX/l/0LAJggGlxcuGC+/IV8WXbsfCQYIoFPNfNq2Ww+e0T+8z991Ey/8MsP2Q8b45b7o/eG6SbV7jznz/XzL4t8MZy+2eUCE+30kzvlX379z6YmpzP3tBPl0gtPl7e/7S3y8+cPyNivfi3/6zcH5aQTO+WNQ2/Ir1/9XybwqZ8T+AQAAACKg5qfUwi1AICJw/GGyWIql8VXXv2NHPV/H2nflT29b1Sefe5l+T9vjIfN44N/jniTyCn/7lgCn3XiXDc5sV8AAADKCH5OIVwIAxOH4w2TBWURrUT5mpzYLwAAAGU0ewcAAAAAAABQSAQ/AQAAAAAAABQSwU8AAAAAAAAAhUTwEwAAAAAAAEAhEfwEAAAAAAAAUEgEPwEAAAAAAAAUEsFPAAAAAAAAAIVE8BMAAAAAAABAIRH8BAAAAAAAAFBIBD8BAAAAAAAAFBLBTwAAAAAAAACFRPATAAAAAAAAQCER/AQAAAAAAABQSAQ/AQAAAAAAABQSwU8AQIu9JN+97jIZ3GXfAgAAAAAwQab95rXfjtvXKLhXXnlFjjrqKPsOE27XgCxZJ/L5e/vlzODt6Hevlb47ngs/i5h19Qb52qXH23eBl74jn+17WBYO3iyXHv+YDF6+Tn5iP6r2ntIycPhwvEVo+f/2DBm86TLpsqOi3DFx3urvSF+tApwhPYSmbFk0580X5KP1nA/NPHdI/Jk5ydQ+506u8qU/tNwkcq1+V9pRot+Z35YZpe9P99p+XEHnv0ZeuDI8B+0auExuTP6y1S/rSXsO4jsIAACgjODnFMKF8OFUeUOlNNBzs1xXGeQMVI+Pzpty89bIzT5aguMtYAL+P7ZvKmmA/1q5qeIHAD/oXxV00CDDlS9IX0J6wQSyNDGgMbUR/AzPhzUDWeetlnv6z7JvVPV52+A8W2HSla/oDyMV7+sLfiotN3fNjPwgaafbcU50/OTBdxAAAEAZzd6BCTD63ZvMTZLeTGlwc8nlA/Ko/aymXffIlpmrg3n1Zusy+ex3X7QfAJPcmf0yePUsE9S8597vhMPq95hA5rU2YOB/5gcRzuy309+7Ws4L3p935WXSFaQXTWfQmwZIUy5TbtByo0Fz+74i8Im2deYSWSp3yD2mm43ge/PbPxZ57g7pu/yy4LtXW008J1v69LUbBkQn1SDnksuvkS3PifxkXfiZdtVxZv8GWfjwNcF370uaYCAMfOr38mQNfAIAAKASwU+g1V76jtz88DlhsEdfm2a9/XK2/TiV1jDSGivBTbkGULc89x756KUn2A+Bya/r0pvlo8/bwIGpCSry+czNRDXIsE6ev1p/ONAaW17AQmuAxgU0rvuOjNq5MTWFPzAFZcE0X/+x3GjKyLVSil2h4I6XS698j/xk52Phj4fB9+bnkwLeZghr8IbB8Q2ydJZWAg4/C2t/BundFAZAw/NPWOOTYDkAAED7oNn7FEITqMPD9WPouKa90fG+pGnCvhBp9t4OON5s7aj4Ih54jyy9+heyJe4YMP3onS2PpjUrrasp69RGs/ek82H9TaANzrMV2qt8NbDPzf6O9gM7+bvZ4DsIAACgjODnFMKF8GEW6YdMA5vZ+vwMm+PdKK4/OoKf7YDjLSLaD1+goqxHPze1RL3+Penzs2EEP7MGP2sF7FNU9Rc6dUym8lXu11XPB9eJ3Jxxf5b2nx/8LJeH6oeweWVlku57voMAAADKCH5OIVwIH056k/2IzPduwjMHP00QqPyU+DAtnvY+2XG8RdQb/PTFfZY2PSpM+eDn4Ay5q+8OmVkVwMpSCzD65PAAPzJVmHzlK2a/VuyztP3uBTVNDXT//OIHRu2oSYzvIAAAgDL6/AQmwK6B4EbrarF9z4UPUcgmuElb9wtZOrhEXrxO59UHM5wlfaW+yuIGbsgxOWhwM76PTn1w10vy0vPJVbLMvAOPha9f/IXIzBNEUtJzaQKGCXbZPj9vFrk2ODfWH7B6SV7IUmsQ7WHWDImNcVv+A49Mn583XVZ5zok8DCkc6EsWAACgHRD8BFotuAm/6yfPyZbn55cClO4m/Lk73AMUykNFP6C7HrEPctHaR5HAptZ8s8GhsKYLN2GYXPRhR6WgfMXT2ctPdp95Qnw4ouusc2TWTx6RXfKSPPrwc3LegrNS0/PTxNRmglimxufVMktrwjdaO/ilF+V5OVESiijayK577pDnZp4QWw7cDy3+A4+cinNO5GFI4ZBUaxgAAACTCcFPoNWOv0y+pjdJMX2C6YONyjdR4TB4tXfndWa/HR+9wdIaoT+W82Yeb59sfZYsuVpky8086RqTiTYTvcwL0r8g9wTvw5rPL8mLz8+SGUlRqeC4+eh5P5a7Bu6RHc+9R+anPu3dDfwAAPfU7uZrwI8+9rA8d958atK3tfAcdONP3iOfT+iXU2ugzwq+SwEAAFBcBD+BiaI1NW2QpqHmuWZ+De7ozdw6ef7qDdJ36fGlmixdl14nS+UO6SsFmoDDyfadN9N/GMgMWXLTBpnx7aAcf/ce2SLnyNkpMYcz+1fLzJ/8WOTqJXJmtLuHmJqf1MJCbl76jtx8h8jSJZPvQTaowdTYDe0aCM5BoucJPxh+lsw/T1tUhN/HN/5kliw8K+bE4X1nh0Ncs/dguI4fHQEAACY7gp9Aq7kbqJ3lZu/1NM8t9Zto5rdPr525OiaN4+XSm1bLeT9ZV0efokCraHkMyntVbSsdH5Tjh38s512Z3hx510D4YK+we4hIrU6tFc3DjtAKes42D0gimN5uzPdl38OycPU5sqPvWnlxSXAOijlPhLWD3ZCwn0stL9wQ1+w9GDgPAQAATHo87X0K4cmfk4TeWGuT3VpmXS1LZ94hO2ZuKAU69cau7/krY5vQl2j6PAX7sON4s7zyrt08mLKs4zSY75fjSLnVfhtvFK/WaB3HDWW/0pQri35ZOc+veRwoPQjJipYXM6/I59OazVc8ORyTqXztGtCApwtm2trnXjfaiYJyMjjz27bP7VmyNOVJ8DztHQAAoP0Q/JxCuBAGJg7HGyYLyiJaifI1ObFfAAAAymj2DgAAAAAAAKCQCH4CAAAAAAAAKCSavQMAAAAAAAAoJGp+AgAAAAAAACgkgp8AAAAAAAAACmnas3v30ewdAAAAAAAAQOFMGw/Y1wAAAAAAAABQGDR7BwAAAAAAAFBIBD8BAAAAAAAAFBLBTwAAAAAAAACFRPATAAAAAAAAQCFNe+aZZ3jgEQAAAAAAAIDC4WnvAAAAAAAAAAqJZu8AAAAAAAAACongJwAAAAAAAIBCIvgJAAAAAAAAoJAIfgIAAAAAAAAoJIKfAAAAAAAAAAqJ4CcAAAAAAACAQiL4CQAAAAAAAKCQCH4CAAAAAAAAKCSCnwAAAAAAAAAKieAnAAAAAAAAgEIi+AkAAAAAAACgkAh+osKyZcvkggsukN/+9rd2DJKQV9lF86rW+2ZoGpqWpglMFZT7qWdkZET+8A//UKZNmyY333yzHds6jSwvz3N7nFanXwQTXU7anZYpzqOh6PHV7sfb4Vr/uHzUoeh0e3W727nMoHXa7TigPBdD5uCnXjBN5IWTW54/6MWbXsRNNvv375fvfOc78sYbb9gx9dPt7erqkn/+53+2Y9pLHnmg3Iklr5OhphMtR3mUYV3PX/ziF/bdxMojrzVfJsvJOykv48rC4VxvPTb1GK1Vlu6///7UabKm4+hnWY8Hv7w3c77M63ieiiZr3rnjKe17JktZy5JOFnmtT5Jm5nXS1lHT949hPe7r1Uz6Ov1FF10kf/EXfyHj4+Ny7bXXVgS50uZtRNzyfHnkd6tl2Wdp00Q/iw5u2nr2g47zp3F5mHVZtdTab0my5FUWU/m7JM9t1/2o54k89kmj9Hx1uK57FdclE6/d87yIZYbjoHHkHVSm4Kd+4W3dulVWrFhh/ur7iXD++efLa6+9Zi7YdHjooYfk3HPPrfsC2100tOpC4ZFHHpEnn3xSvv3tb0/ZA+pw50HaPvbL0RNPPCF/9Vd/ZS7sm/H7v//78oMf/MAM+noiHa68btVxdDjzsh6f/exnzeDOR3ouvO666yrKkubNVVddZcpZUnnLko5yN9D6WRY6/5IlS0rp6s2uni8bCYDmUcZafd5tlWbXe7J+H3zjG9+QH/7wh/ZdpXrKWlo69chrfaKamTcqaR31GuRrX/ua/OpXvyodw4sXL667zDST/ksvvSRHHHGEvP/977djQrrt7vzjhg9+8IP208YlLS/P/G6lLHlaaxoNHPr56oZPfvKTZvDzOct+0OX9yZ/8SWl5OmzevNl8Vs+y0iTttzR5lW81la+P89p2/W4/+uij5Zvf/GZFWXjwwQczf7/n8X18uK/VpnJZatThvp6hzOSP46Bx7V6ekY9MwU/dyf/wD/8gH/vYx2T37t3m/eHQ3d0tP//5z+Vv//ZvqwIFh9OHP/xhmT17tuzbt2/KnozaJQ+0DF122WXm5NeuKG+Hh96U+rVm9OZTb0L1xlB/ENLhpptuMuVLy5nSvxqEdNOoWukoPb+tWrVKDhw4YD7LQtP0b4jdze4LL7xg/taDMta4yZh3eoO8fv16Wbp0qR1TVk9ZS0unHnmtT1Qz80YlraPeTOo1iAYi3v72t5tx7hjW4z/rj8PNpq/H9b/8y7+Y146Oe/311+X444+3Y/ITt7w887uVsuRpo/tV9+Pf/d3fyWc+8xk7Jtt+0GCELk+vRdzyaolbVi1x+y1NXuXbmcrfJXlsu5YT/QFVA+m6H3x6/nDXGlMB1yUTr93zvIhlhuOgceQdVKbg5z333CMf+MAH5Oyzz5Z58+aZ91H6S7E233r00UfNL96uWYaO92WdLolejGmtKf1VWi/SlF6MaZouLf2Vy32mF+f6i6lWddZfrvVzHafS5qvHm970JrnyyitbfkDpha+fZzrE/Zqn26Db4qbRbXQXrHltc1Sr8yC67f42pe3jKJ0n2mzHlcm1a9dWpF0rr9x8/rQ6TpedNE903zTya2zeeZ1l3Wvlcdr+ycLPy3ppHrrl6qBpxam1ji4f3Of1Hht79+41Pw5p7UvfO97xDjNeP89KA5mH85fFZstYveVFh+ixoPsxWibdPvPHxe2n6HHm7+u0/VxrvbPI4/jMUhazlntNSwNUOsydO9eOLcta1mqlo7KcB/JanzhZ500rHyptHV1NuhkzZtgxIT3u9UdibWVQS7Pp677W8vmv//qvcvrpp5s817xvhq5TUplLWl49+ypaNpLKa1TaevnS0s+Sp43sV38/1huE0utovZbNGvhMW1ZSeU4rJ0nz5FG+fc2eD3Ubosdn0jh/n0fLgw5x3zGaTvTaL0qn088n+rtA10UDzvoDaq3ypdPq+rtt9Y+TtO+1tPni+Hnv5tVxml5SGvUuI0ne175OlrKiko4Z1eg2puWbyrJu0fVyn6ft96zyyHO/zKik9VVu2kZjBFF5lZlmzyc6rT+vTqOfN7JdeWxTrfKadT9kKffR/e3ni1PvcRCXRhbtXp6Rj5rBTy1w2j+CXvjoBa6eQPW9jo/S5ltf+MIXTC0AbZKhv1TqtNGdnHW6JFqjSS/O9CJN3X777eYXUE1LL8xOOeUU+chHPmIKpl6ca9Odzs5OU7NKp9Fxtearlx5QOu/06dPNAbVjxw77ST70YNKL1zvvvNOsr8s3bWLrf5npdPpl5zer1W38+7//e/N5ntsc1ao80G3S5rva7YFbb6W/gtfax1F6o6YX8Bo892mZ1HXWed3NXCN5ddttt5m/Oo+uk9J9ofQE+a53vati32gZnizlLW3d0/K41v5pJV22npPcOumg+y7alDTLOta7v925UZfvbv71yy1606jvdXySuHSapeusN8laCzVaWySrZspYrfKS5Vym/DKp02gQ+a1vfaupLaXjouVUafqNngPT1rsezR6ftcpi1nKvPv3pT5u/n/rUp8zfRtVKJ8sxpvJan0bVKh+q1jpqTTqtUed75pln7Kvamk1fa4/rvn/b295mjgudXoMjOo3e6Or2xV2Ip0krc0nLyyrpmi/LjXiW83KW9LPss3r3q7ue6O3ttWNCtfaDXgto7cqZM2dW3Dim3dAlLSutPCftt1rHQL35UEsz50O99/B/PHR554/TPNMftXVapduX9Tsm7trPp9Pr95Dm40R/F7gfVPUH1Foa/V7LcnzVknbtqPJYhpP3tW/WslLrmGlkG+PyzZ8ny7ql3VdMlusZX5b7oKTzeaMBo2bXv9nziU4TvV7TaXTaRjW7Tc18r/r7oVY6tY4bleU4yPMes93LM3IQ7IhUN91003hw4hwPCqR5H+y08eBCyoz3ffKTn6yYzonOn3U6fX/++eePB4XcvPe5dQhOJHZMJR3vp6V/9X3S9E50vnq8/vrr43fcccf4X/7lX5q/+r4e0e33ufWP5rny59O80jzTPM4qus06b1K+19JsHqjoNrj30X2nZWDGjBnmr3J5FJ1O09Fi7g/RfEwqk1FpeeXWM5p3/v6pVW7r0Wxe17vuKi6P3by19o+/vCzvlUtbP3P86dz6RPdndD73vtY6RkX3t8/tS3+ddXodF03PTRtdvopLJ0q3w8+DJG47k8p5vZotY3HlJWmfqWh58/e1o+Oi+8SfzuVBlvxyovs5br3r1WzeRfnr6NavVrlX0TyNvo/SeePyrlY6btnRPNPy7R9jea1PFnHzZikfWdZR5/fHueM4bVucvNLXvI473/g0bT0XNFKW/TLn3qctLy6/VXRbnLjtziK6XlnTz5KnWaZxXFnS5dQS3Q+alqbp56dLTwd97UtaVpbyHN1vWeapJx+yaOZ86PLK5Z3bnne+852l/ND1c+cZN33cftFx/jZEt9PR8Trospr9Lm1m2/3tqpeuu79t0XxMEp1P88Evk/57V5b8z1U0n6Oiy6hHM/mp/PV3eVKrrLjt1HmzqicfHX+ZWdfNHZtJ+9WlU2u/p8kzz2utr07r55vjb3O9mln/rPtBxa170vyNlClfs/skKq68RrdF1doPfjpZtlE/SzsOXBrR8tLMubHZvPPX+XCUZzQvteanRrS1hpw2eXdNc+bMmWOavvvNzh2N+GutHJ/+Yvmb3/ymVEtTZZ0uTbSGlUbQ3a/n+gtLVo3O59Mq01p1Wn9B0KrUWqVaf1nIi+aJ5k3cr79+viU1u43KY5ujWpUHbpt0Pd0666C/wmnNhGjthDjBScr8UhSUd/M3OElV1bCIK5Oq3rw68cQTE2vvuWNH00mr4VFLq/I6bd2T5LF/GpV2XPjqWccs+1t/xdV5dV/qL5JZ8iyuRmgj6aTR+fWXZi3nOijdDk27Xq0qY1nPZU5cmYweq/qrq3M4z4FOXnmXtI5Zy73ud+0r7oEHHsjctDZOlnSyHGN5rY+eN/3acnpsxbVEiVOrfGRdR61Rp9dFrmafPk37lltusZ8mr2Ne6WeltXyCi+9SX4218q5Vx0Wta75m1yvLNWWWPK0n35NqYsaJ7gd3DPvNmfU8pzVitHxq2r6kZWU93/myzJNX+VPNng/1ONF1cd1taQ1UbdHwx3/8x+ZaTvPz+9//vklbr7HSzo9x3zFJ1367du0yNbt0nzVSW0616ns0SaPHb7PHfZZrxzzOLXnnZ9ay0qrrirR8y7pued1XJMk7z7Osb5bzeVbNrn/W/eBE1z1t/kbltU/y+F5VSelkPW7SjgOXhqbrlqFDo/eY7V6ekY/U4KdWS9amO1ol2RU43YFahVfH+9WWJ5Je6LxuO5PXAKz2taDNYH71q/KTKWtpdL44f/M3f5PbgdRKeW5zVN554Ac0lK6nC+r4Q71NevUEq0+l1ZOpnlSTtCKvdNl6E/PEE+Xmu41crEzG8pbX/okTLQuNSlvHLPtb95PuLy0/+pnuS/8L2wU3o1/G+l6bETq10smLu+GO66O5lnY5p9WrledAp9m8y2MdtYzpTbvr6899f2uZc81x9YK1lnrT0fV0x5U/aHnPY32UO4+6tF1T3mbVu60aIHLrMDo6Ki+//HLpIjduHfUiOa/06+GfP5PybiKOizQTtV5Z8jTLNK6saFAuayDf3w967XrkkUdmuiFuZFl5yKv85fFdonmnzdpfeeUVs//1Zlq7v9LjRn/Q1m5Q9OazFd+jujzdB41odtu1nOi9jt7zpGn0OJmI4z7PZUzW65LDef50585m7yuS5J3nrV7fqMlaZprR7DblVV4nstxrupp+dKj3HrPdyzPykRj8dBdcfq05N+h7Ha+f+ztYf5nWz3x6461Rcb3wd7JOF0cPNq11qv0r6IWgBmA1eu7XpMjSN1Gj88WZP3++uThr1YnVXSjHrZ+O0890mrTpVJ7bHJVXHmi50PLhbgpqbVOrtDKv9KZOb+70ZK4/JOiJsx6tLm/1aOX+iZaFqKRlu/mcLOuYZX9rP32arn7Jx33hul8Ao/Ppe//cViudyaBVZSxtX+g4/UynaVStfd3K49ppNu9qrWOWch8NJrlBv7M7OztN2dPgRi1Z06mV73mtT7PS1rOZddTrID2fayBT04nT6vSTaGCoVs2sVh8XWi4buebLul6NpJ8lT5OmyVqjxefvB71B0kBi3LZEWwmkLavWcRenkXmaKX95fJdooFNvWIeHh03A84/+6I/MftXjRsdpOdFpVNr26Tj9TKep5cwzzzR9zGneuz5669XstmuZ16B3XEs7X6PHb6uPe5XnMvK+LslaVmodM63Ix3rLcbP3FUladS2Ytr6Nfl/EaXb9690PUUnzR+9T6tHsNmUtr7X2Q6100vIuqzzS8LV7eUY+EoOf7oIr7mJH3+t4/dyvPacXJRqUdLSJl9YajaaRdboonU5rR+jFgN8MRWtSuNpW2lRKm5XFiR48WeerRS/AtBlOngeST08qml+aP5oHjr7Wcd/85jfNNGnTufd5bXNUXnkwNDRk/urFrUraJl13faBLVK0TpF7E681mlpNO3nmladx66632Xehtb3tbVXPoWlpd3mrx87je/VOPaFmI0mXruUD3iy7P0fXRc4yTdR3T9rfeeOivm+5Yi+POi/76uHR0vH6eJZ0s3C+urqaYvj/jjDMqbpC0Wb2eV+u5QXfyLGNZyou+1nHN5kta+u59o98XWeWRd2nrqNuYpdxPpKR81/Vr9jyQpyzlIwvdJpf3+p3ifsTQX/zz0Gj6/nxKzwHasf5nPvMZOyZZq64NVKPXfCrLemVJP0ueZs13rYmnN2RJ30219oP7rvDLoZ67tXn5+973PnMj5aQtq5HynGWeRstfnDzOh3qtpjV1NBip+aDboHmotT1vvPFG8wOpu55L2z4dV893jO4HXWajD6fIY9u//vWvm0D5SSedVFGmdL9ccsklpXGNfq+18rh38lpG3te+WctK2nTufd75mHXddFlZ7isO5/WML8v6NvN9EdXs+mfdD0n0s7yv1/LYJ3l9r6alk5Z3/vs0SWnosvR7ql7tXp6Rk/EESZ20OjpeP9fplP7VDmBvuOEG00G4G7ZGOoHNOt1NN4UdxPtD0vr402raf/3Xf101rabvptHpVZb5Jkrc9urg8lf526CDdrKrne1GRafz06i1zW7/vOZ1Ptxquixdpq5T0jZF8yduHeP2sW6PP58Ofn6opG2uJ6/cNkTT1jSi87g0k7Z1IjSy7iouj5WfVzq4tB1/eWnvgxtA81fTiMuf6HxKx/nL1v2k0+h4X6119D/Xz/z9reuh6+PP74boekaXo3nm1JOOo9sR3RZd7+g2RtOO7rvDIam8RM9Rcdset936Pm6/RcdF0/fTSdvPTtJ6T5Qs66jb5KbRIanc+zTdtHKh86bN7ySl46+3DtH9EpXX+sRJmzetfETFraO+1nFufp2mUY2mr9sQPW7cecHNl5a3UboMN19cmYtbni8pv3Wcplfrmi9JrfXKmn6WPM0yjXLLTCrbWfdD9Jydln9px1FaeU7ab2nzZM2HieTKgb9fXf7FrV90++LyIClvdXw0DzWNWvuhldz2J22P/7muZ9bvtVrzRfPIf6+DvvbzSmmafhpZ1m2iRLdHZSkrKjqdv92N5GOtfFNZy3Ha53H7fSLFbXvS+rppG/2+aJWs+yFathx/m3XQ8qHT6vjDIWt5rSdWE5eOiuadv836OpoHcceBvxwdkvJ5Iri8aefyPNVN03+CHdE0/VVU++TRiHZaJDvrdAAAAAAAoP24WtNZuraZKjECV6Neu0KZiC5/6kWsJhnluf2lPvAIAAAAAAAgKw3yafBH+1lEWSP9RuPwozwXA8FPAAAAAACQC33wiwb53APJpiLt81kHx/XvrM+eyKufcEwMynMxEPwEAAAAAABN0WDftGnTzEPJ7rzzzoqHuE01+oDmJ5980uSHDu7BzRpIoyl0e6A8F0tufX4CAAAAAAAAwGRCzU8AAAAAAAAAhUTwEwAAAAAAAEAhEfwEAAAAAAAAUEgEPwEAAAAAAAAUEsFPAAAAAAAAAIVE8BMAAAAAAABAIRH8BAAAAAAAAFBIBD8BAAAAAAAAFNK0Z555Zty+BgAAAAAAAIDCmDYesK8BAAAAAAAAoDBo9g4AAAAAAACgkAh+AgAAAAAAACgkgp8AAAAAAAAACongJwAAAAAAAIBCIvgJAAAAAAAAoJAIfgIAAAAAAAAopJYEPw8ePGhfAQDyMDo6al8B7Y/yjFagXE0u7A8AADBZUPMTSPDYY4/JBRdcYP4CAAAAAACg/RD8BGJowPO2226TH/zgB+YvAVAAAAAAAID2Q/ATiHCBz69//evmvf4lAAoAAAAAANB+CH4Cnmjg0yEACgAAAAAA0H4IfgKeRx99tCrw6eh4/RwAAAAAAADtgeAn4Lnmmmvsq3i1PgcAAAAAAMDkQfATAAAAAAAAQCER/AQAAAAAAABQSAQ/AQAAAAAAABTStPGAfZ2bgwcPyvTp0+27ifCy3PPF9TJ0wlL53opT7bjaXtw6KJ+6dyx41SG9X+mTJfIj6f/CiJyrr48LpwGAyWB0dFS6urrsuxQH9Dw2Jldt/qicbUeJPC03L/u+zGzw3PboxjVyZ9cqGVh8jB1TTae54RH7Js2MC+UbX3qvnGDfyp675D/d11Ee56+/ef2g/NxM6HTL9RXbhnaUrTyH3+3PX7JWrp1rR0XLi9Jy8j+OlYHS97+W9y3yQ/uuyvzgWuGMJ8vpxKWJtpT5PBllzjWNXv+F5U2u8copjIb3BwAAQM4KUPPTBj5fCF4+skX+07I1scPNe8KpNeDpxn3qsW75xua18r3N4cXuiz8dkZ/Pfz+BTwBtKzyPvasiOPjoRg0EjcnQFyrPi/1bXw4n0Bt/b7wZvvgjedF+ducj3XJVSuDTOenyVcH5VM+p8cM3Lu+wU9ZDg50ujaVyvh2LqWHGCR3yww1Bedz4tB1TyXynf+FBObHrmLC8GqfKta68aaCzVHZsWarjR1IAAAAA7a/Ng5/6a3tYK8S/wS4Pq6R3RjBZcPPjfo0/YXFf+Nk13eGIkqflbq0FmhBAdcFTAJi8Xpa/f2xMzj/jGLnni+F5S4NDWiOzIjBpzn8dcm4wnXHce2WgdN6sPD+aYKqMyA0x58WkgFRWJnC1YUTkhQflUy5NU9NTlzco94zaCTFFHSNnrwi+s79yoZz0yJPyqB1bcuBH8tV7RXq/slauXXwMtTYBAAAAxGrf4Kc2UzPNOJOaGYWB0YfOCm74M9Ty0JpRv4irtaQ3XdIhM2m1A2Cy2/MDGXrBO1/99C5bw32VnPvY+uCcOSj9X1wTNvG1Nd7T6Y9CYXCp4pyoTdf1dZM16MyPURpodemVzrlaQy9YP867U5bfSqMcEA9e+8FyM76yRrMG/LULBn1turUp/aCptZ9dEJ/AOuJ0yIxMLX+0xZFXc75C2mcAAAA4XNqyz0+9KTI39KZ/Ltfs3esHTgOjwQ3S+VX9L3lN5KO8fujK/duJmV4DqGl93QFAq9XuO82d37QP44+JfD2mr0QNHBm2n+OkG33bB2LvCQ/K0CNSeS5N6B8xS7+gleduq2K9HHs+N/3w0ednEdXfF6Dtt/byDhl6LCiTMiI/9L/3Y1SWSZ3/SVnoXyfQ52fh1CpX5hxk+nqvj9acL53bzHnJ71c50uenOaeNpZ9jpwj6/AQAAJNFQR54FN7klB62EX2gRozYm3Ary008AEykTDf1ox1y/iNjMtMFP0/olh8+YgOL2vfhilPlxQMvB+e8n5WDima8mJv3igfEzOg2/WvOPGtMhkbfX6rlmXR+rDgHp6n7gUfRIIMXwELbyhYU8X+wtIFOF1i6plse2uAHxqMB/UhAKq3sEPwsjIaDbXUELKvPgdGyZsttnQ/hLCKCnwAAYLIowAOP1NOyw9x0683PWvlezRuYsF8803TOPdTDXKxW9u2pF7jN9mkHABPhpdEOuX7Fu+w764yPlpurrwj7Af3UF74l94jXx2fp5tyeP3Wc7RP0ii99VJac0e31t/iyvBCcMPXhMnEafuBRVZ+fmOrM929Fn942aDlXy3SfLJlb2U/tNy4X0/zdNTc2D/macaFc4WosAyleHNXaoGPy0E9rNFc/oA+A8/pLjnWMLPm09lO7hf7iAQAAJom2Dn5qTadyX16q+mnG4TAo9xwwE4RMv3jB3+DG6PqzRuSrerNkxnXLQu9G6ewPcfEKoD2cvSKhNqTWnjTnwW+JfFoDRX3yRz8Nzp1pP+xogMn9iHTcO+XcGSOyQ8+DMefJXGhtUBfIMn1+Yqo7e0VYHkrdLThanks/Wpa5hxma2ngmQNUt16f+EBr+4GmuETaMyElnvZNan1NW+MDL8y+/UOSxn1WVLd+j/+NBkcs/Vrs5+3Hvlavmi/zwvuqyCgAAgInXlsHPsEbIGvmqvN88zV37o3O1P6qHpabpZllww3PfiJw/P3ya8fGLPybnjv5Abg7GnXT5BZXBAy5eAbS5R38q8jlzLtTmnGHAx3T5kbk55jGy5JLu4Dx4V/x5spVGx6TySfORpvkorPKPm5FBawb7NYUjg/mxMvjuHqhq3n6qXPuVDrlz2V22FnNQrr9Uvlagm5up68Wt3w9rCS8OrvlOeDD8QTyODapflbGsmB/Qg7J6Nz+gAwAAHHZtGfx0NUIauVl5ceu3ZEiCi9wz7Ai9AQpe64MT4i5oz16xVM7n4hVAmzo7uKEPHwynwSFb+1NrxGkfdzE16EI6vQsSBeZeIL36gJng3Pm5HINE5ocs/+ndOphm7xrwvEvu0aaofq3Qqh+zUFSuJmflEO7/k2Z0JHaxUPFgLi8oWlm2IuODgadzT1FBOfnUvR2lWsIasJR7v1XZWsgKa33W8eOP+wH9p3SfBAAAcLgVpM/P7F4aFen9tN8ULqwJmlyb6VS54vIOLl4BtJGwVpsGgsIadOUm70vENoPfIHL9p99ppy8rT+9qzmkgdL0MiT4Aye8nuXnuhyztC9QEs0yTd9f36AUij43RHBlW+FCZH85fKgNf6pOrRtenBO8Dpm/QclDUDKZ86YOTIuODgZqfU48515mHHHm1hLXW8Fe65aEvVPYBr/R8VW85Mee4Kf7QIwAAgMmgzZ/2bm/KzZNg00SfAhtIebpr9ZM8AeDwyvbUXA0QfV9mxjyxWM9r4dPY7VOzzVjHBpaCVxqEdOc+N0/cOO1uxO+PsZx+DVqTs3TedYFVb5z26fiFETn38g4Zulci65ryxG60lcxPgTZP4R4xL6NlrvxZzHd8HFO2xuQqyk9hZSpXphw8KD+vOBdFuGliz5dR0ae9w+Fp7wAAYLIoRPBTnwabfMGZEAyoCn76gdSMN1IAMEEaCn6WbuBjAke+6PnQzTd/aUKtJRss9T7P8qOR1rQy/Y3a5ZiAqcQtQ8/HWvvUbocXAJPEdUI7qVWetZuG8Ps4e/DJ9AcblI/rZUu2QHzUjAtNlxBoX7XKVfgjTfZrPHPOunes+rzjnVuNtEDqFEbwEwAATBZtHvwEgKmBm0gUCeUZrUC5mlzYHwAAYLKYcn1+AgAAAAAAAJgaCH4CAAAAAAAAKCSCnwAAAAAAAAAKieAnAAAAAAAAgEIi+AkAAAAAAACgkAh+AgAAAAAAACgkgp8AAAAAAAAACongJwAAAAAAAIBCmjYesK9zc/DgQZk+fbp9BwAAAAAAAAATj5qfAAAAAAAAAAqJ4CcAAAAAAACAQiL4CQAAAAAAAKCQCH4CAAAAAAAAKCSCnwAAAAAAAAAKieAnAAAAAAAAgEIi+AkAAAAAAACgkAh+AgAAAAAAACgkgp8AAAAAAAAACongJwAAAAAAAIBCIvgJAAAAAAAAoJCmjQfs69wcPHhQpk+fbt9NjDvvvFN0Uw4Fw/ihYBg/VH5vxx2y43Tdzj7rbDnllHfYuQEAAAAAAAAUTWGCn1u2bJEL3vc+6Tj2WPO+tFHuxTSR3772mnzve9+T+fPny8MP75B5Z8yT/3DKKXYCAAAAAAAAAEVSmGbvWsNTguGNQ4fkjTd0eKM0vG7/ujjvkUceKeecs1B27dolL7/8shkHAAAAAAAAoFgKE/zUZu3hi/CP4b/23H777XLvvffKq6++Kr/73f+2YwEAAAAAAAAUSXGCn+OH7CuNeZajnu6V1vp8y1t+Ty697HL50z+7Rvr7V8khEzBNiJB6tq2cJtMWDsg++75x+2RgYZDWym32favZ5eWy7o3LL/8AACiGkaE+6esbkhH7vhadft32MfvOMzIkfeu2S8wnAAAAAAKF6fPztttuk0WLFsnRxxwTjrBbVd644FX4v3l9xJuOkA233CJLllwuM044wYyNpwHEObJK1sveHf0y245tjE3rtGEZv/ViO66V8lz3xmnws+epw7sOwNQwIkN9m2S3fae6Fq+R1Ys67DtLgyWbylNVT5MlnYzLssa2r5O1Wztl+WCvdNtxyozf3yODvf7YSpmncemPbZd1a7fKqP3Mmbd8UJKTyCvv0ozJ9nVrZevovKp8iKYbrGzq9k4t1fvG35dJZStOOO1o+n6L7ouuxbJm9SKpmDrLNBloQHPT/izzah4MS+ea1aKrbbZjz9xwPl2X4c6Glo+CqOf8YaaV+HOxd2yYsukfdIH6zncAAACTR2GCn/9982b5wAc+IMccbYOfgfjAZyDY5COOOEIGN2yQjyxZIjNmpAU/8zTRwc/JgeAnMDH0ZnW407s5tTfEFTesZtx+WWyDKMEdrwkUBiNK02RJJ9OySmzQr9O7IfcDlEk36lmmMSLpm/n2yFy3jRnklXdpXHAh2JjKwINdVimg57abAGgpz6KB65GhdXLgIi8QuDVL8DMsJ/s758nu/fHBwti0gv2z7sBFpX2cZZoyF/C2b+vhB1S1jHgBTi2vj7/b5knkM0wtWhY27Y75QSWJOd9UBj/jjjOTrh+Yr/N8BwAAMJkUqNl7Obqpf0qBTu9VqNwo/pBpKh/9HADaU3fvYOVNaXevLJ8nMrrnCQmbxI7J9uHdIvN6ykHBjkWybHGXN02WdLJNUzL2hOwZ7ZLFF4V31Xqj3bdZZNngoJknTpZpSiLpy9h+GZVOOa6O+/O88i7R2HbZvDWYfV6XHVE28niQbtdicavv0pXdj0vWJtGFNDIkYaylMvCpunuzB7ZLRh4wtW7ffVGndI1ulQeqMndEHjA13y6qDCIFZaFcNrJM4+uQRasHZTAox4ODa2RxV1BOg+0J30cGU9A1iGXfl4KZYdnrmnu6fT8iWmR2b9Jm88GwKXgTbM9afW2HoSldcKaQ4BipK/AZxxxn1T8wVAnOSz16Ttxf82wHAAAw6RTqgUfhfz77LvhTGu9NkLXSa2WflbYfzZXbZN/AQpk2LXhthpVS1ZPntpXe5zrP/faDiH0DstCfzusf0y2jspvQbbLSpFe779Dq/jbtvHbwkyhNG12fTH2UVqab3senzcPS9NG8S17H9M8ApDJBQpF57668w+04rlOjfPJEi+5pRx7YKqNdc+V0GxvqWLTaC+zEyzKNE02/JTLlndby64vpfzEYr5HPxcvkomDyqI7O6oCo0dWZafuLyQb8gjyrO8iZwASZ571bujtOl7kmthwfIcwS3GksANQhx3WOyp6EA620fvZ9iQna2teBse3DsltrBftBU60l6t4HQ2oQC4WhZaYqEF8Prc3p1zpPNSYH9tuXAAAAbaYwwU9Ti7MiwhkM+n/4JxS8Kb0OhAHTBm3skV4ZMgHU8fFhWSEbpacykijTejbKimH9PByGZZWs2mk/d3S6OXfLFXvddHtlfTDdHBs8nN2/Q4ZXBIu7wQUTNXDYIxtXNNJ0XgOHPfLU+r2ldbrk2UiQcmew7F6RIfv5+N71siDY1tQAqAnyVqY7PiRyf8Is+wa+qguw0wbbuyDIu1KwNG0dM6w/gLLgxlYrK5ZrjKku6YwGkzo6g7EpYtOJSJwmrKWWOm9TqtMfM3fou2VTMzXh8sq7wMjQWtkqi2VZQhSvY9Gy4FOvJmKw7DBWOoWbMdtgc2c91XfT2P0ZBq875HQT/RyWyucHdcu7tfLl7k3Sl1hgskyTrPuixSJbHwhKbZSWY6/2comtcVyiNU+DslE1Haae8NzXeZyEP7q4813Wh18Fx4Rrxp4pWG5rTi8nsg4AANpQsZq9+9FO+6dEg2X2pdJ3Zh4zXwMWrJehfteD5cXyufULRDbeJ2G8b5us7NkYTLJX/PjkxbdqoM++MfbJwA0aIN0hpaRktvQPrZcFO++W+21U7+Jbh2XFzlXSO7BP9g30yqqdK2S4kT5D9z0rTwV/Tju53PPmxf3RfjiDtP2+OWf3y1DFtkWF2xBshOwob4SZrz9hFWf331q5vdevENn5tOzVt2nrmGn9ARj2xna0ywu6mebgSUYltjJbXDpRadOMPC67ZZ705FV9LyomfVNr1KsFt2Zxl2kinDlW1XDe2SbOXo1Vbb5vmqWm1mIdk/1B4qVmzLps+8nUFhNsbtDYE3uCPJ0nruJux+lzg9Sra2Fq9wdaXkxwU/dFTKHJMk0i03R4twxHntoe1ub0ulSwxrZvNoHzxRpwNSMOyP5W13JGW9m9yfQPYs93a8wPKWtrBkB3yyZznqlxbva7UzB9IDdRyxQAAOAwKlTwU8OY/hAKXkUDnzbgeajRwKc67eTkoFtMkC7Wvvvl7p1aibTcjNsMc1bJzuC/p000UF0st+5dL7JqjgQfyfq9twZjGjD7g3KFxjF1eUnN0hecKnPsS2f2yacF/z4lz8bNYLdhxSX1rZFpYu+2t2ejHRtIW8cs6w/ABNxMAE2bwmZsOh4XaMqSTvo0ttZaXFPeXGRLX4Oh2jJ493DtGlF55Z1R6rMyrT++YBvW6ZPMvb4eTd+Qo7J17VBMDUHUL+yns6Kc2Kbvo1ura2G64LnpgtMEONdFaohmmyZJWPtzc3l6U046Y2vUje0PawAfZ99r8HR15nKJQtNAePCnsmuIDlm0bHFCn7Y+Pd/oeWa3bEoLlOp50Dsvzd2zNnvNUgAAgEmkWH1+VsQybdBT/9gxygU+1fj4oYrPDhe/abw/5P9A+NnSvyNIW5uya/N2DTxOeBAx7LOzZ+MKGXbbqu36S9LWcTKsPzCZaSCtr/Twiqo+M00T7ZganlW1GmukY2SYJqGfzNzUkX5iv5oleeWdE6RnmitrENPWnAoGTd/UunI1Bt02LPcDpDaAEUyX0C1l8XUcJ51B3iX1j1kXUzs44GpqmsE9gT05j7WGZ61AdJZpqmgAc3lnMP062T6yXdZt2p8YIK96sNPIkLcNdoh54BEBqinAHCPNdA2hNdWXyzwtO5nKSzC9eeJR6/qHBgAAaJUC9fmpYUyNdNqAmr4MPyrR8T4NmLYk+jn7ZDF1JauqSu6Vp/0+PxOni9onA72myqeYCqC9TQb8ZvfLDs0jDTruXCVf9duzu+bnnm33bRRZcIV8MK4ia+ZtsLbdJxtlQUXt1X3Paj3ZiLR1TPsMmMJM35LaJ9tgwsMrbG23/Qcq71xNH5leU9qa6QSyTGOaGnd5TzHPWT3pj2m78s7jqgO0Vl55V2abwJsaU+XBNJd2tTyTMg6BsG/NuJqZ9bFB6IoabG7QoKXUqBFsAz6pskwT0d0blAWRrZtM567ZH+oUzFe5DcEQ88Cj+B8sUCwdor/pRM9JoaxdRnRLb1AQtabo2nq6bwAAAGgzBWr2Hj7wKDaWqYGySOBTlQKmubtYLjFxuV4Z8GKC21b2iNfAOxD2Fbpz1ZzKp5br09a9EdtWzpFVEvYxOrt/KHwgUiOPOQ/SXemvkLFATq1o51794CZtlb7iete3Zlhzs/wApIRtCOZLXkWvSX+wTr3+U6DS1jHT+gNTVfjwi8oahFFhkGbUb3I7pg/XGZV5PS5YkiWdbNNoU+NWPugoKf2RocomyGG/m3EPk3Hyyruw9mhdte5MH5DRAFyQzuaw6f1Ufq5Nd69tllvVpFzzOWMzc1eztrSPfDZoWarJNiJDccuq6FohyzQ1aJ+yfX2yds9cWTO4XDq3rpV6ms0DIXdOWuv1ZxyUT+22I6b/2ESmJrKehDbV6L/WlnP6nAUAAG1o2nhcVLBJBw8elOnTp9t3E2PDLbfIhz/0ITnmWHtFpgHP8FWsN7/5CPnKuhvlEx+/WmadeKIdG0/7p+x5ar3sNQ8C0qetz5FVp1U+bX3fwEKZs+o0GR4v12g083nRzhXDe+XUG5Lm9QKAC9yyXBpaU9J7KJIGR7Vf0AxPfK9c9+g6Vabrph2+4m7p8dZHm+WXFxO//cHMlX13eusWXYeK7dVtvf5pmdMjpbyruY4JnwFTmntIj31bqUsWryk3n9VgYNj8OqTNvEuVELOkIxmmGRuSPtOcN9JsN2JkqE82yfLUWpCx02jz38T0NTjmmjUrrWmZEtjMK+/cciW5v9Bw/s6q9YmmGyRMzVCrKm9q7JOSIA+XByXHPHAqcf9rMHOT7C7lt30ffmh0LV4jqysKWZZpqpXXM2Z9vDIYl5YeA8OdCcvQY2G4s44+alEo0fNXrXOHOXdKdRk04zW4GZ6/xvS86xdyxXkJAAC0qcIEPwc3bJAPfejDcvzxXXZMbf/1K+uk9+Mfl1mz0oOf7cwEC6V2kFRFg5QA0KgsQc1mtDp9IC+mrJqYUu0AqXLT+4Emgp8AAABA4woT/Fw/MGiatutwSB9kpK/NQ5D0vf4NxgXvw9duOCSf/MQnZNasWTaVoglrad59xV7ZkaF6JMFPALmwNZE6K2pF5qjV6QMAAAAACqMwwU/EME3Rn8rcNJzgJwAAAAAAAIqkMA88mprsw4eShp6NsmKYPjEBAAAAAAAwNVHzEwAAAAAAAEAhUfMTAAAAAAAAQCER/AQAAAAAAABQSAQ/AQAAAAAAABQSwU8AAAAAAAAAhUTwEwAAAAAAAEAhEfwEAAAAAAAAUEjTxgP2dW4OHjwo06dPt+8mxp133im6KYeCYfxQMIwfKr+34w7ZcbpuZ591tpxyyjvs3AAAAAAAAACKpjDBzy1btsgF73ufdBx7rHlf2ij3YprIb197Tb73ve/J/Pnz5eGHd8i8M+bJfzjlFDsBAAAAAAAAgCIpTLN3reEpwfDGoUPyxhs6vFEaXrd/XZz3yCOPlHPOWSi7du2Sl19+2YwDAAAAAAAAUCyFCX5qs/bwRfjH8F97br/9drn33nvl1Vdfld/97n/bsQAAAAAAAACKpDjBz/FD9pXGPMtRT/dKa32+5S2/J5dedrn86Z9dI/39q+SQCZgmREg921ZOk2kLB2Sffd+4fTKwMEhr5Tb7vtXs8nJZ9yQTsQwAAJCrse2yrq9P+oJh3fYxGRkKXq/bLmP24+h7AAAAoF0Vps/P2267TRYtWiRHH3NMOMJuVXnjglfh/+b1EW86QjbccossWXK5zDjhBDM2ngb35sgqWS97d/TLbDu2MTat04Zl/NaL7bhWynPdk0zEMgBkMyJDfZtkt32nuhavkdWLOuw7a2RI+jaVp6qeJks6GZdljW1fJ2u3dsrywV7ptuOUGb+/RwZ7/bGVMk/j0tegztqtMmo/c+YtH5TkJPLKuzRjsn3dWtk6Oq8qH6LpBiubur1Th82zTvIjX2F5318qvzafZbGsWb1IdIwGPzftL7/HJNTIuc6cayT+XLx1tHROM/vfPyEG6jvfAQAATB6F6vPTBDb1nzDC6f4Eglfh/yH3ucZ9SyOTzJb+HUHabRnYm4h1b+f8AYplZCgMZgwODobD8nkyunWtqdVVYm5898viNXaaNYtFItNkSSfTskrG5Ik9we35vHeXb7ZtrTO92U6UZRojJn3pKm+jHdJiZ3nlXZqx7ZsldlNs4FMDFi7drt2bpG9oxE4A5GzsgOwPjpG5p7tAVocsWh2UPQKdbai+c10cF/jUc1BFcLNrsaxx6dZ5vgMAAJhMCtTsvRzI1D/lmGY0ulluFH/INJWPfg4A7am7N3Lj2t0ry+eJjO55QsLb1THZPrxbZF6PlCbrWCTLFnd502RJJ9s0JWNPyJ7R4Ab9ovCOXG+0+zaLLAtuqHWeOFmmKYmkL2P7ZVQ65Thv9WrJK+8SjW2XzVuD2ed12RFlI48H6XYtFrf6Ll3Z/bgQ/kRLmGMEba+Bc12VkaFS4DM1aBqcl3r0nLi/5tkOAABg0inUA4/C/3z2XfCnNN6bIGuL/8o+P20flyu3yb6BhTJtWvDaDCulqifPbSu9z3We++0HEfsGZKE/ndd/pltGZTeh22SlSa9236HV/ZXaee3gJ1GaNro+NZZTvQybR6U0ynmT1H9qbB7HzA+gCSZIqBUkK+9wO47r1CifPNGie9qRB7bKaNdccZXMOhatrlnDLMs0TjT9lsiUd9p0OK6fxGC8Rj4XL5OLgsmjOjqrA6JGVye18GLZfLb9Vfb1DZWCxEn9VFaOT54/njYRL09fVSHX1lAupxedJpw/WmMuuq7u/YgG/jWdiu2oXIeqbYyuQ/Rzj1mOac88KlvX6vTrRFctKe8q1LEctAHdn7bWee3aomNyYL99CQAA0GYK1Oz9UCTCGQz6f/gn5JrGW2HAtEEbe6RXhkwAdXx8WFbIRumpjCTKtJ6NsmJYPw+HYVklq3bazx2dbs7dcsVeN91eWR9MN8cGAmf375DhFcHibvADgz2ycUUj/YZq4LNHnlq/t7ROlzwbCUTuDJbdKzJkPx/fu14WBNtaz0Oa9g18VRMob8+CIG/s9lx8SbAxO++W+/2F7huQGzaKrLg+bDqfNj+AOgQ3tlpZsWvu6V4QrUs6oxG1js5gbIrYdCISpxkRU7Exbd6mVKc/Zu7Qd8smL0hTdwvyvPIuMDIU9qW4zK9Z6ulYtCz4dKs84NYxWHYYK6UJcpyx7Q9olWDbxHeNLO4K9rUNwnW/21TXrQzk2305ryfMz7T5q5X7xnRNit99wJtWuyxYu1U6XZcFOqxZLPs3VQc7MxndKpu0f1tNxwX/dRmRdRhcJvKEKy9mHfbI3FLT52CbgvK0NmGbtJazduug5TlsLr26XJs5TZ3LQes1da4LjgvtLzQoBNmayY88EPZXXG+begAAgEmgWM3e/Win/VOigTT7Uuk7M4+ZrwEL1stQv+vl8mL53PoFIhvvszUUt8nKno3BJHvFj09efKsG8uwbY58M3KAB0h1SSkr70BxaLwu8AOHFtw7Lip2rpHdgn+wb6JVVO1fIcCMPTNr3rDwV/Dnt5HLvnBf3R/vqDNL2+++c3S9DFdtW2+z+Wyu353oNeD4te/XtxZ8L8mCn3O1FP/fdf7fsDJZ7id2k1PkBZGNvbEe7vKBbalPXUYltzRiXTlTaNCOPB7fm86QnU3SlATHpm1qjLkgUDGsWd8nuTfUHBerPu+p+E7X5/qbd82R5ai3WMdkfJK7raAIYumz7Cap1LOr1gnVBnodtccMAXPdFsrhrVPZ40c+xJ/YE+TlPXKXd1PmjTN+YIp1eu+LuRW5fjsjQpt3mITAV8SDXHcLWB4Ip6hUNLrnuFpZXdssQLGORmSz8fN5yP4AZbNOyxdKVa23uiVoO6tH4uW63bDLnmRrn5tGtstYFVk1Zv6jyQW0AAABtolDBTw1j+kMoeBUNfNqApz4kqWGnnRwJGnpigoyx9t0vd+/USqR+E+9gmLNKdgb/PV2K9l0st+5dL7JqjgQfyfq9twZjGjD7g3KFxjF1eUk1KRecKnPsS2f2yacF/z4lz9ZR9dI0Y3fb07PRjlWz5YPBSuy8+367/H1yf5AJC9Z/rmKbkucHUIvpL9MG77I/qbm6VmOWdNKncYEb/0FEecqWvgYItKLb7uHaNdTyyjvD9KWnFasiT3avEGzDOn3KvD4B3gUxtDaiNkmu1Rx76jJNtL2gTFmHnD7X74c1fBhWNGiTPH9Ex+kSJBcGpqM1HGMCo47pDiH49EC9QcFoVwcJ3S2U2M9LgXM3aBkuBeVzMFHLQVOyn+v0fFOr1nNAz4PeeWnunrV0dQAAANpSsfr8rIhl2qCn/rFjlAt8qvHxQxWfHS5+03h/aKRyZzr7ZHZtyq7N2zWwmHtz8rBP0Z6NK2TYbYu22/fM/uAVZvlf1aqkJgC8QK74oAsU154fQBINpIVPRzdPDo8G70wT7ZhARVWtxhrpGBmmqRW4aVYd6Sf2q1mSV945QXoamA0+DftVDAdNX1wzVa2e5bZhuR8gtTXqgukeJ/ppdJWiy2Hfl6Y2rQvKRJ6I1XH6XOkatd0ImPz1n2pee/5Kwb7Q2rxrtIajrQU3CYM/psy67fGGvFsoT9Ry0Lja5zpHy/ZymaflOlOZDqY3taSp6QsAANpPgfr81DCmRjptwExfhh+V6HifBkxbEv2cfbKYupJVVSX3ytN+n5+J00Xtk4FeU+VTTAXQ3iYDlrP7ZYfmkQYVXRDSiWlevu2+jSILrpBSfDLNtvtkoyyoqJ2671mtB+sJlq8t2Tfety1s8r7i+nIz9yzzA4hl+pbUPtmSghG2Ftv+SHU002+c98CgmukEskxjmht3eU8xz1k96Y9pu/LO4yoDmp688q7MBs2C9PxBm6WKq+VJxCiDsEuAUu1K082B9lVZDhaH/R567FOpdz8+EpYR/wn9WeaPE6S5WveZBkpdYLXjODH1O2Oqd4Zpuqdwd4jGoxp6SnbKMoxan+dlopaDptU611Xqll4X2M/cLwgAAED7KVCz9/CBR7GxTBsQjSoFTHN3sZjn+qzqlQEvSrltZY9UNuAO+wrduWpO5dPc9Wnr3ohtK+fIKgn7GJ3dPxQ+EKmOBxCVBOmu9FfIWCCnVrRzr35wk7Y6dw8jCkZkeNK812Q/WGZv1VOegi3XDNp4g/TevVNWuM4+S2rPDyAqfPBPZQ3CqLDmzujWzebpzsaYPlxntPQwmGzpZJvmgSDdVj7oKCn9kaHw6dVO2O9mlyxOjJLmlXdh7dG6aga6QF1FM9Ugnc1h0/tWBY7bxdj2YdMlQGXlXq8Grt0HUebBR7uHZfOeYP9U1QyuPX9J8PlQ1YOLXDcH3XKR6dtzbWUfi6a7A61B7MpTh5hW8LsfD0qaFUyT1tq+LHkZ4fuEz4P1XpdrMGuiloN61H+ui6GBfdNWflNYGz2Rrc0e+2MPAADA5DZtPC4q2KSDBw/K9OnT7buJseGWW+TDH/qQHHOsvSLTgGf4Ktab33yEfGXdjfKJj18ts0480Y6Np/1P9jy1XvaaBwHp09bnyKrTKp+2vm9gocxZdZoMj5drLJr5vGjniuG9cuoNSfN6Ab4FblkuDa0J6T0USYOj2i9ohie+V657dJ0q03XTDl9xt/R466PN8suLqd7+6DIqtke35fqnZU6PVORNMJd58vxGb1udbPMDqKBBCNP/Xhyt6VZ+UIneIIfNr0PalLVUCTFLOpJhmrEh6du0v2K5cbTvxU2yPLUWZOw0+uTpxPQ1CKk1Oe1bU9MyJbCZV9655Up6H6lrt3ZWrU803SDhKV0zVIPIYXZU5r+qyCvtk7Bnv6zdJJE8DZ/Svls/j+yLbPOXmfJXClRWr09YFv1IZsw00TIZ7N/lQanetL+8fmY53vsK0WVEykdV+YnZ7goxx090+XHrU/dy0GJ1nuuU2fcx5d2VMbtPxyrKvTXFz0sAAKB9FSb4Obhhg3zoQx+W44/XJoXZ/NevrJPej39cZs1KD362MxOYlNpBUhUNYmZVzzIATA2xAcsctTp9AAAAAEAxFCb4uX5g0DRt1+GQPshIX5uHIOl7/RuMC96Hr91wSD75iU/IrFmzbCpFE9bSvPuKvbKjVG00WWPBz/qWAWAKsDUpOytqReao1ekDAAAAAAqjMMFPxNi2Uqb1PFXZZD5FQ8HPOpcBAAAAAAAATJTCPPBoarIPH0oaejbKiuHWBCW1X85WLwMAAAAAAABoBjU/AQAAAAAAABQSNT8BAAAAAAAAFBLBTwAAAAAAAACFRPATAAAAAAAAQCER/AQAAAAAAABQSAQ/AQAAAAAAABQSwU8AAAAAAAAAhUTwEwAAAAAAAEAhEfwEAAAAAAAAUEgEPwEAAAAAAAAUEsFPAAAAAAAAAIVE8BMAAAAAAABAIRH8BAAAAAAAAFBIBD8BAAAAAAAAFBLBTwAAAAAAAACFRPATAAAAAAAAQCER/AQAAAAAAABQSAQ/AQAAAAAAABQSwU8AAAAAAAAAhUTwEwAAAAAAAEAhEfwEAAAAAAAAUEgEPwEAAAAAAAAUEsFPAAAAAAAAAIVE8BMAAAAAAABAIRH8BAAAAAAAAFBIBD8BAAAAAAAAFBLBTwAAAAAAAACFRPATAAAAAAAAQCER/AQAAAAAAABQSAQ/AQAAAAAAABQSwU8AAAAAAAAAhUTwEwAAAAAAAEAhEfwEAAAAAAAAUEgEPwEAAAAAAAAUEsFPAAAAAAAAAIVE8BMAAAAAAABAIRH8BAAAAAAAAFBIBD8BAAAAAAAAFBLBTwAAAAAAAACFRPATAAAAAAAAQAGJ/P/bS28oeJgDXQAAAABJRU5ErkJggg=="></p>
+<p>在启动的时候,本地自动生成了这样的<code>.class</code>文件和<code>.java</code>文件</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/*
+ * Generated by the Jasper component of Apache Tomcat
+ * Version: Apache Tomcat/8.5.81
+ * Generated at: 2022-11-05 12:52:44 UTC
+ * Note: The last modified time of this file was set to
+ *       the last modified time of the source file after
+ *       generation to assist with modification tracking.
+ */</span>
+<span class="token keyword">package</span> <span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>jsp</span><span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span></span><span class="token operator">*</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span><span class="token operator">*</span></span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token import"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span><span class="token operator">*</span></span><span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">final</span> <span class="token keyword">class</span> index_jsp <span class="token keyword">extends</span> <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>jasper<span class="token punctuation">.</span>runtime<span class="token punctuation">.</span></span>HttpJspBase</span>
+    <span class="token keyword">implements</span> <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>jasper<span class="token punctuation">.</span>runtime<span class="token punctuation">.</span></span>JspSourceDependent</span><span class="token punctuation">,</span>
+                 <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>jasper<span class="token punctuation">.</span>runtime<span class="token punctuation">.</span></span>JspSourceImports</span> <span class="token punctuation">&#123;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span>JspFactory</span> _jspxFactory <span class="token operator">=</span>
+          <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span>JspFactory</span><span class="token punctuation">.</span><span class="token function">getDefaultFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>String</span><span class="token punctuation">,</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Long</span><span class="token punctuation">></span></span> _jspx_dependants<span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>String</span><span class="token punctuation">></span></span> _jspx_imports_packages<span class="token punctuation">;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>String</span><span class="token punctuation">></span></span> _jspx_imports_classes<span class="token punctuation">;</span>
+
+  <span class="token keyword">static</span> <span class="token punctuation">&#123;</span>
+    _jspx_imports_packages <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>HashSet</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _jspx_imports_packages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"javax.servlet"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _jspx_imports_packages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"javax.servlet.http"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _jspx_imports_packages<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token string">"javax.servlet.jsp"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    _jspx_imports_classes <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>el<span class="token punctuation">.</span></span>ExpressionFactory</span> _el_expressionfactory<span class="token punctuation">;</span>
+  <span class="token keyword">private</span> <span class="token keyword">volatile</span> <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>tomcat<span class="token punctuation">.</span></span>InstanceManager</span> _jsp_instancemanager<span class="token punctuation">;</span>
+
+  <span class="token keyword">public</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>String</span><span class="token punctuation">,</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Long</span><span class="token punctuation">></span></span> <span class="token function">getDependants</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> _jspx_dependants<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">public</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>String</span><span class="token punctuation">></span></span> <span class="token function">getPackageImports</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> _jspx_imports_packages<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">public</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>Set</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>String</span><span class="token punctuation">></span></span> <span class="token function">getClassImports</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> _jspx_imports_classes<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">public</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>el<span class="token punctuation">.</span></span>ExpressionFactory</span> <span class="token function">_jsp_getExpressionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_el_expressionfactory <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>_el_expressionfactory <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+          _el_expressionfactory <span class="token operator">=</span> _jspxFactory<span class="token punctuation">.</span><span class="token function">getJspApplicationContext</span><span class="token punctuation">(</span><span class="token function">getServletConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getExpressionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> _el_expressionfactory<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">public</span> <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>tomcat<span class="token punctuation">.</span></span>InstanceManager</span> <span class="token function">_jsp_getInstanceManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_jsp_instancemanager <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>_jsp_instancemanager <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+          _jsp_instancemanager <span class="token operator">=</span> <span class="token class-name"><span class="token namespace">org<span class="token punctuation">.</span>apache<span class="token punctuation">.</span>jasper<span class="token punctuation">.</span>runtime<span class="token punctuation">.</span></span>InstanceManagerFactory</span><span class="token punctuation">.</span><span class="token function">getInstanceManager</span><span class="token punctuation">(</span><span class="token function">getServletConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> _jsp_instancemanager<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">_jspInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">_jspDestroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">_jspService</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span>HttpServletRequest</span> request<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span>HttpServletResponse</span> response<span class="token punctuation">)</span>
+      <span class="token keyword">throws</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>IOException</span><span class="token punctuation">,</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span></span>ServletException</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>String</span> _jspx_method <span class="token operator">=</span> request<span class="token punctuation">.</span><span class="token function">getMethod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token string">"GET"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>_jspx_method<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token string">"POST"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>_jspx_method<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token string">"HEAD"</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>_jspx_method<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span></span>DispatcherType</span><span class="token punctuation">.</span><span class="token constant">ERROR</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>request<span class="token punctuation">.</span><span class="token function">getDispatcherType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      response<span class="token punctuation">.</span><span class="token function">sendError</span><span class="token punctuation">(</span><span class="token class-name">HttpServletResponse</span><span class="token punctuation">.</span><span class="token constant">SC_METHOD_NOT_ALLOWED</span><span class="token punctuation">,</span> <span class="token string">"JSP 只允许 GET、POST 或 HEAD。Jasper 还允许 OPTIONS"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span>PageContext</span> pageContext<span class="token punctuation">;</span>
+    <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span>HttpSession</span> session <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span></span>ServletContext</span> application<span class="token punctuation">;</span>
+    <span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span></span>ServletConfig</span> config<span class="token punctuation">;</span>
+    <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span>JspWriter</span> out <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Object</span> page <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+    <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span>JspWriter</span> _jspx_out <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span>PageContext</span> _jspx_page_context <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+
+    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+      response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"text/html;charset=UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      pageContext <span class="token operator">=</span> _jspxFactory<span class="token punctuation">.</span><span class="token function">getPageContext</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> request<span class="token punctuation">,</span> response<span class="token punctuation">,</span>
+      			<span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token number">8192</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      _jspx_page_context <span class="token operator">=</span> pageContext<span class="token punctuation">;</span>
+      application <span class="token operator">=</span> pageContext<span class="token punctuation">.</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      config <span class="token operator">=</span> pageContext<span class="token punctuation">.</span><span class="token function">getServletConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      session <span class="token operator">=</span> pageContext<span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out <span class="token operator">=</span> pageContext<span class="token punctuation">.</span><span class="token function">getOut</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      _jspx_out <span class="token operator">=</span> out<span class="token punctuation">;</span>
+        <span class="token comment">/*写入页面的代码*/</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"&lt;html>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  &lt;head>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"    &lt;title>$Title$&lt;/title>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  &lt;/head>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  &lt;body>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  $END$\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  &lt;/body>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"&lt;/html>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Throwable</span> t<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>t <span class="token keyword">instanceof</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span>SkipPageException</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        out <span class="token operator">=</span> _jspx_out<span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>out <span class="token operator">!=</span> <span class="token keyword">null</span> <span class="token operator">&amp;&amp;</span> out<span class="token punctuation">.</span><span class="token function">getBufferSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+          <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>response<span class="token punctuation">.</span><span class="token function">isCommitted</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+              out<span class="token punctuation">.</span><span class="token function">flush</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+              out<span class="token punctuation">.</span><span class="token function">clearBuffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+          <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>_jspx_page_context <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> _jspx_page_context<span class="token punctuation">.</span><span class="token function">handlePageException</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span> <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ServletException</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>
+      _jspxFactory<span class="token punctuation">.</span><span class="token function">releasePageContext</span><span class="token punctuation">(</span>_jspx_page_context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>简单来说就是<code>index.jsp</code>会被<code>tomcat</code>翻译生成<code>index_jsp.java</code>文件,然后<code>tomcat</code>服务器又会将<code>index_jsp.java</code>生成<code>.class</code>文件,然后交给<code>jvm</code>进行类加载与运行。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">HttpJspBase</span> <span class="token keyword">extends</span> <span class="token class-name">HttpServlet</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>同时可以知道<code>JspBase</code>也是继承自<code>HttpServlet</code>的,因此其本质还是<code>Servlet</code></p>
+<p>因此<code>jsp</code>的生命周期和<code>Servlet</code>的生命周期是完全一样的</p>
+<p>因此<code>jsp</code>是一个<code>(假)单例</code></p>
+<blockquote>
+<p>为什么jsp文件第一次访问的时候比较慢?</p>
+<p>这是因为第一次访问的时候类还没有生成,因此需要翻译生成jsp.java文件,然后还要编译成<code>jsp.class</code>文件,还要还要拿去<code>jvm</code>加载使用。这个过程还是比较耗时的 </p>
+</blockquote>
+<h2 id="3-JSP是什么"><a href="#3-JSP是什么" class="headerlink" title="3. JSP是什么?"></a>3. JSP是什么?</h2><p><code>JSP</code>是java程序，其本质还是<code>Servlet</code></p>
+<p>基于Java语言实现的服务端的页面。</p>
+<p><code>JSP</code>是一套规范,所有的<code>web/web服务</code>都是遵循这套规则的,都是按照这套规范进行的代码生成</p>
+<p>每一个<code>web容器/web服务器</code>都内置一个<code>JSP</code>的翻译引擎。</p>
+<h2 id="4-JSP写的java代码都去哪里了"><a href="#4-JSP写的java代码都去哪里了" class="headerlink" title="4. JSP写的java代码都去哪里了?"></a>4. JSP写的java代码都去哪里了?</h2><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+      response<span class="token punctuation">.</span><span class="token function">setContentType</span><span class="token punctuation">(</span><span class="token string">"text/html;charset=UTF-8"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      pageContext <span class="token operator">=</span> _jspxFactory<span class="token punctuation">.</span><span class="token function">getPageContext</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> request<span class="token punctuation">,</span> response<span class="token punctuation">,</span>
+      			<span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token number">8192</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      _jspx_page_context <span class="token operator">=</span> pageContext<span class="token punctuation">;</span>
+      application <span class="token operator">=</span> pageContext<span class="token punctuation">.</span><span class="token function">getServletContext</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      config <span class="token operator">=</span> pageContext<span class="token punctuation">.</span><span class="token function">getServletConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      session <span class="token operator">=</span> pageContext<span class="token punctuation">.</span><span class="token function">getSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out <span class="token operator">=</span> pageContext<span class="token punctuation">.</span><span class="token function">getOut</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      _jspx_out <span class="token operator">=</span> out<span class="token punctuation">;</span>
+        <span class="token comment">/*写入页面的代码*/</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"&lt;html>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  &lt;head>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"    &lt;title>$Title$&lt;/title>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  &lt;/head>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  &lt;body>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  $END$\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"  &lt;/body>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      out<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span><span class="token string">"&lt;/html>\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>同样的是这一段代码,我们通过jsp注入的代码都会通过这一段代码行进行注释</p>
+<h2 id="5-JSP九大内置对象"><a href="#5-JSP九大内置对象" class="headerlink" title="5. JSP九大内置对象"></a>5. JSP九大内置对象</h2><p><code>JSP</code>指令的作用:指导当前的<code>JSP</code>引擎应该如何翻译<code>JSP</code>代码</p>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;!--包含指令--&gt;
+&lt;%@include%&gt;
+&lt;!--JSTL标签库--&gt;
+&lt;%@taglib%&gt;
+&lt;!--page指令--&gt;
+&lt;%@page%&gt;
+&lt;%@指令名 属性名&#x3D;属性值 属性名&#x3D;属性值%&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>关于page指令</p>
+</blockquote>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;%@page session&#x3D;&quot;true|fasle&quot; %&gt;
+&lt;!--true表示启用jsp内置的session对象,false表示不启用,无法使用session对象,true的话就是没有session将会新建--&gt;
+&lt;%@page contentType&#x3D;&quot;text&#x2F;json&quot; %&gt;
+&lt;!--设置响应的内容类型--&gt;
+&lt;%@page pageEncoding&#x3D;&quot;UTF-8&quot;%&gt;
+&lt;!--设置响应时采用的字符集,或者你在contentType加也可以--&gt;
+&lt;!--一般不要两个都设置--&gt;
+&lt;%@page import&#x3D;&quot;java.util.*&quot; %&gt;
+&lt;!--导包--&gt;
+&lt;%@page errorPage&#x3D;&quot;&#x2F;error.jsp&quot;%&gt;
+&lt;%@page isErrirPage&#x3D;&quot;true&quot;%&gt;
+&lt;!--启用jsp九大内置对象的exception对象,默认值为false--&gt;
+&lt;!--这个路径&#x2F;是代表项目的根路径,从webapp下开始的--&gt;
+&lt;!--在jsp页面中提供错误页标识--&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>关于九大内置对象</p>
+</blockquote>
+<ul>
+<li>四大域对象</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span>PageContext</span> pageContext<span class="token punctuation">;</span>	<span class="token comment">//页面作用域,页面的上下文,只在这个页面中存活</span>
+<span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span>HttpServletRequest</span> request<span class="token punctuation">;</span><span class="token comment">//请求域对象</span>
+<span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span>HttpSession</span> session <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>		<span class="token comment">//会话域对象</span>
+<span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span></span>ServletContext</span> application<span class="token punctuation">;</span>		<span class="token comment">//应用域对象</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>http<span class="token punctuation">.</span></span>HttpServletResponse</span> response<span class="token punctuation">;</span><span class="token comment">//响应</span>
+<span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span></span>ServletConfig</span> config<span class="token punctuation">;</span>			  <span class="token comment">//initParams</span>
+<span class="token class-name"><span class="token namespace">javax<span class="token punctuation">.</span>servlet<span class="token punctuation">.</span>jsp<span class="token punctuation">.</span></span>JspWriter</span> out <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>				  <span class="token comment">//输出</span>
+<span class="token keyword">final</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Object</span> page <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">;</span>					  <span class="token comment">//当前的servlet对象</span>
+<span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span></span>Throwable</span> exception<span class="token punctuation">;</span>						  <span class="token comment">//内置异常控制流对象</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>关于页面域对象</p>
+</blockquote>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">pageConext.getRequest() <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>在<code>EL</code>表达式中是没有<code>request</code>这个对象的,之前所说的<code>requestScope</code>是一个人请求范围,并不等同于这个<code>request</code>对象</p>
+<h1 id="E-L表达式"><a href="#E-L表达式" class="headerlink" title="E-L表达式"></a>E-L表达式</h1><h2 id="1-什么是E-L表达式"><a href="#1-什么是E-L表达式" class="headerlink" title="1. 什么是E-L表达式"></a>1. 什么是E-L表达式</h2><p><code>Expression Language</code>:表达式语言</p>
+<p><code>E-L</code>表达式可以代替<code>JSP</code>中的<code>java</code>代码,让<code>JSP</code>文件中的程序看起来更加整洁与美观</p>
+<blockquote>
+<p>作用:从某个作用域中取数据,然后将其转化为字符串,然后将其输出到浏览器,这就是<code>EL</code>表达式的作用。</p>
+</blockquote>
+<ul>
+<li>从某个域中取数据<ul>
+<li>pageContext</li>
+<li>request</li>
+<li>session</li>
+<li>application</li>
+</ul>
+</li>
+<li>取出的数据转为字符串<ul>
+<li>如果是java对象,那么则会转为toString()后输出</li>
+</ul>
+</li>
+<li>字符串输出到浏览器。</li>
+</ul>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">$&#123;表达式&#125;
+&lt;!--EL表达式的基本语法形式--&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>关于取对象属性的过程</p>
+</blockquote>
+<p>对于任意的对象而言，如果我们想要使用EL表达式,底层实际上是调用<code>get()</code>和<code>set()</code>方法</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">User</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> name<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> password<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+    <span class="token comment">//注意get和set方法也要使用驼峰命名的规范,否则不起作用。</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">$&#123;user.username&#125;
+$&#123;user.password&#125;
+$&#123;user.age&#125;
+$&#123;&quot;userObj&quot;&#125;
+&lt;!--如果输入的是&quot;useObj&quot;,EL表达式将会将其转为普通字符串进行输出--&gt;
+&lt;!--也就是说实际上调用的get方法--&gt;
+&lt;%--使用EL表达式取数据--%&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>如果内部数据相同怎么办?</p>
+</blockquote>
+<p>则会按照<code>pageContext&lt;request&lt;session&lt;application</code>优先从小范围中取数据。</p>
+<p>还可以通过指定域来取数据</p>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">$&#123;pageScope.data&#125;
+$&#123;requestScope.data&#125;
+$&#123;sessionScope.data&#125;
+$&#123;applicationScope.data&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>对空的处理</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span><span class="token punctuation">(</span>userObj <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token function">sout</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="2-取数据的语法"><a href="#2-取数据的语法" class="headerlink" title="2. 取数据的语法"></a>2. 取数据的语法</h2><pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;%--EL表达式中取数据包括两种方式--%&gt;
+&lt;%&gt;
+    User userObj &#x3D; new User();
+    request.setAttribute(userObj,&quot;username&quot;);
+&lt;%&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>一般来说,使用<code>.</code>访问符就足够使用了,但是如果name中含有了特殊字符,例如<code>.</code>等则使用<code>[]</code>内加name字符串来获得数据。</p>
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">$&#123;userObj[&quot;abc.edc&quot;]&#125;
+&lt;%--如果是数组的对象,那么就应该是直接取数据的方式--%&gt;
+$&#123;userObj[1]&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="3-EL表达式基本操作"><a href="#3-EL表达式基本操作" class="headerlink" title="3.EL表达式基本操作"></a>3.EL表达式基本操作</h2><pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">&lt;%page isELIgnore&#x3D;&quot;true&quot;%&gt;
+\&#123;username&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-jsp" data-language="jsp"><code class="language-jsp">pageContext
+param
+paramValues
+initParam<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">穿山甲</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lumxi.github.io/2022/11/02/javaweb/jsp/">https://lumxi.github.io/2022/11/02/javaweb/jsp/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">穿山甲</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2022/11/02/algorithm/labuladong/sonStru/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="最优子结构和DP数组遍历方向">
+                        
+                        <span class="card-title">最优子结构和DP数组遍历方向</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-02
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
+                                    数据结构与算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/leetcode/">
+                        <span class="chip bg-color">leetcode</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2022/10/29/Mybatis/Mybatis-1/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="深入学习Mybatis">
+                        
+                        <span class="card-title">深入学习Mybatis</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-29
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Mybatis/" class="post-category">
+                                    Mybatis
+                                </a>
+                            
+                            <a href="/categories/Mybatis/Mysql/" class="post-category">
+                                    Mysql
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2022</span>
+            
+            <a href="/about" target="_blank">穿山甲</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

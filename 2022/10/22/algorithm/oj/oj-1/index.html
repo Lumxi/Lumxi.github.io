@@ -4,10 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="石子合并问题, 后端工程师之路">
-    <meta name="description" content="石子合并问题1. 一行排列并且相邻合并的模型一行排列且相邻合并有n堆石子A1,A2,...,An形成一行，
-每堆石头个数记为ai(1&amp;lt;=i&amp;lt;=n)，相邻两堆可合并，合并的分值为新堆的石子数。求合并为一堆的最低得分和最高得分。
-这">
+    <meta name="keywords" content="区间dp问题, 后端工程师之路">
+    <meta name="description" content="区间dp概述什么是区间dp
+区间dp就是在区间上进行动态规划,求解一段区间上的最优解,其主要的手段是通过合并小区间的最优解进而得出整个大区间上的最优解。
+
+核心思路
+如果是要求一个大区间上的最优解,那么就将这区间分割成一个个小区间,求解每个">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +21,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>石子合并问题 | 后端工程师之路</title>
+    <title>区间dp问题 | 后端工程师之路</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -336,12 +338,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">石子合并问题</h1>
+                    <h1 class="description center-align post-title">区间dp问题</h1>
                 </div>
             </div>
         </div>
@@ -418,11 +420,33 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="石子合并问题"><a href="#石子合并问题" class="headerlink" title="石子合并问题"></a>石子合并问题</h1><h2 id="1-一行排列并且相邻合并的模型"><a href="#1-一行排列并且相邻合并的模型" class="headerlink" title="1. 一行排列并且相邻合并的模型"></a>1. 一行排列并且相邻合并的模型</h2><p>一行排列且相邻合并有<code>n</code>堆石子<code>A1,A2,...,An</code>形成一行，</p>
+                <h1 id="区间dp概述"><a href="#区间dp概述" class="headerlink" title="区间dp概述"></a>区间dp概述</h1><p><strong>什么是区间dp</strong></p>
+<p>区间dp就是在区间上进行动态规划,求解一段区间上的最优解,其主要的手段是通过<code>合并小区间</code>的最优解进而得出整个大区间上的最优解。</p>
+<blockquote>
+<p>核心思路</p>
+<p>如果是要求一个大区间上的最优解,那么就将这区间分割成一个个小区间,求解每个小区间的最优解,再合并每个小区间的最优解,从而得到大区间上的最优解即可。</p>
+<p>所以自然在代码的实现上,可以枚举区间长度<code>len</code>为每次分割成的小区间<code>(由短到长不断合并)</code>,所以问题就变成了如何穷举所有的区间的这个问题。</p>
+<p>同时,由于一个区间的最优解是通过枚举其内的小区间来做的,因此需要枚举大区间内的每一个区间的情况。</p>
+<p>对于区间的合并,一定存在一个分界点,这个分界点就是哪两个区间合并的界限,因此我们如果要穷举所有区间合并的情况,只需要穷举分界点即可</p>
+</blockquote>
+<p><strong>如何穷举所有的区间?</strong></p>
+<p>从一个起点出发,延伸出来的区间长度是<code>[1+i]</code>个,其中<code>i∈[0,n-1]</code>,用代码来表示就是</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>len<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>		  <span class="token comment">//枚举长度</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">+</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//枚举起点</span>
+        <span class="token keyword">int</span> end <span class="token operator">=</span> j <span class="token operator">+</span> len <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span> j<span class="token punctuation">;</span>k<span class="token operator">&lt;</span>end<span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token comment">//状态转移。</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>我们注意到这种题目通常需要借助于两个区间的结果来得到答案,这种情况下,那么这道题就不是独立子问题了呢?</strong></p>
+<p>注意:划分是否是独立子问题的唯一标准是子问题之间是否会产生联系,也就是一个子问题的答案依赖于另一个子问题的答案,而这道题而言,一旦我们确定了区间长度和切分点,这时候的状态就是唯一确定的,而且左右区间互不关联,没有任何联系,因此是独立的,同时也容易知道,这个状态对应的结果也只有一个,是依赖于单个结果进行转移的,具有最优子结构没错。</p>
+<h2 id="经典例题-石子合并问题"><a href="#经典例题-石子合并问题" class="headerlink" title="经典例题:石子合并问题"></a>经典例题:石子合并问题</h2><h3 id="1-一行排列并且相邻合并的模型"><a href="#1-一行排列并且相邻合并的模型" class="headerlink" title="1. 一行排列并且相邻合并的模型"></a>1. 一行排列并且相邻合并的模型</h3><p>一行排列且相邻合并有<code>n</code>堆石子<code>A1,A2,...,An</code>形成一行，</p>
 <p>每堆石头个数记为<code>ai(1&lt;=i&lt;=n)</code>，相邻两堆可合并，合并的分值为新堆的石子数。求合并为一堆的最低得分和最高得分。</p>
 <p>这道题是动态规划的经典问题，既然是动态规划，我们应该从<code>状态</code>、<code>选择</code>这两个维度对问题进行分析。</p>
 <ul>
-<li><strong>状态</strong>:当前正在合并哪一堆石子?我们用一个指针i指向数组，表示当前正在合并哪一堆石子，然后我们知道，合并的时候，合并旁边的石子<code>并不一定只是合并一堆，也就是a[i-1]或者a[i+1]</code>，而是有可能合并一个区间内的石子，这是因为合并之后，这些石子就归成一堆了，因此我们的状态涉及到两个变量，可以这样来表示:<code>从i...j</code>这个区间内合并成一堆石子所能得到的得分，至于是最低得分还是最高低分，这个按照题目要求来定义即可。回推题目的过程，如果要得出答案，最终一定是<code>dp[0][n-1] = dp[0][k] + dp[k+1][n-1]</code>这个式子来决定的</li>
+<li><strong>状态</strong>:当前正在合并哪一堆石子?我们用一个指针i指向数组，表示当前正在合并哪两堆石子,合并石子的时候,然后我们知道，合并的时候，合并旁边的石子<code>并不一定只是合并一堆，也就是a[i-1]或者a[i+1]</code>，而是有可能合并一个区间内的石子，这是因为合并之后，这些石子就归成一堆了，因此我们的状态涉及到两个变量，可以这样来表示:<code>从i...j</code>这个区间内合并成一堆石子所能得到的得分，至于是最低得分还是最高低分，这个按照题目要求来定义即可。回推题目的过程，如果要得出答案，最终一定是<code>dp[0][n-1] = dp[0][k] + dp[k+1][n-1]</code>这个式子来决定的</li>
 </ul>
 <p>同时容易知道，题目的最后答案应当是<code>dp[0][n-1]</code>:从0到n-1合并石子后所能得到的最高(最低)得分</p>
 <ul>
@@ -443,38 +467,131 @@
 <p>然后两者取最小，就是这三堆合并的最小代价</p>
 <p>如果石子有四堆，那么我们想象一下，我们已经合并好了其中的三堆，那么我要做的就是从这合并好了的三堆中得到一个最优解，把这个最优解加上新来的石子，就可以了，同理，五堆、六堆…n堆也是一样的</p>
 <p>我们以五堆的情况来分析一下情况，我们假设这五堆石子是<code>1 2 3 4 5</code>，然后我尝试第3堆石子准备要合并，那么合并的话必然是用<code>a[0]-a[1]</code>合并后的结果与<code>a[2]</code>合并，或者是用<code>a[3]-a[4]</code>合并后的结果与<code>a[2]</code>合并。如果我们想要求出最终的最优解，最简单的办法就是做一个穷举</p>
-<p><strong>穷举出每一个切分点，从切分点入手，这样的话就可以得到答案了</strong></p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">if</span><span class="token punctuation">(</span> i <span class="token operator">==</span> j<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//base-case</span>
-<span class="token punctuation">&#125;</span>
-dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span>sum<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>穷举其就是穷举所有的合并情况,那么合并情况是怎么的出来的呢?</p>
+<p>**关键就是一个倒推的思想,合并的时候肯定是两堆石头合并在一起,因此在最后的合并之前,必然存在一个分界点,假设这个分界点是k,使得左边那堆石子是<code>[l,k]</code>,右边那堆石子是<code>[k+1,r]</code>**。</p>
+<p>最后梳理一下动态规划的三要素</p>
+<ul>
+<li><code>状态</code>：合并的分界点是哪个?合并的区间长度是多少?</li>
+<li><code>选择</code>：是选择之前区间合并的最小值,还是在新分界点合并的最小值?</li>
+<li><code>定义dp数组</code>:<code>dp[l][r]</code>,从第<code>l堆</code>石子合并到<code>第r堆</code>石子所能得到的最小代价,注意:闭区间</li>
+<li><code>状态转移方程</code></li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//base-case</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>l <span class="token operator">==</span> r<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">//当是同一堆石子的时候,不需要合并,因此</span>
+    dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//推广,状态转移</span>
+dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">,</span>dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token operator">+</span>preSump<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//根据计算规则,就是合并[l][k]的代价+合并[k+1][r]的代价+这两堆的总重量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>根据上述分析写出ac代码</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">//</span>
+<span class="token comment">// Created by 12743 on 2022/10/7.</span>
+<span class="token comment">//</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+<span class="token keyword">const</span> <span class="token keyword">static</span> <span class="token keyword">int</span> N <span class="token operator">=</span> <span class="token number">100</span><span class="token operator">+</span><span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> nums<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> dp<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> preSum<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
 <span class="token keyword">public</span><span class="token operator">:</span>
-    <span class="token keyword">int</span> nums<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token keyword">int</span> preSum<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//前缀和优化</span>
-    <span class="token keyword">int</span> dp<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//从i到j合并石子的最小代价</span>
     <span class="token keyword">void</span> <span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token function">memset</span><span class="token punctuation">(</span>dp<span class="token punctuation">,</span><span class="token number">0x3f3f</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>dp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//除了0 0 其他都设置成无穷大</span>
         <span class="token keyword">int</span> n<span class="token punctuation">;</span>cin<span class="token operator">>></span>n<span class="token punctuation">;</span>
+        <span class="token comment">//从1开始,方便做前缀和</span>
         preSum<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
         <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            cin<span class="token operator">>></span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span><span class="token comment">//读取数组</span>
-            preSum<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> preSum<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            cin<span class="token operator">>></span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+            preSum<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+</span> preSum<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">//这个memset是为了区分记录了答案和没有记录答案的数组</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>dp<span class="token punctuation">,</span><span class="token number">0x3f3f3f</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span> dp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//定义dp数组,dp[l][r]:从l合并到r</span>
+        <span class="token comment">//定义base-case</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
             dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
-        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>len <span class="token operator">&lt;=</span> n<span class="token punctuation">;</span> len<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">+</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                <span class="token keyword">int</span> j <span class="token operator">=</span> i<span class="token operator">+</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-                <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span> i<span class="token punctuation">;</span>k <span class="token operator">&lt;</span> j<span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                    dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">,</span>
-                                        dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span>preSum<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">-</span>preSum<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//枚举长度</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>len<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>len<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//长度最大为n</span>
+            <span class="token comment">//枚举起点,如果i是起点,len是区间长度,那么r是多少?</span>
+            <span class="token comment">//如果i是1,我们想要的区间长度是1,那么也就是区间只包含i这个元素</span>
+            <span class="token comment">//那么也就是从1遍历到1,那么end就是i+1-1</span>
+            <span class="token comment">//同理,如果区间长度是2,那么也就是区间包含i和i+1这个元素</span>
+            <span class="token comment">//也么也就是从1遍历到2,那么end就是i+2-1</span>
+            <span class="token comment">//...所以r = l+len-1</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>l<span class="token operator">+</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>l<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                <span class="token keyword">int</span> r <span class="token operator">=</span> l<span class="token operator">+</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span> l<span class="token punctuation">;</span>k <span class="token operator">&lt;</span> r<span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//为了确保k+1有元素,也就是说是右边有那一堆,因为这样我才能合并!]</span>
+                    dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token operator">+</span><span class="token punctuation">(</span>preSum<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token operator">-</span>preSum<span class="token punctuation">[</span>l<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
                 <span class="token punctuation">&#125;</span>
             <span class="token punctuation">&#125;</span>
         <span class="token punctuation">&#125;</span>
-        cout<span class="token operator">&lt;&lt;</span>dp<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        cout<span class="token operator">&lt;&lt;</span>dp<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
     <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    ios<span class="token double-colon punctuation">::</span><span class="token function">sync_with_stdio</span><span class="token punctuation">(</span><span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Solution solution<span class="token punctuation">;</span>
+    solution<span class="token punctuation">.</span><span class="token function">solve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>如果让你求合并的最大代价,你怎么求?</li>
+</ul>
+<p>同样的分析思路,如果要求区间的最大值,那么我就求子区间的最大值就可以了,只需要在决策过程中将<code>min()</code>改成<code>max()</code>即可</p>
+<h3 id="2-第二个模型-一圈排列并且相邻合并"><a href="#2-第二个模型-一圈排列并且相邻合并" class="headerlink" title="2. 第二个模型:一圈排列并且相邻合并"></a>2. 第二个模型:一圈排列并且相邻合并</h3><p>对于有环的问题,一般思路就是将数组复制一份出来接上去,另一种方案就是通过指针取模运算来得到答案</p>
+<p>这里的话采用第一种思路比较好理解。代码如下:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">transfer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token comment">//接一半数组上去,前缀和需要重新计算</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> n<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span><span class="token number">2</span><span class="token operator">*</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> nums<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token operator">%</span>n<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            preSum<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> preSum<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>nums<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">void</span> <span class="token function">solve3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token function">memset</span><span class="token punctuation">(</span>dp<span class="token punctuation">,</span><span class="token number">0x3f3f3f</span><span class="token punctuation">,</span><span class="token keyword">sizeof</span> dp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//定义dp数组,dp[l][r]:从l合并到r</span>
+        <span class="token comment">//定义base-case</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span><span class="token number">2</span><span class="token operator">*</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">//枚举长度,注意,这里不能超过n否则一堆石头就会被算两次</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>len<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>len<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//长度最大为n</span>
+            <span class="token comment">//枚举起点,如果i是起点,len是区间长度,那么r是多少?</span>
+            <span class="token comment">//如果i是1,我们想要的区间长度是1,那么也就是区间只包含i这个元素</span>
+            <span class="token comment">//那么也就是从1遍历到1,那么end就是i+1-1</span>
+            <span class="token comment">//同理,如果区间长度是2,那么也就是区间包含i和i+1这个元素</span>
+            <span class="token comment">//也么也就是从1遍历到2,那么end就是i+2-1</span>
+            <span class="token comment">//...所以r = l+len-1</span>
+            <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>l<span class="token operator">+</span>len<span class="token operator">&lt;=</span><span class="token number">2</span><span class="token operator">*</span>n<span class="token punctuation">;</span>l<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                <span class="token keyword">int</span> r <span class="token operator">=</span> l<span class="token operator">+</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+                <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> k <span class="token operator">=</span> l<span class="token punctuation">;</span>k <span class="token operator">&lt;</span> r<span class="token punctuation">;</span>k<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//为了确保k+1有元素,也就是说是右边有那一堆,因为这样我才能合并!]</span>
+                    dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span> <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span>dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token punctuation">,</span>
+                                        dp<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>k<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token operator">+</span><span class="token punctuation">(</span>preSum<span class="token punctuation">[</span>r<span class="token punctuation">]</span><span class="token operator">-</span>preSum<span class="token punctuation">[</span>l<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">int</span> min <span class="token operator">=</span> <span class="token number">0x3f3f3f</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>n<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            min <span class="token operator">=</span> std<span class="token double-colon punctuation">::</span><span class="token function">min</span><span class="token punctuation">(</span>min<span class="token punctuation">,</span>dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token operator">+</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        cout<span class="token operator">&lt;&lt;</span>min<span class="token operator">&lt;&lt;</span><span class="token string">" "</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+
+
+
 
 
 
