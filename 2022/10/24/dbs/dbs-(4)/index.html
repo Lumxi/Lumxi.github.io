@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="数据库原理-中级SQL, 后端工程师之路">
-    <meta name="description" content="">
+    <meta name="description" content="1. 连接表达式1.1 连接条件join using子句是一种自然连接的形式,只需要在指定属性上取值匹配,SQL支持另外一种形式的连接,其中可以指定任意的连接条件。on条件允许在参与连接的关系上设置通用的谓词,该谓词的写法与where子句谓">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -412,7 +412,17 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h1 id="1-连接表达式"><a href="#1-连接表达式" class="headerlink" title="1. 连接表达式"></a>1. 连接表达式</h1><h2 id="1-1-连接条件"><a href="#1-1-连接条件" class="headerlink" title="1.1 连接条件"></a>1.1 连接条件</h2><p><code>join using</code>子句是一种自然连接的形式,只需要在指定属性上取值匹配,<code>SQL</code>支持另外一种形式的连接,其中可以指定任意的连接条件。<code>on</code>条件允许在参与连接的关系上设置通用的谓词,该谓词的写法与<code>where</code>子句谓词是类似的。用来指定满足连接条件的字段进行连接。<code>on</code>条件出现在连接表达式的末尾。</p>
+<p>例如</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> student <span class="token keyword">join</span> takes <span class="token keyword">on</span> student<span class="token punctuation">.</span>ID <span class="token operator">=</span> takes<span class="token punctuation">.</span>ID<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>上述<code>on</code>条件表明:如果一个来自<code>student</code>的元组和一个来自<code>takes</code>元组在<code>ID</code>上的取值是相同的话,那么它们就是匹配的。</p>
+<blockquote>
+<p>关于<code>natural join</code>与<code>on</code>指定条件的区别</p>
+<p>首先知道<code>natural join</code>要求同名的字段一致才能进行连接,而使用<code>on</code>关键字能够在连接操作的时候指定哪几个字段相同的时候才进行连接。</p>
+</blockquote>
+
                 
             </div>
             <hr/>
