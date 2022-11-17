@@ -4,12 +4,13 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="数据库原理-高级SQL, 后端工程师之路">
-    <meta name="description" content="create trigger different_class_check before insert on section
-	referencing new row as nrow
-	declare tcount int;
-	begin
-	">
+    <meta name="keywords" content="数据库原理实战-高级SQL实战, 后端工程师之路">
+    <meta name="description" content="
+练习1:定义两个变量，用于分别获取名字为Green的员工的城市和街道，并显示变量值。
+
+#定义两个变量，用于分别获取名字为Green的员工的城市和街道，并显示变量值。
+set @green_street;
+set @green_city;">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -21,7 +22,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>数据库原理-高级SQL | 后端工程师之路</title>
+    <title>数据库原理实战-高级SQL实战 | 后端工程师之路</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -338,12 +339,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数据库原理-高级SQL</h1>
+                    <h1 class="description center-align post-title">数据库原理实战-高级SQL实战</h1>
                 </div>
             </div>
         </div>
@@ -392,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-10-25
+                    2022-11-14
                 </div>
                 
 
@@ -416,22 +417,128 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">trigger</span> different_class_check before <span class="token keyword">insert</span> <span class="token keyword">on</span> section
-	referencing new <span class="token keyword">row</span> <span class="token keyword">as</span> nrow
-	<span class="token keyword">declare</span> tcount <span class="token keyword">int</span><span class="token punctuation">;</span>
-	<span class="token keyword">begin</span>
-		<span class="token keyword">select</span> <span class="token function">count</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span> <span class="token keyword">into</span> t count
-		<span class="token keyword">from</span> time_slot <span class="token keyword">natural</span> <span class="token keyword">join</span> section <span class="token keyword">natural</span> <span class="token keyword">join</span> teaches
-		<span class="token keyword">where</span> teaches<span class="token punctuation">.</span>ID <span class="token operator">=</span>: new<span class="token punctuation">.</span>ID
-		<span class="token keyword">group</span> <span class="token keyword">by</span> <span class="token punctuation">(</span>semester<span class="token punctuation">,</span><span class="token keyword">year</span><span class="token punctuation">,</span>time_slot<span class="token punctuation">,</span><span class="token keyword">day</span><span class="token punctuation">,</span>start_time<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token keyword">if</span> tcount <span class="token operator">></span> <span class="token number">1</span>
-			<span class="token keyword">then</span> RAISE_APPLICATION_ERROR<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">20001</span><span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			<span class="token comment">---抛出异常</span>
-		<span class="token keyword">end</span> <span class="token keyword">if</span>
-    <span class="token keyword">begin</span>
-    	<span class="token keyword">rollback</span><span class="token punctuation">;</span>
-    <span class="token keyword">end</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                <ul>
+<li>练习1:定义两个变量，用于分别获取名字为Green的员工的城市和街道，并显示变量值。</li>
+</ul>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#定义两个变量，用于分别获取名字为Green的员工的城市和街道，并显示变量值。
+set @green_street;
+set @green_city;
+select city, street into @green_city,@green_street
+from employee
+where employee_name &#x3D; &#39;Green&#39;;
+select @green_street,@green_city;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<ul>
+<li>练习2:给定员工姓名，统计该员工所在公司的平均工资。</li>
+</ul>
+<p>首先是通过员工姓名找到公司,而姓名-&gt;公司的这个关系是在<code>works</code>的,因此先要查询works</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter$$
+create PROCEDURE emp_avg_sla(IN emp_name varchar(20),out emp_sal decimal(8,2))
+begin
+	select avg(salary) into emp_sal
+	from works
+	where employee_name &#x3D; emp_name;
+end$$
+delimiter ;
+
+show tables;
+
+set @emp_name &#x3D; &#39;CbingQuan&#39;;
+set @emp_sal :&#x3D; 0;
+call emp_avg_sla(@emp_name,@emp_sal);
+select @emp_sal;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>练习3:调用已经创建的存储过程，显示Green所在公司的平均工资。</li>
+</ul>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">set @emp_name &#x3D; &#39;Green&#39;;
+set @emp_sal :&#x3D; 0;
+call emp_avg_sla(@emp_name,@emp_sal);
+select @emp_sal;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>练习4:设计一个存储过程，给低于等于平均工资的员工增加工资5%，给高于平均工资的员工增加10%。</li>
+</ul>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">drop procedure update_salary;
+create procedure update_salary()
+begin
+    declare temp_name varchar(20);
+    declare temp_salary decimal(8,2);
+    declare avg_salary decimal(8,2);
+    declare count int default 0;
+    declare total_count int ;
+    declare cur cursor for select employee_name,salary from works;
+    select avg(salary) into avg_salary from works;
+    select count(*) into total_count from works;
+    open cur;
+    while &#96;count&#96; &lt; total_count do
+        fetch cur into temp_name,temp_salary;
+        if(temp_salary &lt;&#x3D; avg_salary) then
+            update works set salary &#x3D; salary *1.05;
+        else
+            update works set salary &#x3D; salary * 1.10;
+        end if;
+        set count &#x3D; count +1;
+    end while;
+    close cur;
+end;
+call update_salary();
+select * from works;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>练习5. 编写university数据库中的触发器，在对takes表的插入操作前检查，使grade的值必须是‘A’-‘F’中的之一，如果不是则把grade设置为null。</li>
+</ul>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">create trigger check_grade before insert on takes
+    for each row
+    begin
+        if new.grade not in (&#39;A&#39;,&#39;B&#39;,&#39;C&#39;,&#39;D&#39;,&#39;E&#39;,&#39;F&#39;) then
+            set new.grade &#x3D; null;
+        end if;
+    end;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>练习6: 创建一个变量<code>@check_cred=true</code>，编写university数据库中的触发器，检查对<code>student表</code>的更新操作，<code>如果tot_cred属性值不等于该学生所有及格课程的学分之和</code>，<code>则强制设置为正确的学分总和</code>，并将<code>@check_cred</code>设置为false。</li>
+</ul>
+<p>这道题涉及的查询有:</p>
+<p><code>tot_cred</code>,要通过查询某一个学生的全部学分之和,并且记录</p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">#查询这位同学选修的所有课程
+select course_id from takes where takes.ID &#x3D; NEW.ID and takes.grade not in (&#39;F&#39;);
+#计算总和
+select sum(credits) into @tot_cred_takes
+from course
+where course_id in
+(select course_id
+ from takes
+ where takes.ID &#x3D; NEW.ID and takes.grade is not null and takes.grade not in (&#39;F&#39;));<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过takes表查询这个学生所有及格的课程学分总和<code>tot_cred_takes</code></p>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select tot_cred into @tot_cred_select
+      from student
+      where student.ID &#x3D; NEW.ID;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">set @check_cred &#x3D; true;
+create trigger check_cred_trigger before update on student
+    for each row
+    begin
+        #查询所有及格课程的学分
+        set @tot_cred_takes :&#x3D; 0;
+        set @tot_cred_select :&#x3D; 0;
+        #计算总和
+        select sum(credits) into @tot_cred_takes
+        from course
+        where course_id in
+        (select course_id
+         from takes
+         where takes.ID &#x3D; NEW.ID and takes.grade is not null and takes.grade not in (&#39;F&#39;));
+        #查询总和
+        select tot_cred into @tot_cred_select
+        from student
+        where student.ID &#x3D; NEW.ID;
+        if @tot_cred_select &lt;&gt; @tot_cred_takes then
+            set NEW.tot_cred &#x3D; @tot_cred_takes;
+            set @check_cred &#x3D; false;
+        end if;
+    end;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
                 
             </div>
@@ -458,7 +565,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lumxi.github.io/2022/10/25/dbs/dbs-(5)/">https://lumxi.github.io/2022/10/25/dbs/dbs-(5)/</a>
+                    <a href="https://lumxi.github.io/2022/11/14/dbs/db-exam-(2)/">https://lumxi.github.io/2022/11/14/dbs/db-exam-(2)/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -580,13 +687,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/10/25/dbs/db-exam-(1)/">
+                <a href="/2022/11/14/dbs/dbs-(4)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="数据库原理实战-实验三">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="数据库原理-中级SQL">
                         
-                        <span class="card-title">数据库原理实战-实验三</span>
+                        <span class="card-title">数据库原理-中级SQL</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -597,7 +704,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-25
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-14
                         </span>
                         <span class="publish-author">
                             
@@ -629,13 +736,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/10/24/algorithm/oj/oj-3/">
+                <a href="/2022/11/13/Mybatis/Mybatis-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="华南农业大学第三章部分题解">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="深入学习Mybatis-Mybatis入门">
                         
-                        <span class="card-title">华南农业大学第三章部分题解</span>
+                        <span class="card-title">深入学习Mybatis-Mybatis入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -646,14 +753,18 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
-                                    数据结构与算法
+                            <a href="/categories/Mybatis/" class="post-category">
+                                    Mybatis
+                                </a>
+                            
+                            <a href="/categories/Mybatis/Mysql/" class="post-category">
+                                    Mysql
                                 </a>
                             
                             
@@ -665,10 +776,6 @@
                     
                     <a href="/tags/Java/">
                         <span class="chip bg-color">Java</span>
-                    </a>
-                    
-                    <a href="/tags/leetcode/">
-                        <span class="chip bg-color">leetcode</span>
                     </a>
                     
                 </div>
