@@ -826,6 +826,34 @@
 <p><code>A-&gt;BC</code>中由分解律可知<code>A-&gt;B</code>、<code>A-&gt;C</code>、<code>B-&gt;C</code>,因此<code>A-&gt;C</code></p>
 <p>可见<code>A-&gt;C</code>是多余的函数依赖,我们删除,此时的正则覆盖是F&#x3D;{A-&gt;BC,B-&gt;C}</p>
 <p><strong>这里做出来和答案不一样,但是经过验证,这个应该也是一个正则覆盖,因为和课本上的那个是等价的</strong></p>
+<p>例子3</p>
+<p>考虑函数依赖集<code>F=&#123;A-&gt;BC,B-&gt;AC,C-&gt;AB&#125;</code>,求解正则覆盖</p>
+<p>第一步:初始化正则覆盖为<code>Fm=&#123;A-&gt;BC,B-&gt;AC,C-&gt;AB&#125;</code></p>
+<p>ps:由于这时候没有可用合并律合并的函数依赖了,因此我们开始去除无关的属性</p>
+<p>第二步,检查B在<code>A-&gt;BC</code>是否是多余的,我们计算<code>(A)+</code>在<code>F&#39;=&#123;A-&gt;C,B-&gt;AC,C-&gt;AB&#125;</code>的闭包,计算过程:</p>
+<p><code>A-&gt;C</code>,所以<code>(A+)=&#123;AC&#125;</code></p>
+<p><code>C-&gt;AB</code>,所以<code>A+=&#123;ABC&#125;</code></p>
+<p>因此在这种情况下,B在<code>A-&gt;BC</code>是多余的</p>
+<p>此时得到的正则覆盖为<code>Fm=&#123;A-&gt;C,B-&gt;AC,C-&gt;AB&#125;</code></p>
+<hr>
+<p>然后我们检验<code>A</code>在<code>B-&gt;AC</code>是否是多余的</p>
+<p>计算<code>(B)+</code>在<code>F&#39;=&#123;A-&gt;C,B-&gt;C,C-&gt;AB&#125;</code>的闭包,计算过程:</p>
+<p><code>B-&gt;C</code>,所以<code>(B)+=&#123;BC&#125;</code></p>
+<p><code>C-&gt;AB</code>,所以<code>(B)+=&#123;ABC&#125;</code></p>
+<p>因此A在<code>B-&gt;AC</code>是多余的</p>
+<p>此时得到的正则覆盖为<code>Fm=&#123;A-&gt;C,B-&gt;C,C-&gt;AB&#125;</code></p>
+<hr>
+<p>检查A在<code>C-&gt;AB</code>中是否是多余的</p>
+<p>计算<code>(C)+</code>在<code>F&#39;=&#123;A-&gt;C,B-&gt;C,C-&gt;B&#125;</code>的闭包,计算过程</p>
+<p><code>C-&gt;B</code>,所以<code>(B)+=&#123;BC&#125;</code></p>
+<p>然后我们发现无法得到<code>A</code>这个属性,因此A不是多余的</p>
+<hr>
+<p>然后我们检查B在<code>C-&gt;AB</code>是否是多余的</p>
+<p>计算<code>(C)+</code>在<code>F&#39;=&#123;A-&gt;C,B-&gt;C,C-&gt;A&#125;</code></p>
+<p><code>(C)+=&#123;AC&#125;</code></p>
+<p>此时我们发现无法得到<code>B</code>这个属性,所以B不是多余的</p>
+<hr>
+<p>最终我们得到的正则覆盖就是<code>Fc=&#123;A-&gt;C,B-&gt;C,C-&gt;AB&#125;</code></p>
 <h2 id="8-无损连接分解-lossless-decomposition"><a href="#8-无损连接分解-lossless-decomposition" class="headerlink" title="8. 无损连接分解(lossless decomposition)"></a>8. 无损连接分解(lossless decomposition)</h2><p>关系模式的规范化过程是通过对关系模式的分解来实现的</p>
 <ul>
 <li>把低一级的关系模式分解为若干个高一级的关系模式的方法并不唯一</li>
@@ -840,10 +868,73 @@
 </ul>
 <p>其中ti是t在属性集上的投影</p>
 <p>如果分解后的关系可以通过自然连接恢复为原来的关系,那么这种分解就没有丢失信息</p>
-<p>如果要求的分解具有无损连接性,那么模式分解一定能够达到<code>4NF</code></p>
+<p>如果要求的分解具有无损连接性,那么模式分解一定能够达到<code>BCNF</code></p>
 <p>如果要求分解保持函数依赖,那么模式分解一定呢能够达到<code>3NF</code>,但是不一定能够达到<code>BCNF</code></p>
 <p>如果要求分解既具有无损连接性,又保持函数依赖,那么模式分解一定能够达到<code>3NF</code>,但不一定能够到达<code>BCNF</code></p>
-<h2 id="9-保持依赖"><a href="#9-保持依赖" class="headerlink" title="9. 保持依赖"></a>9. 保持依赖</h2><h2 id="10-BCNF分解"><a href="#10-BCNF分解" class="headerlink" title="10. BCNF分解"></a>10. BCNF分解</h2><h2 id="11-3NF分解"><a href="#11-3NF分解" class="headerlink" title="11. 3NF分解"></a>11. 3NF分解</h2><h2 id="12-BCNF和3NF的比较"><a href="#12-BCNF和3NF的比较" class="headerlink" title="12.BCNF和3NF的比较"></a>12.BCNF和3NF的比较</h2><h2 id="13-数据库的设计过程"><a href="#13-数据库的设计过程" class="headerlink" title="13. 数据库的设计过程"></a>13. 数据库的设计过程</h2><h3 id="13-1-关系模式规范化的步骤"><a href="#13-1-关系模式规范化的步骤" class="headerlink" title="13.1 关系模式规范化的步骤"></a>13.1 关系模式规范化的步骤</h3><ul>
+<blockquote>
+<p>定理:设p&#x3D;(S1,S2)是S的一个分解,D是S上的函数依赖集,分解p具有无损连接性的充分必要条件是:</p>
+<p>S1∩S2-&gt;(S1-S2)∈D+或S1∩S2-&gt;(S2-S1)∈D+</p>
+<p>理解:分解具有无损连接性当且仅当两个关系模式的公共属性是其中一个模式的键</p>
+</blockquote>
+<h2 id="9-保持依赖"><a href="#9-保持依赖" class="headerlink" title="9. 保持依赖"></a>9. 保持依赖</h2><p>设关系模式<code>S&lt;A,D&gt;</code>被分解为n个关系模式,<code>S1&lt;A1,D1&gt;</code>…<code>Sn&lt;An,Dn&gt;</code>其中<code>A=A1,A2...,An</code>,而且不存在<code>Ai是Aj的子集</code>,<code>Di</code>是D在<code>Ai</code>上的投影,如果D等价于<code>Di(i=1,2,3...,n)</code>的并集,那么就说关系模式S的这个分解是保持函数依赖的</p>
+<h2 id="10-BCNF分解"><a href="#10-BCNF分解" class="headerlink" title="10. BCNF分解"></a>10. BCNF分解</h2><p>分解算法的过程:</p>
+<p><strong>1.初始化</strong>:初始化分解后的结果为<code>p=&#123;S&lt;A,D&gt;&#125;</code></p>
+<p><strong>2.检查p中各关系模式是否属于BCNF,如果是的话,那么算法就终止,否则执行3</strong></p>
+<p><strong>3.设p中存在Si&lt;Ai,Di&gt;不属于BCNF,那么就一定会存在一个非平凡的函数依赖</strong></p>
+<ul>
+<li><strong>a-&gt;b∈Di,a∩b&#x3D;∅</strong></li>
+<li><strong>a不包含Si的候选码</strong></li>
+</ul>
+<p><strong>那么我们将<code>Si</code>分解为<code>Pi=&#123;a∪b,Ai-b&#125;</code>,后用<code>pi</code>来代替Si,回到2</strong></p>
+<p>注意:分解为BCNF的关系不一定能够保持函数依赖</p>
+<p>例题,有如下关系:</p>
+<p>tutor(t_id,s_id,dept_name)</p>
+<p>其中,每个导师可以指导多名研究生但是只能在一个院系中工作</p>
+<p>每个研究生可以有多位导师,但是在一个院系中只能有一个</p>
+<p>函数依赖表达如下:</p>
+<p><code>(s_id,t_id)-&gt;dept_name</code></p>
+<p><code>t_id-&gt;dept_name</code></p>
+<p><code>(s_id,dept_name)-&gt;t_id</code></p>
+<p>候选码:</p>
+<p><code>(t_id,s_id)</code>、<code>(s_id,dept_name)</code></p>
+<ul>
+<li>请分析上述关系不满足什么范式?该如何分解为对应的范式?</li>
+</ul>
+<p>由函数依赖<code>t_id-&gt;dept_name</code>中<code>t_id</code>并不是候选码,因此不满足<code>BCNF</code></p>
+<p>分解为BCNF</p>
+<ul>
+<li>第一步,初始化分解后的结果为<code>p=&#123;tutor(s_id,t_id,dept_name)&#125;</code></li>
+<li>第二步,检查是否满足BC范式(不满足)</li>
+<li>第三步,针对不满足BC范式的函数依赖进行分解<code>(t_id-&gt;dept_name)</code></li>
+</ul>
+<p>这时候,<code>t_id</code>&#x3D;&gt;<code>a</code>,<code>dept_name</code>&#x3D;&gt;<code>b</code></p>
+<p>因此分解为<code>p&#39;=&#123;a∪b,p-b&#125;=&#123;&#123;t_id,dept_name&#125;,&#123;t_id,s_id&#125;&#125;</code></p>
+<p>同时我们注意到,这个分解使得原模式损失了<code>(s_id,t_id)-&gt;dept_name</code>这个函数依赖,因此没有保持依赖</p>
+<h2 id="11-3NF分解"><a href="#11-3NF分解" class="headerlink" title="11. 3NF分解"></a>11. 3NF分解</h2><p>分解的过程:</p>
+<p><strong>1.先求出D的极小依赖集,然后把极小依赖集中那些左部相同的函数依赖用合并律合并起来</strong></p>
+<p><strong>2.每个函数依赖a-&gt;b去构成模式{a∪b}</strong></p>
+<p><strong>3.在构成的模式集中,如果每个模式都不包含S(S是原来的完整的关系模式)的候选码,那么就把候选码作为一个模式放入到模式集中</strong></p>
+<p>例子,有如下关系和函数依赖</p>
+<p>tutor(t_id,name,dept_name,dept_num)</p>
+<p><code>&#123;t_id-&gt;name,t_id-&gt;dept_name,dept_name-&gt;dept_num&#125;</code></p>
+<ul>
+<li>请分析上述关系不满足什么范式?该如何分解为对应的范式?</li>
+</ul>
+<p>首先要先分析出这个关系的码,计算<code>(t_id)+</code></p>
+<p>由<code>t_id-&gt;name</code>,<code>(t_id)+=&#123;t_id,name&#125;</code></p>
+<p>由<code>t_id-&gt;dept_name</code>,<code>(t_id)+=&#123;t_id,name,dept_name&#125;</code></p>
+<p>由<code>dept_name-&gt;dept_num</code>,<code>(t_id)+=&#123;t_id,name,dept_name,dept_num&#125;=tutor</code></p>
+<p>因此<code>t_id</code>是候选码是主属性,而存在<code>t_id-&gt;dept_name,dept_name-&gt;dept_num,t_id-&gt;dept_num</code>,也就是非主属性对码的传递函数依赖,因此不满足第三范式</p>
+<p>分解为第三范式过程:</p>
+<p>求解该关系的正则覆盖:</p>
+<p>第一步,初始化正则覆盖,对于形如<code>a1-&gt;b1</code>和<code>a1-&gt;b2</code>的所有函数依赖依据合并律合并起来</p>
+<p>则:<code>Fm=&#123;t_id-&gt;(name,dept_name),dept_name-&gt;dept_num&#125;</code></p>
+<p>试检查<code>dept_name</code>在<code>t_id-&gt;(name,dept_name)</code>是否是多余的,显然不是,这里省略</p>
+<p>因此求得正则覆盖是<code>Fm=&#123;t_id-&gt;(name,dept_name),dept_name-&gt;dept_num&#125;</code></p>
+<p>求解完了正则覆盖后,对Fm进行操作,也就是执行算法的第二步,对每个函数依赖的左部和右部执行合并为一个关系模式的操作</p>
+<p>变为<code>p=&#123;&#123;t_id,name,dept_name&#125;,&#123;dept_name,dept_num&#125;&#125;</code></p>
+<p>第三步,检查是有包含候选码,可以观察到有<code>t_id</code>存在于第一个关系中,分解完成</p>
+<h2 id="12-数据库的设计过程"><a href="#12-数据库的设计过程" class="headerlink" title="12. 数据库的设计过程"></a>12. 数据库的设计过程</h2><ul>
 <li>1NF-&gt;2NF <strong>消除非主属性对码的部分函数依赖</strong></li>
 <li>2NF-&gt;3NF <strong>消除非主属性对码的传递函数依赖</strong></li>
 <li>3NF-&gt;BCNF <strong>消除主属性对码的部分和传递函数依赖</strong></li>
@@ -853,7 +944,7 @@
 <p>规范化的基本思想是逐步消除数据依赖中不合适的部分,使模式中个关系模式达到某种程度的分离</p>
 <p>让一个关系描述一个概念、一个实体、或者实体间的一种联系</p>
 <p>如果多于一个概念,就把它分离出去,所谓规范化实质上就是概念的单一化</p>
-
+<h2 id="课后习题解析"><a href="#课后习题解析" class="headerlink" title="课后习题解析"></a>课后习题解析</h2>
                 
             </div>
             <hr/>
