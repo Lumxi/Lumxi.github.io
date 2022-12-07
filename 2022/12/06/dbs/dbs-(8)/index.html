@@ -425,7 +425,7 @@
 <h2 id="2-事务的特性-ACID"><a href="#2-事务的特性-ACID" class="headerlink" title="2. 事务的特性(ACID)"></a>2. 事务的特性(ACID)</h2><p><code>原子性(atomicity)</code>:事务的所有操作在数据库中要么全部正确地反映出来,要么就完全不反映</p>
 <p><code>一致性(consistency)</code>:隔离执行事务的时候<code>(在没有其他事务并发执行的情况下)</code>保持数据库的一致性,<strong>如果一个事务作为原子,从一个一致的数据库状态开始独立地运行,那么在事务结束的时候数据库也必须再次是一致的</strong></p>
 <p><code>隔离性(isolation)</code>:尽管多个事务可能并发执行但是系统保证,对于任何一对事务<code>Ti</code>和<code>Tj</code>,在<code>Ti</code>看来,<code>Tj</code>也许是在<code>Ti</code>开始之前完成执行,也可能是在<code>Ti</code>结束之后开始执行的,对于系统中的每个事务,它们都感受不到系统中有其他事务在并发地执行</p>
-<p><code>持久性(Durability)</code>:一个事务成功之后,它对数据库的改变必须是永久的,及时后面出现了系统故障</p>
+<p><code>持久性(Durability)</code>:一个事务成功之后,它对数据库的改变必须是永久的,即使后面出现了系统故障</p>
 <h2 id="3-简单事务模型"><a href="#3-简单事务模型" class="headerlink" title="3. 简单事务模型"></a>3. 简单事务模型</h2><p>事务运用以下两个操作来访问数据</p>
 <ul>
 <li><code>read(X)</code>:从数据库把数据项X传送到执行<code>read</code>操作的事务的主存缓冲区,为主存缓冲区中,同样存在的这个X变量附上值</li>
@@ -768,7 +768,8 @@
 <li><code>可重复读(repeatable read)</code>:只允许读取已提交的数据，而且在一个事务两次读取一个数据项期间,其他事务<code>不得更新该数据</code>,但是该事务不要求与其他事务可串行化,例如当一个事务在查找满足某些条件的数据的时候,它可能找到一个已提交事务插入的一些数据,但是可能找不到该事务插入的其他数据</li>
 </ul>
 <blockquote>
-<p>这个的话举个例子好理解一点,比如说事务A插入了1-10条数据并且成功提交,然后事务B去读取这1-10条数据,然后这时候事务C进入活跃状态,往这个表里面插入了11-20条数据,但是它还没有提交,这时候如果事务B在这个事务C插入数据之后读取,尽管可能这11-20条数据可能有符合条件的,但是依然查询不到相关的数据,其根本原因是没有提交。</p>
+<p>这个的话举个例子好理解一点,比如说事务A插入了1-10条数据并且成功提交,然后事务B去读取这1-10条数据,然后这时候事务C进入活跃状态,往这个表里面插入了11-20条数据,然后提交数据,这时候事务A再执行查询,就会发现多了这几条数据进去。</p>
+<p>这样做破坏了事务的隔离性,因为我们说事务隔离应该是一个事务不会被另外一个事务的操作所影响,也就是说无论外部的事务怎么操作,本事务的操作结果都不会因为外部的事务的操作而改变,但是在这种情况下,就产生了影响,这个影响有一个专业的术语,也就是产生了<code>幻读</code></p>
 </blockquote>
 <ul>
 <li><code>已提交读(read committed)</code>:只允许读取已提交的数据,但是不要求可重复读,这是对可重复读的限制的降低。比如说在事务两次读取一个数据项期间,另一个事务允许更新这个数据并且提交。</li>
@@ -945,18 +946,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/12/06/dbs/dbs-(8)/">
+                <a href="/2022/12/07/dbs/dbs-(9)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="数据库原理-事务原理">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="数据库原理-并发控制与恢复">
                         
-                        <span class="card-title">数据库原理-事务原理</span>
+                        <span class="card-title">数据库原理-并发控制与恢复</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -966,9 +966,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-12-06
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-12-07
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -981,7 +981,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
