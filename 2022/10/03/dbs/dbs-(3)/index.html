@@ -450,13 +450,13 @@
 <p>当比较一个<strong>char类型</strong>和<strong>varchar类型</strong>的时候，这时候是否在短值上补充空格则是取决于数据库系统</p>
 <p>SQL提供<code>nvarchar</code>类型来存放使用<code>Unicode</code>表示多语言数据。</p>
 <h2 id="2-2-基本模式定义"><a href="#2-2-基本模式定义" class="headerlink" title="2.2 基本模式定义"></a>2.2 基本模式定义</h2><p>我们用<code>create table</code>命令来定义SQL关系。例如:</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">create table department
-(
-    dept_name varchar(20),
-    building varchar(15),
-    budget numeric(12,2),
-    primary key(dept_name)
-);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span> department
+<span class="token punctuation">(</span>
+    dept_name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    building <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    budget <span class="token keyword">numeric</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token keyword">primary</span> <span class="token keyword">key</span><span class="token punctuation">(</span>dept_name<span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><strong>SQL支持许多不同的完整性约束</strong></p>
 <ul>
