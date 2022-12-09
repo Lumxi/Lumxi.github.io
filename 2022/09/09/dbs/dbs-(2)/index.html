@@ -418,9 +418,12 @@
 <p><code>关系(relation)</code>用来指表，而<code>元组(tuple)</code>指代行，类似地，<code>属性(attribute)</code>指代的是表中的列</p>
 <p>我们用<code>关系实例(relation instance)</code>这个属于来表示一个关系的特定实例，也就是所包含的一组特定的行</p>
 <p>由于关系是元组的<code>集合</code>，所以元组在关系中出现的顺序是无关紧要的，因为他们具有同样的元组集合。对于关系的每个属性，都存在一个允许取值的集合，称为该属性的<code>域(domain)</code>。</p>
-<p>我们要求对所有的<code>关系r</code>而言，<code>r的所有属性的域</code>都是原子的。如果域中元素被看作是不可再分的单元，则域是<code>原子的(atomic)</code>。啥叫原子性的，其实就是指它只有一个取值。</p>
+<p>我们要求对所有的<code>关系r</code>而言，<code>r的所有属性的域</code>都是原子的。如果域中元素被看作是不可再分的单元，则域是<code>原子的(atomic)</code>。啥叫原子性的，其实就是属性不可以再被划分为再小的属性单元,比如说像<code>address</code>这种,可以分成省份,城市啥啥啥的,这种可以再分的这种情况就是不原子性的,然而这是相对的,根据数据库定义人员对这个字段的定义以及实际业务开发中对这个字段的利用程度而言。</p>
 <p><code>空(null)</code>值是一个特殊的值，表示值位置或者不存在。空值会给数据库访问和更新带来很多困难，因此应该尽量避免使用空值。</p>
 <h2 id="2-2-数据库模式"><a href="#2-2-数据库模式" class="headerlink" title="2.2 数据库模式"></a>2.2 数据库模式</h2><p>当我们讨论数据库时，我们必须区分<code>数据库模式(database schema)</code>和<code>数据库实例(database instance)</code>，前者是关于数据库的逻辑设计而后者是给定时刻数据库中数据的一个快照</p>
+<blockquote>
+<p>快照:一个暂存的实例,是在特定的时空下表现出来的一个数据库状态的体现。</p>
+</blockquote>
 <p>关系的概念对应于程序设计语言中变量的概念，而关系模式的概念对应于程序设计语言中类型定义的概念</p>
 <h2 id="2-3-码"><a href="#2-3-码" class="headerlink" title="2.3 码"></a>2.3 码</h2><p>我们必须有一种能区分给给定关系中的不同元组的方法。这用它们的属性来表明，也就是说，一个元组的属性值必须是能够<code>唯一区分元组</code>的。</p>
 <ul>
@@ -447,7 +450,7 @@
 <h3 id="2-5-2-投影语句"><a href="#2-5-2-投影语句" class="headerlink" title="2.5.2 投影语句"></a>2.5.2 投影语句</h3><p><code>投影(project)</code>:是一元运算，它返回作为参数的关系，但把某些属性排除在外，由于关系是一个集合，所以所有重复行均被去除。运算结果是一个集合，使用示例</p>
 <p>$$\Pi _{ID,name,salary}(instructor)$$</p>
 <h3 id="2-5-3-笛卡尔积运算语句"><a href="#2-5-3-笛卡尔积运算语句" class="headerlink" title="2.5.3 笛卡尔积运算语句"></a>2.5.3 笛卡尔积运算语句</h3><p>用<code>X</code>表示的<code>笛卡尔积(Cartesian-product)</code>运算使得我们可以将任意两个关系的信息组合在一起。我们将关系<code>r1Xr2</code>，笛卡尔积的结果简单来说就是从r1中取一个元组然后和r2的所有元组做组合，组合完毕后填入r3,r3含有r1和r2的所有属性，依次将r1剩余的元素与r2的全部元素组合，最终就是笛卡尔积的结果</p>
-<p>例如:我们计算<code>r=instructor X teaches</code>的关系的模式位，我们可以区别<code>instructor.ID和teaches.ID</code>，对那些只在两个关系模式之一出现的属性，我们通常省略其关系名前缀。这样的简化不会导致任意歧义。</p>
+<p>例如:我们计算<code>r=instructor X teaches</code>的关系的模式为例，我们可以区别<code>instructor.ID和teaches.ID</code>这样的方式来区别两个模式相同的属性名，对那些只在两个关系模式之一出现的属性，我们通常省略其关系名前缀。这样的简化不会导致任意歧义。</p>
 <p>这个命名规则作为笛卡尔积运算参数的关系名字必须不同。</p>
 <p><strong>当某个关系需要与自身做笛卡尔积的时候，我们必须给关系一个名字以引用其属性(一个关键技术是更名运算)</strong></p>
 <h3 id="2-5-4-集合并语句"><a href="#2-5-4-集合并语句" class="headerlink" title="2.5.4 集合并语句"></a>2.5.4 集合并语句</h3><p><code>并(Union)</code>，当我们需要出现在这两个集合之一的或同时出现在这两个集合中的所有课程段的<code>ID</code>，可以通过并运算来获得这些数据，由于关系是集合，所以如果有重复值的，那么就会被选出一个元组，只留下一个。运算结果也是一个集合。</p>
@@ -456,6 +459,9 @@
 <li><code>关系r和s</code>必须是同元的，也就是说它们的属性数目必须相同</li>
 <li>对于所有的<code>i,r</code>的第<code>i</code>个属性和域必须和<code>s</code>的第<code>i</code>个属性的域相同</li>
 </ul>
+<blockquote>
+<p>说人话就是,两个集合的属性必须一模一样。</p>
+</blockquote>
 <h3 id="2-5-5-集合差语句"><a href="#2-5-5-集合差语句" class="headerlink" title="2.5.5 集合差语句"></a>2.5.5 集合差语句</h3><p>用<code>-</code>表示<code>集合差(set-different)</code>运算使得我们可以找出<code>在一个关系中而不在另一个关系中的那些元组</code>，运算结果也是一个集合</p>
 <p>同样的，为了使得差运算有意义，我们要求一下的两个提交必须同时成立</p>
 <ul>
@@ -552,25 +558,25 @@
 <p>然后咱们用原始薪水表去和这个表作差，就是一个仅含有一个元素的薪水表，这样就查到了最大值</p>
 <h3 id="2-5-8-自然连接语句"><a href="#2-5-8-自然连接语句" class="headerlink" title="2.5.8 自然连接语句"></a>2.5.8 自然连接语句</h3><p><code>自然连接(join)</code>提供了一种手段，它可以提供一种选择规则，要求笛卡尔积的两个关系在所有属性上的值完全一致。具体流程:它先对两个参数计算笛卡尔积，然后基于两个关系模式都出现的属性上的相等性进行选择，最后还要去除重复属性。</p>
 <p>一种属性相同当然是可以理解的，如果是两个属性都相同，那么它就会查找两个元素，转化为sql语句如下</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select *
-from table1
-natural join table2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span>
+<span class="token keyword">from</span> table1
+<span class="token keyword">natural</span> <span class="token keyword">join</span> table2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>单个属性相同:table1(A,B) table2(A,C)</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select t1.*
-from table1 t1
-inner join table2 t2
-on t1.a &#x3D; t2.a<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> t1<span class="token punctuation">.</span><span class="token operator">*</span>
+<span class="token keyword">from</span> table1 t1
+<span class="token keyword">inner</span> <span class="token keyword">join</span> table2 t2
+<span class="token keyword">on</span> t1<span class="token punctuation">.</span>a <span class="token operator">=</span> t2<span class="token punctuation">.</span>a<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
-<li>多个属性相同:table1(A,B,C) table2(A,B,C)</li>
+<li>多个属性相同:table1(A,B,D) table2(A,B,C)</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select t1.*
-from table1 t1
-inner join table2 t2
-on t1.a &#x3D; t2.a and t1.b &#x3D; t2.b<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> t1<span class="token punctuation">.</span><span class="token operator">*</span>
+<span class="token keyword">from</span> table1 t1
+<span class="token keyword">inner</span> <span class="token keyword">join</span> table2 t2
+<span class="token keyword">on</span> t1<span class="token punctuation">.</span>a <span class="token operator">=</span> t2<span class="token punctuation">.</span>a <span class="token operator">and</span> t1<span class="token punctuation">.</span>b <span class="token operator">=</span> t2<span class="token punctuation">.</span>b<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="2-6-作业解析-个人理解-不一定对"><a href="#2-6-作业解析-个人理解-不一定对" class="headerlink" title="2.6 作业解析(个人理解,不一定对)"></a>2.6 作业解析(个人理解,不一定对)</h2><p>表结果</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">employee<span class="token punctuation">(</span>ID,person_name,street,city<span class="token punctuation">)</span>
@@ -587,11 +593,17 @@ company<span class="token punctuation">(</span>company_name,city<span class="tok
 <p>然后把这个只有<code>person_name</code>的集合去和<code>employee</code>做自然连接(因为需要ID，只有employee有ID)，连接完毕后再投影即可</p>
 <p>写出表达式如下</p>
 <p>$$\Pi <em>{ID,person_name}(\Pi</em>{person_name}(\sigma _{company_name≠”BigBank”}(works)) \bowtie employee)$$</p>
+<blockquote>
+<p>注意,这个解法实际上是错误的,这是因为我们忽略掉了如果<code>works</code>中如果一位员工不止为一个公司工作的话,比如说<code>john</code>同时是<code>Acompany</code>和<code>BigBank</code>的员工,但是这时候关于<code>Acompany</code>的那一个元组就会导致<code>John</code>被加入到我们的结果元组里面去,这个结果是错误的。</p>
+</blockquote>
 <ul>
 <li>第二种思路</li>
 </ul>
 <p>既然要找不为它工作，那我找出为它工作的，然后用全部减去为它工作的不就好了吗</p>
 <p>$$\Pi_{ID,person_name}(employee) - \Pi <em>{ID,person_name}(\Pi</em>{person_name}(\sigma _{company_name&#x3D;”BigBank”}(works)) \bowtie employee)$$</p>
+<blockquote>
+<p><code>=</code>这个条件严格保证了员工为<code>BigBank</code>工作,在这样的情况下,只要用差集的办法就能够求出相关的员工</p>
+</blockquote>
 <p><strong>b:简单来说就是找一个最大值</strong></p>
 <p>找最大值的方法在<code>2.5.7中已经解析过了，这里直接把结论套进去即可</code></p>
 <p>首先写出最大值</p>

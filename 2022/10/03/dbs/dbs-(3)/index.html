@@ -461,7 +461,7 @@
 <p><strong>SQL支持许多不同的完整性约束</strong></p>
 <ul>
 <li><strong>primary key(A1,A2,…,An)</strong>:这个声明表示属性<code>(A1,A2,....,An)</code>构成关系的主码，主码属性必须非空并且唯一</li>
-<li><strong>foreign key(A1,A2,…,An) referebces</strong>:foreign key表示关系中任意元组在属性<code>(A1,A2,...,An)</code>上的取值必须对应于关系s中某元组在主码属性上的取值</li>
+<li><strong>foreign key(A1,A2,…,An) referebce s</strong>:foreign key表示关系中任意元组在属性<code>(A1,A2,...,An)</code>上的取值必须对应于关系s中某元组在主码属性上的取值</li>
 <li><strong>not null</strong>:一个属性上的<code>not null</code>约束表名在该属性上不允许空值，此约束在空值排除在该属性域之外。</li>
 </ul>
 <hr>
@@ -493,7 +493,7 @@
 
 <p>select子句还可以带含有<code>+、-、*、/</code>运算符的算术表达式，运算对象可以是常数或者元组的属性</p>
 <hr>
-<p>SQL允许在where子句中使用逻辑连词<code>and</code>、<code>or</code>、<code>not</code>。逻辑连词的原酸对象可以是包含比较运算符<code>&lt;</code>、<code>&lt;=</code>、<code>&gt;</code>、<code>&gt;=</code>、<code>=</code>、<code>&lt;&gt;</code>的表达式。它允许我们使用比较运算符来比较字符串、算术表达式以及特殊类型。</p>
+<p>SQL允许在where子句中使用逻辑连词<code>and</code>、<code>or</code>、<code>not</code>。逻辑连词的原始对象可以是包含比较运算符<code>&lt;</code>、<code>&lt;=</code>、<code>&gt;</code>、<code>&gt;=</code>、<code>=</code>、<code>&lt;&gt;</code>的表达式。它允许我们使用比较运算符来比较字符串、算术表达式以及特殊类型。</p>
 <h3 id="2-3-2-多关系查询"><a href="#2-3-2-多关系查询" class="headerlink" title="2.3.2 多关系查询"></a>2.3.2 多关系查询</h3><p>当一个属性出现在多个关系中，需要使用关系名作为前缀来说明我们使用的是哪个关系的属性。相反，如果属性只出现在一个关系中，这时候不需要把关系名作为前缀</p>
 <p>来梳理一下SQL查询三种类型的子句</p>
 <ul>
@@ -541,7 +541,9 @@
 
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">from</span> instructor <span class="token keyword">natural</span> <span class="token keyword">join</span> teaches<span class="token punctuation">,</span>course<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>要说明的是，当两个关系有多个属性名是相同的时候，这时候将要求两个关系中这相同的属性名都相同。</p>
+<p>要说明的是，当两个关系有多个属性名是相同的时候，这时候将要求两个关系中这些相同的属性名都相同。例如:</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">where</span> t1<span class="token punctuation">.</span>a <span class="token operator">=</span> t2<span class="token punctuation">.</span>a <span class="token operator">and</span> t1<span class="token punctuation">.</span>b <span class="token operator">=</span> t2<span class="token punctuation">.</span>b <span class="token operator">and</span> t3<span class="token punctuation">.</span>c <span class="token operator">=</span> t3<span class="token punctuation">.</span>c<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>SQL还提供了一种自然连接的构造形式，允许用户来指定哪些列相同</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> name<span class="token punctuation">,</span>title
 <span class="token keyword">from</span> <span class="token punctuation">(</span>instructor <span class="token keyword">natural</span> <span class="token keyword">join</span> teaches<span class="token punctuation">)</span> <span class="token keyword">join</span> course <span class="token keyword">using</span><span class="token punctuation">(</span>course_id<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -556,7 +558,7 @@
 <p>结果中的属性名来自于<code>from</code>子句中关系的属性名</p>
 <p>我们不能总是用这个方法来派生名字，原因:</p>
 <ul>
-<li><strong>from子句的两个关系中可能存在同名属性</strong>，在这种情况下，结果中就会出现重复的属性名</li>
+<li><strong>from子句的两个关系中可能存在同名属性</strong>，在这种情况下，结果<code>(是指select之后产生的结果集)</code>中就会出现重复的属性名</li>
 <li><strong>select子句中使用算术表达式</strong>，那么结果属性就没有名字</li>
 <li><strong>属性名可以从基关系中导出，但我们也许想要改变结果中的属性的名字</strong></li>
 </ul>
@@ -648,7 +650,7 @@
 <span class="token keyword">from</span> instructor
 <span class="token keyword">group</span> <span class="token keyword">by</span> dept_name<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>当SQL查询使用分组的时候，一个很重要的事情是需要<strong>保证出现在<code>select</code>依据中没有被聚集的属性只能是出现在group by子句中的那些属性。换句话说，任何没有出现在group by子句中的属性如果出现在select子句中的话，它只能出现在聚集函数内部，否则这样的查询就是错误的</strong></p>
+<p>当SQL查询使用分组的时候，一个很重要的事情是需要<strong>保证出现在<code>select</code>语句中没有被聚集的属性只能是出现在group by子句中的那些属性。换句话说，任何没有出现在group by子句中的属性如果出现在select子句中的话，它只能出现在聚集函数内部，否则这样的查询就是错误的</strong></p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">/*错误查询*/</span>
 <span class="token keyword">select</span> dept_name<span class="token punctuation">,</span>ID<span class="token punctuation">,</span><span class="token function">avg</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span>
 <span class="token keyword">from</span> instructor
@@ -673,7 +675,7 @@
 <li><strong>如果出现了having子句，它将应用到每个分组上，不满足having子句谓词的分组将被抛弃</strong></li>
 <li><strong>select子句利用剩下的分组产生出查询结果中的元组，也就是在每个分组上应用聚集函数来得到单个结果元组</strong></li>
 </ul>
-<p>对于在2009年讲授的每个课程段，如果该课程段至少有2名学生选课，找出该选修课程段的所欲学生的总学分的平均值</p>
+<p>对于在2009年讲授的每个课程段，如果该课程段至少有2名学生选课，找出该选修课程段的所有学生的总学分的平均值</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> course_id<span class="token punctuation">,</span>semster<span class="token punctuation">,</span><span class="token keyword">year</span><span class="token punctuation">,</span>sec_id<span class="token punctuation">,</span><span class="token function">avg</span><span class="token punctuation">(</span>tol_cred<span class="token punctuation">)</span>
 <span class="token keyword">from</span> takes <span class="token keyword">natural</span> <span class="token keyword">join</span> student
 <span class="token keyword">where</span> <span class="token keyword">year</span> <span class="token operator">=</span> <span class="token number">2009</span>
@@ -731,7 +733,7 @@ course_id  <span class="token operator">not</span> <span class="token operator">
 <span class="token keyword">where</span> T<span class="token punctuation">.</span>salary <span class="token operator">></span> S<span class="token punctuation">.</span>salary <span class="token operator">and</span> S<span class="token punctuation">.</span>dept_name <span class="token operator">=</span> <span class="token string">"Biology"</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>SQL提供了另外一种方式书写上面的查询。短语”至少比某一个要大”在SQL用<code>&gt;some</code>来表示。</p>
-<p>这个结构允许我们用一种更贴近此查询的文件表达的形式重写上面的查询:</p>
+<p>这个结构允许我们用一种更贴近此查询表达的形式重写上面的查询:</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> name
 <span class="token keyword">from</span> instructor
 <span class="token keyword">where</span> salary <span class="token operator">></span> <span class="token keyword">some</span><span class="token punctuation">(</span><span class="token keyword">select</span> salary
@@ -771,7 +773,7 @@ course_id  <span class="token operator">not</span> <span class="token operator">
 <span class="token keyword">where</span> semester <span class="token operator">=</span> <span class="token string">"Fall"</span> <span class="token operator">and</span> <span class="token keyword">year</span> <span class="token operator">=</span> <span class="token number">2009</span> <span class="token operator">and</span>
 <span class="token keyword">exists</span><span class="token punctuation">(</span><span class="token keyword">select</span> <span class="token operator">*</span> 
         <span class="token keyword">from</span> section <span class="token keyword">as</span> T
-     	<span class="token keyword">where</span> semester <span class="token operator">=</span> <span class="token string">"Spring"</span> <span class="token operator">and</span> <span class="token keyword">year</span> <span class="token operator">=</span> <span class="token number">2009</span> <span class="token operator">and</span>
+     	<span class="token keyword">where</span> semester <span class="token operator">=</span> <span class="token string">"Spring"</span> <span class="token operator">and</span> <span class="token keyword">year</span> <span class="token operator">=</span> <span class="token number">2010</span> <span class="token operator">and</span>
       	S<span class="token punctuation">.</span>course_id <span class="token operator">=</span> T<span class="token punctuation">.</span>couse_id<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>最关键的是<code>S.course_id = T.couse_id</code>这句。</p>
@@ -907,7 +909,7 @@ course_id  <span class="token operator">not</span> <span class="token operator">
 <ul>
 <li>更通常的情况是，我们可能想要在查询结果的基础上插入元组。</li>
 </ul>
-<p>我们想让Music系每个修满144学分的学生称为Muisc系的教师，其工资是18000美元，可以写作</p>
+<p>我们想让Music系每个修满144学分的学生成为Muisc系的教师，其工资是18000美元，可以写作</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">insert</span> <span class="token keyword">into</span> instructor
 	<span class="token keyword">select</span> ID<span class="token punctuation">,</span>name<span class="token punctuation">,</span>dept_name<span class="token punctuation">,</span><span class="token number">18000</span>
 	<span class="token keyword">from</span> student
@@ -941,7 +943,7 @@ course_id  <span class="token operator">not</span> <span class="token operator">
 	<span class="token keyword">when</span> pred5 <span class="token keyword">then</span> result5
 <span class="token keyword">end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><strong>将每个student元组的tot_cred属性值设置为该生成个学完的课程学分的总和</strong></p>
+<p><strong>将每个student元组的tot_cred属性值设置为该学生通过的课程学分的总和</strong></p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">update</span> student S
 <span class="token keyword">set</span> tot_cred <span class="token operator">=</span> <span class="token punctuation">(</span>
 	<span class="token keyword">select</span> <span class="token function">sum</span><span class="token punctuation">(</span>credits<span class="token punctuation">)</span>
@@ -1119,8 +1121,6 @@ course_id  <span class="token operator">not</span> <span class="token operator">
 <span class="token punctuation">(</span><span class="token keyword">select</span> M<span class="token punctuation">.</span>city
 <span class="token keyword">from</span> company <span class="token keyword">as</span> M
 <span class="token keyword">where</span> N<span class="token punctuation">.</span>company_name <span class="token operator">=</span> M<span class="token punctuation">.</span>company_name<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
 
 <p><strong>f:找出拥有最多雇员的公式的名称(如果有多个的，那么并列列出)</strong></p>
 <p>这道题的要求，是以公司为单位来计算雇员数，因此是需要分组的。</p>

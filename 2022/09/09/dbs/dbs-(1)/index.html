@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="keywords" content="数据库原理-概述, 后端工程师之路">
     <meta name="description" content="1. 数据库系统概述1.1 数据库系统的应用
-数据库管理系统(DataBase-Nabafenebt Systen,DBMS):由一个互相关联的数据的集合和一组用以访问这些数据的程序组成。这个数据集合通常称为数据库(DataBase),DB">
+数据库管理系统(DataBase-Management Systen,DBMS):由一个互相关联的数据的集合和一组用以访问这些数据的程序组成。这个数据集合通常称为数据库(DataBase),DB">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -414,7 +414,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="1-数据库系统概述"><a href="#1-数据库系统概述" class="headerlink" title="1. 数据库系统概述"></a>1. 数据库系统概述</h1><h2 id="1-1-数据库系统的应用"><a href="#1-1-数据库系统的应用" class="headerlink" title="1.1 数据库系统的应用"></a>1.1 数据库系统的应用</h2><ul>
-<li><strong>数据库管理系统(DataBase-Nabafenebt Systen,DBMS)</strong>:由一个互相关联的数据的集合和一组用以访问这些数据的程序组成。这个数据集合通常称为<strong>数据库(DataBase)</strong>,DBMS的主要目标是要提供一种可以<code>方便、高效</code>地存储数据库信息的途径</li>
+<li><strong>数据库管理系统(DataBase-Management Systen,DBMS)</strong>:由一个互相关联的数据的集合和一组用以访问这些数据的程序组成。这个数据集合通常称为<strong>数据库(DataBase)</strong>,DBMS的主要目标是要提供一种可以<code>方便、高效</code>地存储数据库信息的途径</li>
 </ul>
 <h2 id="1-2-数据库系统的目标"><a href="#1-2-数据库系统的目标" class="headerlink" title="1.2 数据库系统的目标"></a>1.2 数据库系统的目标</h2><ul>
 <li><strong>文件处理系统</strong>:传统操作系统所支持的，永久记录被存储在多个不同的文件中，人们编写不同的应用程序来将记录从有关文件中取出或者加入到适当的文件中</li>
@@ -434,10 +434,13 @@
 <h3 id="1-3-1-数抽抽象"><a href="#1-3-1-数抽抽象" class="headerlink" title="1.3.1 数抽抽象"></a>1.3.1 数抽抽象</h3><p>数据库系统通过以下几个层次上的抽象来对用户屏蔽复杂性，以简化用户与系统的交互</p>
 <ul>
 <li><strong>物理层(physical level)</strong>:最低层次的抽象，描述数据实际上是如何存储的，物理层详细描述了复杂的底层数据结构</li>
-<li><strong>逻辑层(logical level)</strong>:比物理层层次稍高的抽象，它描述了数据库中存储了什么样的数据以及这些数据间村咋什么样的关系。虽然逻辑层的简单结构的实现可能涉及到复杂的物理层结构，但是逻辑层的用户不必知道这样的复杂性，这称为<strong>物理数据独立性(physical data independence)</strong></li>
+<li><strong>逻辑层(logical level)</strong>:比物理层层次稍高的抽象，它描述了数据库中存储了什么样的数据以及这些数据间什么样的关系。虽然逻辑层的简单结构的实现可能涉及到复杂的物理层结构，但是逻辑层的用户不必知道这样的复杂性，这称为<strong>物理数据独立性(physical data independence)</strong></li>
 <li><strong>视图层(view level)</strong>: 最高层次的抽象，它只描述整个数据库的某个部分，数据库系统的很多用户并不需要关心所有的信息，而只需要访问数据的一部分。</li>
 </ul>
 <p>值得注意的是，与其他具有分层结构的架构类似，只改动某一层的架构是不会影响其更高层次的抽象的，比如说物理层更换了底层实现的数据结构，其逻辑层所定义的结构是不会有改动的</p>
+<blockquote>
+<p>因此,例如<code>Mysql</code>这样的数据库是支持可插拔的内部执行引擎的,例如<code>InnoDB</code>、<code>MySlyam</code>等</p>
+</blockquote>
 <h3 id="1-3-2-实例和模式-架构"><a href="#1-3-2-实例和模式-架构" class="headerlink" title="1.3.2 实例和模式(架构)"></a>1.3.2 实例和模式(架构)</h3><ul>
 <li><strong>实例(instance)</strong>:<code>特定时刻</code>存储在数据库中的信息集合成为数据库的一个实例</li>
 <li><strong>数据库模式(schema)</strong>:数据库的总体设计称为数据库模式</li>
@@ -477,28 +480,28 @@
 <li><strong>数据定义语言(Data-Definition Language,DDL)</strong>:数据库模式(架构)是通过一系列定义来说明，这些定义由一种称作为DDL的特殊语言来表达。DDL也可以用来定义数据的其他特征</li>
 <li>数据库系统所使用的存储结构和访问方式通过一系列特殊得到DDL语句来说明的，这种特殊的DDL称作**数据存储和定义(data storage and definition)**语言</li>
 </ul>
-<p>存储在数据中的数据值必须满足某些<strong>一致性约束(consistenhcy constraint)</strong></p>
+<p>存储在数据中的数据值必须满足某些<strong>一致性约束(constisency constraint)</strong></p>
 <ul>
 <li><strong>域约束(domain constraint)</strong>:声明一种属性属于某种具体的域就相当于约束它可以取的值</li>
 <li><strong>参照完整性(referential integrity)</strong>:一个悬系中给定属性集上的取值也在另一关系的某一属性集的取值中出现(外键的出现可以维护此完整性)</li>
 <li><strong>断言(assertion)</strong>:一个断言是数据库需要时刻满足的某一条件。域约束和参照为你整形约束是断言的特殊形式，简而言之，就是一个特殊的条件而已</li>
 <li><strong>授权(authorization)</strong>:对于不同的用户授予不同的权限</li>
 </ul>
-<p>DDL以一些指令(语句)作为输入，生成一些输出，DDL的输出放在<strong>数据字典(data dictionary)<strong>，数据字典中包含了</strong>元数据(metadata)</strong>,元数据是关于数据的数据，在读取和修改实际的数据之前，数据库系统先要参考数据字典啊</p>
+<p>DDL以一些指令(语句)作为输入，生成一些输出，DDL的输出放在<strong>数据字典(data dictionary)<strong>，数据字典中包含了</strong>元数据(metadata)</strong>,元数据是关于数据的数据，在读取和修改实际的数据之前，数据库系统先要参考数据字典</p>
 <h2 id="1-5-关系数据库"><a href="#1-5-关系数据库" class="headerlink" title="1.5 关系数据库"></a>1.5 关系数据库</h2><h3 id="1-5-1-表"><a href="#1-5-1-表" class="headerlink" title="1.5.1 表"></a>1.5.1 表</h3><p>可以这么理解，表就对应一种关系，一种关系就能映射出一张表</p>
 <h3 id="1-5-2-数据操纵语言"><a href="#1-5-2-数据操纵语言" class="headerlink" title="1.5.2 数据操纵语言"></a>1.5.2 数据操纵语言</h3><p>SQL查询语言是非过程化的，它以几个表作为输入(也可能只有一个)，总是仅返回一个表(视图)</p>
 <h3 id="1-5-3-数据定义语言-略"><a href="#1-5-3-数据定义语言-略" class="headerlink" title="1.5.3 数据定义语言(略)"></a>1.5.3 数据定义语言(略)</h3><h3 id="1-5-4-来自应用程序的数据库访问"><a href="#1-5-4-来自应用程序的数据库访问" class="headerlink" title="1.5.4 来自应用程序的数据库访问"></a>1.5.4 来自应用程序的数据库访问</h3><p><strong>应用程序(application program)</strong>:在这里是指以这种方式与数据库进行交互的程序</p>
 <p>为了访问数据库，DML语言需要由宿主语言来执行，有两种途径可以做到这一点</p>
 <ul>
-<li>一种是通过提供应用程序接口(过程集)，它可以用来将DML和DDL的语句发送数据库，再去取回结果，如JDBC何ODBC等</li>
+<li>一种是通过提供应用程序接口(过程集)，它可以用来将DML和DDL的语句发送数据库，再去取回结果，如JDBC和ODBC等</li>
 <li>另一种是通过扩展宿主语言的语法，在宿主语言的程序中嵌入DML调用，通常用一个特殊字符串作为DML调用的开始，并且通过预处理器，称为**DML预编译器(DML precompiler)**，来将DML语句转变成宿主语言中的过程调用</li>
 </ul>
 <h2 id="1-6-数据库设计-略"><a href="#1-6-数据库设计-略" class="headerlink" title="1.6 数据库设计(略)"></a>1.6 数据库设计(略)</h2><h2 id="1-7-数据存储和查询"><a href="#1-7-数据存储和查询" class="headerlink" title="1.7 数据存储和查询"></a>1.7 数据存储和查询</h2><p>数据库系统的功能部件大致可以分为存储管理器和查询处理部件，将在逻辑层编写的更新和查询转变成物理层的高效操作序列，这是数据库系统的任务</p>
 <h3 id="1-7-1-存储管理器"><a href="#1-7-1-存储管理器" class="headerlink" title="1.7.1 存储管理器"></a>1.7.1 存储管理器</h3><p><strong>存储管理器</strong>是数据库系统中负责在数据库中存储的底层数据与应用程序以及向操作系统提交的查询之间提供接口的部件。存储管理器负责与文件管理器进行交互。原始数据通过操作系统提供的文件系统存储在磁盘上。存储管理器将各种DML语句翻译到底层文件系统命令。因此，存储管理器负责数据库中数据的存储、检索和更新</p>
 <p>存储管理部件包括:</p>
 <ul>
-<li><strong>权限以及完整性管理器(authorization and integrity manager)</strong>:它检车是否满足完整性约束，并检查视图试图访问数据的用户的权限</li>
-<li><strong>事务管理器(transacation manager)</strong>:</li>
+<li><strong>权限以及完整性管理器(authorization and integrity manager)</strong>:它检查是否满足完整性约束，并检查视图试图访问数据的用户的权限</li>
+<li><strong>事务管理器(transaction manager)</strong></li>
 <li><strong>文件管理器(file manager)</strong></li>
 <li><strong>缓冲区管理器(buffer manager)</strong>:它负责将数据从磁盘上取到内存中来，并决定哪些数据应该被存储在内存中，它使得数据库可以处理比内存更大的数据</li>
 </ul>
