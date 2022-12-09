@@ -426,11 +426,11 @@
 <li>仅仅带<code>out</code>,也就是无参数有返回</li>
 <li><code>inout</code>,也就是有参数也有返回。</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">create procedure 存储过程名(in|out|intout 参数名 参数类型...)
-[characteristics...]
-BEGIN
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">procedure</span> 存储过程名<span class="token punctuation">(</span><span class="token operator">in</span><span class="token operator">|</span><span class="token keyword">out</span><span class="token operator">|</span>intout 参数名 参数类型<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token punctuation">[</span>characteristics<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span>
+<span class="token keyword">BEGIN</span>
 	存储过程体
-END<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">END</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <blockquote>
 <p>characteristics表示创建存储过程时指定的对存储过程的约束条件,其取值信息如下:</p>
@@ -440,91 +440,91 @@ END<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span>
 &#123;CONTAINS SQL|NO SQL|READS SQL DATA|MODIFIES SQL DATA&#125;:指明子程序使用SQL语句的限制<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="1-3-存储过程的创建与调用"><a href="#1-3-存储过程的创建与调用" class="headerlink" title="1.3 存储过程的创建与调用"></a>1.3 存储过程的创建与调用</h2><p>一个典型的创建存储过程的SQL代码如下:</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter $
-create procedure select_all_data()
-begin
-	select * 
-	from student;
-end $
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span> $
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> select_all_data<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">select</span> <span class="token operator">*</span> 
+	<span class="token keyword">from</span> student<span class="token punctuation">;</span>
+<span class="token keyword">end</span> $
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>存储过程的调用</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">call select_all_data();&#x2F;&#x2F;此时就可以调用存储过程了<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">call</span> select_all_data<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//此时就可以调用存储过程了</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter $
-create procedure select_avg_salary
-begin
-	select avg(salary) from employees;
-end$
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span> $
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> select_avg_salary
+<span class="token keyword">begin</span>
+	<span class="token keyword">select</span> <span class="token function">avg</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token keyword">from</span> employees<span class="token punctuation">;</span>
+<span class="token keyword">end</span>$
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>带有返回类型的存储过程编写</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter $
-create procedure show_min_salary(out ms Double(8,2))
-begin
-	select min(salary) into ms#将这个值写入ms
-	from employees;
-end$
-delimiter;
-#用户定义的变量
-CALL show_min_salary(@ms);
-#查看变量
-select @ms;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span> $
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> show_min_salary<span class="token punctuation">(</span><span class="token keyword">out</span> ms <span class="token keyword">Double</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">select</span> <span class="token function">min</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token keyword">into</span> ms<span class="token comment">#将这个值写入ms</span>
+	<span class="token keyword">from</span> employees<span class="token punctuation">;</span>
+<span class="token keyword">end</span>$
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span>
+<span class="token comment">#用户定义的变量</span>
+<span class="token keyword">CALL</span> show_min_salary<span class="token punctuation">(</span><span class="token variable">@ms</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">#查看变量</span>
+<span class="token keyword">select</span> <span class="token variable">@ms</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>带有输入参数的存储过程编写</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter $
-create procedure show_some_salary(IN empname varchar(20))
-begin
-	select salary from employee
-	where last_name &#x3D; empname;
-end$
-delimiter;
-#调用过程1
-CALL show_some_salary(&quot;Jack&quot;);
-#调用过程2
-set @empname :&#x3D; &quot;Jack&quot;;#赋值符号
-CALL show_some_salary(@empname);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span> $
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> show_some_salary<span class="token punctuation">(</span><span class="token operator">IN</span> empname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">select</span> salary <span class="token keyword">from</span> employee
+	<span class="token keyword">where</span> last_name <span class="token operator">=</span> empname<span class="token punctuation">;</span>
+<span class="token keyword">end</span>$
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span>
+<span class="token comment">#调用过程1</span>
+<span class="token keyword">CALL</span> show_some_salary<span class="token punctuation">(</span><span class="token string">"Jack"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">#调用过程2</span>
+<span class="token keyword">set</span> <span class="token variable">@empname</span> :<span class="token operator">=</span> <span class="token string">"Jack"</span><span class="token punctuation">;</span><span class="token comment">#赋值符号</span>
+<span class="token keyword">CALL</span> show_some_salary<span class="token punctuation">(</span><span class="token variable">@empname</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>同时带有输入输出参数的存储过程编写</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure show_someone_salary2(IN empname varchar(20),OUT empname double(8,2))
-begin
-	select salary into empname
-	where last_name &#x3D; empname;
-end
-delimiter;
-#调用的过程
-set @empname :&#x3D; &quot;Jack&quot;;
-#传入和传出,记得顺序不能乱
-CALL show_someone_salary(@empname,@empsalary)
-select @empsalary; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> show_someone_salary2<span class="token punctuation">(</span><span class="token operator">IN</span> empname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token keyword">OUT</span> empname <span class="token keyword">double</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">select</span> salary <span class="token keyword">into</span> empname
+	<span class="token keyword">where</span> last_name <span class="token operator">=</span> empname<span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span>
+<span class="token comment">#调用的过程</span>
+<span class="token keyword">set</span> <span class="token variable">@empname</span> :<span class="token operator">=</span> <span class="token string">"Jack"</span><span class="token punctuation">;</span>
+<span class="token comment">#传入和传出,记得顺序不能乱</span>
+<span class="token keyword">CALL</span> show_someone_salary<span class="token punctuation">(</span><span class="token variable">@empname</span><span class="token punctuation">,</span><span class="token variable">@empsalary</span><span class="token punctuation">)</span>
+<span class="token keyword">select</span> <span class="token variable">@empsalary</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>同一个参数,既是输入又是输出</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure show_mgr_name(INOUT empname varchar(25))
-begin
-	# 单句子查询
-	select mamager_id
-	from employees
-	where last_name &#x3D; empname;
-end
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> show_mgr_name<span class="token punctuation">(</span><span class="token keyword">INOUT</span> empname <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token comment"># 单句子查询</span>
+	<span class="token keyword">select</span> mamager_id
+	<span class="token keyword">from</span> employees
+	<span class="token keyword">where</span> last_name <span class="token operator">=</span> empname<span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="1-4-存储函数"><a href="#1-4-存储函数" class="headerlink" title="1.4 存储函数"></a>1.4 存储函数</h2><p>语法分析</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">create function 函数名(参数名 参数类型...)
-returns 返回值类型#一定有返回值。
-[characteristics]
-begin
-	函数体#函数体中有returns语句
-end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">function</span> 函数名<span class="token punctuation">(</span>参数名 参数类型<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">)</span>
+<span class="token keyword">returns</span> 返回值类型<span class="token comment">#一定有返回值。</span>
+<span class="token punctuation">[</span>characteristics<span class="token punctuation">]</span>
+<span class="token keyword">begin</span>
+	函数体<span class="token comment">#函数体中有returns语句</span>
+<span class="token keyword">end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>参数列表:指定参数是<code>IN</code>、<code>OUT</code>还是<code>INOUT</code>,<code>FUNCTION</code>总是默认为<code>IN</code>参数</p>
 <p><code>returns type</code>语句表示函数返回数据的类型</p>
@@ -549,24 +549,24 @@ delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 <h2 id="1-5-查看存储过程"><a href="#1-5-查看存储过程" class="headerlink" title="1.5 查看存储过程"></a>1.5 查看存储过程</h2><ul>
 <li>使用<code>show create</code>语句来查看存储过程和函数的创建信息</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">show create &#123;(procedure)|(function)&#125; 函数名;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">show</span> <span class="token keyword">create</span> &#123;<span class="token punctuation">(</span><span class="token keyword">procedure</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">)</span>&#125; 函数名<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
 <li>使用<code>show status</code>查看存储过程和函数的状态信息</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">show procedure status;
-show function status;
-show procedure status like &#39;show_max_salary&#39;;
-show function status like &#39;show_max_time&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">show</span> <span class="token keyword">procedure</span> <span class="token keyword">status</span><span class="token punctuation">;</span>
+<span class="token keyword">show</span> <span class="token keyword">function</span> <span class="token keyword">status</span><span class="token punctuation">;</span>
+<span class="token keyword">show</span> <span class="token keyword">procedure</span> <span class="token keyword">status</span> <span class="token operator">like</span> <span class="token string">'show_max_salary'</span><span class="token punctuation">;</span>
+<span class="token keyword">show</span> <span class="token keyword">function</span> <span class="token keyword">status</span> <span class="token operator">like</span> <span class="token string">'show_max_time'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li>使用数据字典进行查询</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select * from information_schema.Routines
-where ROUTINE_NAME &#x3D; &#39;show_max_time&#39; and ROUTINE_TYPE &#x3D; &#39;FUNCTION&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> information_schema<span class="token punctuation">.</span>Routines
+<span class="token keyword">where</span> ROUTINE_NAME <span class="token operator">=</span> <span class="token string">'show_max_time'</span> <span class="token operator">and</span> ROUTINE_TYPE <span class="token operator">=</span> <span class="token string">'FUNCTION'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<h2 id="1-6-修改特性"><a href="#1-6-修改特性" class="headerlink" title="1.6 修改特性"></a>1.6 修改特性</h2><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">alter &#123;(procedure)|(function)&#125; 存储过程或者函数名 
-[约束的情况];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="1-6-修改特性"><a href="#1-6-修改特性" class="headerlink" title="1.6 修改特性"></a>1.6 修改特性</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">alter</span> &#123;<span class="token punctuation">(</span><span class="token keyword">procedure</span><span class="token punctuation">)</span><span class="token operator">|</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">)</span>&#125; 存储过程或者函数名 
+<span class="token punctuation">[</span>约束的情况<span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <h2 id="1-7-存储过程的优缺点"><a href="#1-7-存储过程的优缺点" class="headerlink" title="1.7 存储过程的优缺点"></a>1.7 存储过程的优缺点</h2><ul>
 <li>存储过程可以一次编译而多次使用</li>
@@ -582,11 +582,11 @@ where ROUTINE_NAME &#x3D; &#39;show_max_time&#39; and ROUTINE_TYPE &#x3D; &#39;F
 <p><code>不适合高并发</code>。高并发的场景需要减少数据库的压力,有时候数据库会采用分库分表的方式,而且对可扩展性要求很高,在这种情况下,存储过程会变得难以维护,增加数据库的压力。</p>
 </blockquote>
 <h1 id="2-条件与处理程序"><a href="#2-条件与处理程序" class="headerlink" title="2. 条件与处理程序"></a>2. 条件与处理程序</h1><p><code>定义条件</code>是事先定义程序执行过程中可能遇到的问题,<code>处理程序</code>定义了在遇到问题的时候应该采取的处理方式,并且保证存储过程或者函数在遇到警告或者错误时能够继续执行,避免程序异常停止运行。</p>
-<h2 id="2-1-定义条件"><a href="#2-1-定义条件" class="headerlink" title="2.1 定义条件"></a>2.1 定义条件</h2><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">declare 错误名称 condition for 错误码(错误条件)
-declare Field_Not_Be_Null condition for 1048;
-declare Field_Not_Be_Null condition for sql state &#39;23000&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="2-1-定义条件"><a href="#2-1-定义条件" class="headerlink" title="2.1 定义条件"></a>2.1 定义条件</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">declare</span> 错误名称 condition <span class="token keyword">for</span> 错误码<span class="token punctuation">(</span>错误条件<span class="token punctuation">)</span>
+<span class="token keyword">declare</span> Field_Not_Be_Null condition <span class="token keyword">for</span> <span class="token number">1048</span><span class="token punctuation">;</span>
+<span class="token keyword">declare</span> Field_Not_Be_Null condition <span class="token keyword">for</span> <span class="token keyword">sql</span> state <span class="token string">'23000'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="2-2-定义处理程序"><a href="#2-2-定义处理程序" class="headerlink" title="2.2 定义处理程序"></a>2.2 定义处理程序</h2><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">declare 处理方式 handler for 错误类型 处理语句<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="2-2-定义处理程序"><a href="#2-2-定义处理程序" class="headerlink" title="2.2 定义处理程序"></a>2.2 定义处理程序</h2><pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">declare</span> 处理方式 <span class="token keyword">handler</span> <span class="token keyword">for</span> 错误类型 处理语句<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>处理方式</p>
 <ul>
@@ -605,121 +605,121 @@ declare Field_Not_Be_Null condition for sql state &#39;23000&#39;;<span aria-hid
 </ul>
 <p>处理语句</p>
 <p>如果出现上述条件之一,则采用对应的处理方式,并执行指定的处理语句,语句可以是像<code>set 变量 = 值</code>这样的形式的语句。</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql"># 捕获sqlstate_value
-declare continue handle for 1146 set @info &#x3D; &#39;NO_SUCH_TABLE&#39;;
-declare continue handle for sqlstate &#39;23000&#39; set @info &#x3D; &#39;NO_SUCH_TABLE&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment"># 捕获sqlstate_value</span>
+<span class="token keyword">declare</span> <span class="token keyword">continue</span> handle <span class="token keyword">for</span> <span class="token number">1146</span> <span class="token keyword">set</span> <span class="token variable">@info</span> <span class="token operator">=</span> <span class="token string">'NO_SUCH_TABLE'</span><span class="token punctuation">;</span>
+<span class="token keyword">declare</span> <span class="token keyword">continue</span> handle <span class="token keyword">for</span> sqlstate <span class="token string">'23000'</span> <span class="token keyword">set</span> <span class="token variable">@info</span> <span class="token operator">=</span> <span class="token string">'NO_SUCH_TABLE'</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="2-3-分支结构IF"><a href="#2-3-分支结构IF" class="headerlink" title="2.3 分支结构IF"></a>2.3 分支结构IF</h2><p>示例程序</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure testif()
-begin
-	declare stu_name varchar(15);
-	if stu_name is not null
-		then select * from student where name &#x3D; stu_name; 
-	end if
-	declare email varchar(25) default &#39;aaa&#39;;#相当于给email赋初值
-	if email is not null
-		then select * from student where stu_email &#x3D; email
-	elseif email between &#39;20000&#39; and &#39;30000&#39;
-		then select * from student;
-	elseif email between &#39;30001&#39; and &#39;40000&#39;
-		then select * from student;
-	else 
-		select * from student;
-	end if
-end
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> testif<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">declare</span> stu_name <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> stu_name <span class="token operator">is</span> <span class="token operator">not</span> <span class="token boolean">null</span>
+		<span class="token keyword">then</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student <span class="token keyword">where</span> name <span class="token operator">=</span> stu_name<span class="token punctuation">;</span> 
+	<span class="token keyword">end</span> <span class="token keyword">if</span>
+	<span class="token keyword">declare</span> email <span class="token keyword">varchar</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">'aaa'</span><span class="token punctuation">;</span><span class="token comment">#相当于给email赋初值</span>
+	<span class="token keyword">if</span> email <span class="token operator">is</span> <span class="token operator">not</span> <span class="token boolean">null</span>
+		<span class="token keyword">then</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student <span class="token keyword">where</span> stu_email <span class="token operator">=</span> email
+	<span class="token keyword">elseif</span> email <span class="token operator">between</span> <span class="token string">'20000'</span> <span class="token operator">and</span> <span class="token string">'30000'</span>
+		<span class="token keyword">then</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+	<span class="token keyword">elseif</span> email <span class="token operator">between</span> <span class="token string">'30001'</span> <span class="token operator">and</span> <span class="token string">'40000'</span>
+		<span class="token keyword">then</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+	<span class="token keyword">else</span> 
+		<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+	<span class="token keyword">end</span> <span class="token keyword">if</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>简单来说就是<code>if-then</code>、<code>elseif then</code>、<code>else</code></p>
 <h2 id="2-4-分支结构CASE"><a href="#2-4-分支结构CASE" class="headerlink" title="2.4 分支结构CASE"></a>2.4 分支结构CASE</h2><p><code>case</code>语法结构</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">case 表达式
-when 值1 then 结果1或者执行语句(语句需要加分号)
-when 值2 then 结果2或者执行语句(语句需要加分号)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">case</span> 表达式
+<span class="token keyword">when</span> 值<span class="token number">1</span> <span class="token keyword">then</span> 结果<span class="token number">1</span>或者执行语句<span class="token punctuation">(</span>语句需要加分号<span class="token punctuation">)</span>
+<span class="token keyword">when</span> 值<span class="token number">2</span> <span class="token keyword">then</span> 结果<span class="token number">2</span>或者执行语句<span class="token punctuation">(</span>语句需要加分号<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <ul>
 <li><code>case-when</code></li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure test_case()
-begin
-	declare var int default 2;
-	case var
-		when 1 then select * from student;
-		when 2 then select * from teacher;
-		else select * from employee;
-	end case;
-end
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> test_case<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">declare</span> var <span class="token keyword">int</span> <span class="token keyword">default</span> <span class="token number">2</span><span class="token punctuation">;</span>
+	<span class="token keyword">case</span> var
+		<span class="token keyword">when</span> <span class="token number">1</span> <span class="token keyword">then</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+		<span class="token keyword">when</span> <span class="token number">2</span> <span class="token keyword">then</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> teacher<span class="token punctuation">;</span>
+		<span class="token keyword">else</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employee<span class="token punctuation">;</span>
+	<span class="token keyword">end</span> <span class="token keyword">case</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>第二种情况</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure test_case()
-begin
-	declare var int default 10;
-	case var
-		when var &gt;&#x3D; 100 then select * from student;
-		when var &gt;&#x3D; 10  then select * from teacher;
-		else select * from employee;
-	end case;
-end
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> test_case<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">declare</span> var <span class="token keyword">int</span> <span class="token keyword">default</span> <span class="token number">10</span><span class="token punctuation">;</span>
+	<span class="token keyword">case</span> var
+		<span class="token keyword">when</span> var <span class="token operator">>=</span> <span class="token number">100</span> <span class="token keyword">then</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> student<span class="token punctuation">;</span>
+		<span class="token keyword">when</span> var <span class="token operator">>=</span> <span class="token number">10</span>  <span class="token keyword">then</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> teacher<span class="token punctuation">;</span>
+		<span class="token keyword">else</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> employee<span class="token punctuation">;</span>
+	<span class="token keyword">end</span> <span class="token keyword">case</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="2-5-三种循环结构"><a href="#2-5-三种循环结构" class="headerlink" title="2.5 三种循环结构"></a>2.5 三种循环结构</h2><p><code>LOOP</code>循环语句用来重复执行某些语句,<code>LOOP</code>内的语句一致重复执行直到循环退出<code>使用LEAVE</code>子句,跳出循环的过程</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">[loop_label:]LOOP
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token punctuation">[</span>loop_label:<span class="token punctuation">]</span><span class="token keyword">LOOP</span>
 	循环执行的语句
-END LOOP[loop_label]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<span class="token keyword">END</span> <span class="token keyword">LOOP</span><span class="token punctuation">[</span>loop_label<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>入门程序</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure test_loop()
-begin
-	declare num int default 1;
-	loop_label:LOOP
-		set num &#x3D; num + 1;
-		if num &gt;&#x3D; 10
-			then leave loop_label;
-		end if;
-	end loop loop_label;
-	select num;
-end
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> test_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">declare</span> num <span class="token keyword">int</span> <span class="token keyword">default</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	loop_label:<span class="token keyword">LOOP</span>
+		<span class="token keyword">set</span> num <span class="token operator">=</span> num <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> num <span class="token operator">>=</span> <span class="token number">10</span>
+			<span class="token keyword">then</span> <span class="token keyword">leave</span> loop_label<span class="token punctuation">;</span>
+		<span class="token keyword">end</span> <span class="token keyword">if</span><span class="token punctuation">;</span>
+	<span class="token keyword">end</span> <span class="token keyword">loop</span> loop_label<span class="token punctuation">;</span>
+	<span class="token keyword">select</span> num<span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>while</code>循环</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure test_loop()
-begin
-	while num &lt;&#x3D; 10 DO
-		#循环体
-		#迭代提交
-	end while
-end
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> test_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">while</span> num <span class="token operator">&lt;=</span> <span class="token number">10</span> <span class="token keyword">DO</span>
+		<span class="token comment">#循环体</span>
+		<span class="token comment">#迭代提交</span>
+	<span class="token keyword">end</span> <span class="token keyword">while</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>repeat</code>结构</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure test_loop()
-begin
-	repeat
-		update employee set salary &#x3D; salary *1.15;
-		select avg(salary) into avg_salary from employee;
-		until avg_salary &gt;&#x3D; 13000
-	end repeat;
-end
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> test_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">repeat</span>
+		<span class="token keyword">update</span> employee <span class="token keyword">set</span> salary <span class="token operator">=</span> salary <span class="token operator">*</span><span class="token number">1.15</span><span class="token punctuation">;</span>
+		<span class="token keyword">select</span> <span class="token function">avg</span><span class="token punctuation">(</span>salary<span class="token punctuation">)</span> <span class="token keyword">into</span> avg_salary <span class="token keyword">from</span> employee<span class="token punctuation">;</span>
+		until avg_salary <span class="token operator">>=</span> <span class="token number">13000</span>
+	<span class="token keyword">end</span> <span class="token keyword">repeat</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>iterate</code></p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure test_loop()
-begin
-	while num &lt;&#x3D; 10 DO
-		#循环体
-		if num &gt;&#x3D; 10
-			then iterate;
-        end if;
-		#迭代提交
-	end while
-end
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> test_loop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token keyword">while</span> num <span class="token operator">&lt;=</span> <span class="token number">10</span> <span class="token keyword">DO</span>
+		<span class="token comment">#循环体</span>
+		<span class="token keyword">if</span> num <span class="token operator">>=</span> <span class="token number">10</span>
+			<span class="token keyword">then</span> <span class="token keyword">iterate</span><span class="token punctuation">;</span>
+        <span class="token keyword">end</span> <span class="token keyword">if</span><span class="token punctuation">;</span>
+		<span class="token comment">#迭代提交</span>
+	<span class="token keyword">end</span> <span class="token keyword">while</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="2-6-游标"><a href="#2-6-游标" class="headerlink" title="2.6 游标"></a>2.6 游标</h2><p>游标提供了一种灵活的技术,它使得我们能够对结果集中的每一条记录进行定位,并对指向的记录中的数据进行操作的数据结构,游标让<code>SQL</code>这种面向集合的语言有了面向过程开发的能力。</p>
 <p>在<code>SQL</code>中，游标是一种临时的数据库对象,可以指向数据库表中的数据行指针,这里游标充当了指针的作用,我们可以通过操作游标来对数据行进行操作。</p>
@@ -736,12 +736,12 @@ delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 <li>打开游标</li>
 </ul>
 <p>当我们定义好游标之后,如果想要使用游标,那么必须要打开游标,打开游标的时候select语句的查询结果集就会送到游标工作区,为后面游标的逐条读取结果集中的记录做准备。</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">open cursor;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">open</span> <span class="token keyword">cursor</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <ul>
 <li>使用游标</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">fetch cursor_name into var_name[,var_name]...<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">fetch</span> cursor_name <span class="token keyword">into</span> var_name<span class="token punctuation">[</span><span class="token punctuation">,</span>var_name<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>这句的作用是使用<code>cursor_name</code>这个游标来读取当前行,并且将数据保存到var_name这个变量中,游标指针自动知道下一行,如游标读取的数据行有多个列名,则在into关键字后面复制给多个变量名即可</p>
 <p>注意:var_name必须在声明游标之前就定义好。</p>
@@ -749,32 +749,32 @@ delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span>
 <ul>
 <li>关闭游标</li>
 </ul>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">close cursor;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">close</span> <span class="token keyword">cursor</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>如果你不关闭的话,那么就会导致内存泄漏。</p>
 <p>入门程序</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">delimiter
-create procedure get_count_by_limit(in limit_total_salary double,out total_count int)
-begin
-	#定义局部变量
-	declare sum_salary double default 0;
-    declare emp_sal double;
-    declare emp_count int default 0;&#x2F;&#x2F;累计人数
-	#1.声明游标
-	declare emp_cursor cursor for select salary from employees order by salary desc;
-	#2.打开游标
-	open emp_cursor;
-	#3.使用游标
-	while sum_salary &lt;&#x3D; 15000 do
-			fetch emp_cursor into emp_sal;
-			set sum_salary &#x3D; sum_salary + emp_sal;
-			emp_count &#x3D; emp_count +1;
-	end while;
-	# 4.关闭游标
-	set total_count &#x3D; emp_count;
-	clsoe emp_cursor;
-end
-delimiter;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">delimiter</span>
+<span class="token keyword">create</span> <span class="token keyword">procedure</span> get_count_by_limit<span class="token punctuation">(</span><span class="token operator">in</span> limit_total_salary <span class="token keyword">double</span><span class="token punctuation">,</span><span class="token keyword">out</span> total_count <span class="token keyword">int</span><span class="token punctuation">)</span>
+<span class="token keyword">begin</span>
+	<span class="token comment">#定义局部变量</span>
+	<span class="token keyword">declare</span> sum_salary <span class="token keyword">double</span> <span class="token keyword">default</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">declare</span> emp_sal <span class="token keyword">double</span><span class="token punctuation">;</span>
+    <span class="token keyword">declare</span> emp_count <span class="token keyword">int</span> <span class="token keyword">default</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//累计人数</span>
+	<span class="token comment">#1.声明游标</span>
+	<span class="token keyword">declare</span> emp_cursor <span class="token keyword">cursor</span> <span class="token keyword">for</span> <span class="token keyword">select</span> salary <span class="token keyword">from</span> employees <span class="token keyword">order</span> <span class="token keyword">by</span> salary <span class="token keyword">desc</span><span class="token punctuation">;</span>
+	<span class="token comment">#2.打开游标</span>
+	<span class="token keyword">open</span> emp_cursor<span class="token punctuation">;</span>
+	<span class="token comment">#3.使用游标</span>
+	<span class="token keyword">while</span> sum_salary <span class="token operator">&lt;=</span> <span class="token number">15000</span> <span class="token keyword">do</span>
+			<span class="token keyword">fetch</span> emp_cursor <span class="token keyword">into</span> emp_sal<span class="token punctuation">;</span>
+			<span class="token keyword">set</span> sum_salary <span class="token operator">=</span> sum_salary <span class="token operator">+</span> emp_sal<span class="token punctuation">;</span>
+			emp_count <span class="token operator">=</span> emp_count <span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">end</span> <span class="token keyword">while</span><span class="token punctuation">;</span>
+	<span class="token comment"># 4.关闭游标</span>
+	<span class="token keyword">set</span> total_count <span class="token operator">=</span> emp_count<span class="token punctuation">;</span>
+	clsoe emp_cursor<span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+<span class="token keyword">delimiter</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <blockquote>
 <p>全局变量的持久化</p>
