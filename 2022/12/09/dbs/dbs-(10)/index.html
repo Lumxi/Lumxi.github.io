@@ -522,6 +522,79 @@ Owns(driver_">
  <span class="token keyword">from</span> Accident
  <span class="token keyword">where</span> <span class="token keyword">year</span> <span class="token operator">=</span> <span class="token number">2021</span> <span class="token operator">and</span> location<span class="token operator">=</span><span class="token string">"Wushan"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>dependencies F &#x3D;{AB→CD, D→C, DEF→AB, DE→B, AC→DC } holds on R.</p>
+<p>(1) List all candidate keys of relation R. <strong>(3 points)</strong></p>
+<blockquote>
+<p>题目大意,请你列出这个关系的所有的候选码</p>
+</blockquote>
+<p>首先从函数依赖出发,找左部是否能够构成候选码</p>
+<p><code>(AB)+</code>&#x3D;{AB}&#x3D;{ABCD},如果要形成候选码,那么必须闭包中包含R中的所有的元素,还缺少<code>E和F</code>,而<code>E和F之间没有的依赖函数依赖可以推导,因此只需要将E和F加上去即可</code>,所以第一个候选码是ABEF</p>
+<p><code>(D)+</code>&#x3D;{D}&#x3D;{CD},由<code>DEF-&gt;AB</code>,因此<code>(DEF)+</code>&#x3D;{DEF}&#x3D;{ABDEF},在D的基础上加上<code>EF</code>即可形成候选码</p>
+<p><code>(DEF)+</code>已经计算过了</p>
+<p><code>(AC)+</code>&#x3D;{AC}&#x3D;{ACD},还缺少<code>BEF</code>,由<code>DE-&gt;B</code>,因此只需要加上<code>EF</code>即可</p>
+<p>综上所述,候选码为<code>ABEF</code>、<code>DEF</code>、<code>ACEF</code></p>
+<p>(2) Does the functional dependency AC→B holds on R, Explain why. <strong>(2 points)</strong></p>
+<p>这道题问你<code>AC-&gt;B</code>这个函数依赖在关系R上是否成立,验证的办法就是求<code>(AC)+</code></p>
+<p><code>(AC)+</code>&#x3D;{AC}&#x3D;{ACD},没有包含B,因此这个函数依赖是不成立的</p>
+<p>(3) Give a decomposition of R with only one time of BCNF decomposition. <strong>(3 points)</strong></p>
+<blockquote>
+<p>这道题要求我们只需要执行一次BCNF的分解即可</p>
+</blockquote>
+<p>首先要找到一个非平凡的函数依赖,这个函数依赖的左部不是候选码,于是我们选中<code>AB-&gt;CD</code></p>
+<p>于是,我们将<code>AB</code>看作a,将<code>CD</code>看作b</p>
+<p>r1&#x3D;{a∪b}&#x3D;{ABCD},r2&#x3D;{r-b}&#x3D;{ABEF}</p>
+<p>分解完成</p>
+<p>(4) Give a 3NF decomposition of R, and list the main procedure for calculating your canonical cover. <strong>(3 points)</strong></p>
+<blockquote>
+<p>这道题要求我们写出分解为第三范式的结果</p>
+</blockquote>
+<p>分解为第三范式,必须先求出正则覆盖,F &#x3D;{AB→CD, D→C, DEF→AB, DE→B, AC→DC } </p>
+<p>第一步,先根据分解律得到一个新的函数依赖集</p>
+<p>F&#x3D;{AB-&gt;C,AB-&gt;D,D-&gt;C,DEF-&gt;A,DEF-&gt;B,DE-&gt;B,AC-&gt;D,AC-&gt;C}</p>
+<p>然后挨个验证函数依赖是否是必要的,</p>
+<p>对于<code>AB-&gt;C</code>,计算<code>(AB)+</code>&#x3D;{AB}&#x3D;{ABD}&#x3D;{ABCD},包含有C,所以这个函数依赖是多余的</p>
+<p>对于<code>AB-&gt;D</code>,计算<code>(AB)+</code>&#x3D;{AB},不包含D,因此保留此函数依赖</p>
+<p>对于<code>D-&gt;C</code>,计算<code>(D)+</code>&#x3D;{D},不包含C,保留函数依赖</p>
+<p>此时的函数依赖集为<code>F=&#123;AB-&gt;D,D-&gt;C,DEF-&gt;A,DEF-&gt;B,DE-&gt;B,AC-&gt;D,AC-&gt;C&#125;</code></p>
+<p>对于<code>DEF-&gt;A</code>,参考函数<code>F=&#123;AB-&gt;D,D-&gt;C,DEF-&gt;B,DE-&gt;B,AC-&gt;D,AC-&gt;C&#125;</code>,计算<code>(DEF)+</code>&#x3D;{DEF}&#x3D;{BDEF}&#x3D;{BDEF}不包含A,因此保留此函数依赖</p>
+<p>对于<code>DEF-&gt;B</code>,参考函数<code>F=&#123;AB-&gt;D,D-&gt;C,DEF-&gt;A,DE-&gt;B,AC-&gt;D,AC-&gt;C&#125;</code>,计算<code>(DEF)+</code>&#x3D;{DEF}&#x3D;{ADEF}&#x3D;{ABDEF}&#x3D;{ABCDEF},包含了B,因此不保留此函数依赖</p>
+<p>此时的函数依赖集为<code>F=&#123;AB-&gt;D,D-&gt;C,DEF-&gt;A,DE-&gt;B,AC-&gt;D,AC-&gt;C&#125;</code></p>
+<p>对于<code>DE-&gt;B</code>,参考函数依赖<code>F=&#123;AB-&gt;D,D-&gt;C,DEF-&gt;A,AC-&gt;D,AC-&gt;C&#125;</code>,计算<code>(DE)+</code>&#x3D;{DE},不包含B,因此保留</p>
+<p>对于<code>AC-&gt;D</code>,参考函数依赖<code>F=&#123;AB-&gt;D,D-&gt;C,DEF-&gt;A,DE-&gt;B,AC-&gt;C&#125;</code>,计算<code>(AC)+</code>&#x3D;{AC},不包含D,因此保留</p>
+<p>对于<code>AC-&gt;C</code>,参考函数依赖<code>F=&#123;AB-&gt;D,D-&gt;C,DEF-&gt;A,DE-&gt;B,AC-&gt;D&#125;</code>,计算<code>(AC)+</code>&#x3D;{AC}&#x3D;{ACD},包含了C,因此不保留</p>
+<p>此时函数依赖集为<code>F=&#123;AB-&gt;D,D-&gt;C,DEF-&gt;A,DE-&gt;B,AC-&gt;D&#125;</code></p>
+<p>然后计算左部的冗余元素</p>
+<p>对于<code>AB-&gt;D</code></p>
+<ul>
+<li>如果我们删除<code>A</code>,那么计算<code>(B)+</code>&#x3D;{B},没有包含D,因此A不是冗余的	</li>
+<li>如果我们删除<code>B</code>,那么计算<code>(A)+</code>&#x3D;{A},没有包含D,因此B不是冗余的</li>
+</ul>
+<p>对于<code>DEF-&gt;A</code></p>
+<ul>
+<li>如果删除<code>D</code>,那么计算<code>(EF)+</code>&#x3D;{EF},因此D不是冗余的</li>
+<li>如果删除<code>E</code>,那么计算<code>(DF)+</code>&#x3D;{DCF},因此E不是冗余的</li>
+<li>如果删除<code>F</code>,那么计算<code>(DE)+</code>&#x3D;{DCE},因此F不是冗余的</li>
+</ul>
+<p>对于<code>DE-&gt;B</code></p>
+<ul>
+<li>如果删除<code>D</code>,那么计算<code>(E)+</code>&#x3D;{E},不包含B,因此不是冗余的</li>
+<li>如果删除<code>E</code>,那么计算<code>(D)+</code>&#x3D;{D}&#x3D;{DC},不包含B,因此不是冗余的</li>
+</ul>
+<p>如果<code>AC-&gt;D</code></p>
+<ul>
+<li>如果删除<code>A</code>,那么计算<code>(C)+</code>&#x3D;{C},因此不是冗余的</li>
+<li>如果删除<code>C</code>,那么计算<code>(A)+</code>&#x3D;{A},因此不是冗余的</li>
+</ul>
+<p>综上所述,一个正则覆盖Fc&#x3D;{AB-&gt;D,D-&gt;C,DEF-&gt;A,DE-&gt;B,AC-&gt;D}</p>
+<p>基于此,分解为3NF:</p>
+<p>第一步,直接合并函数依赖的左部和右部</p>
+<p><code>R=&#123;ABD,CD,ADEF,BDE,ACD&#125;</code></p>
+<p>第二步,去除被包含的关系模式</p>
+<p><code>R=&#123;ABD,ADEF,BDE,ACD&#125;</code></p>
+<p>第三步,检查是否包含候选码<code>ABEF</code>、<code>DEF</code>、<code>ACEF</code></p>
+<p>观察到含有<code>DEF</code></p>
+<p>说明一下:并不需要放所有的候选码,如果有多个放一个候选码就可以了</p>
+<p>然后这道题就解完了</p>
 <h2 id="第二套题"><a href="#第二套题" class="headerlink" title="第二套题"></a>第二套题</h2>
                 
             </div>
