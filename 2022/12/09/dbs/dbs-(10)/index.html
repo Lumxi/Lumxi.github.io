@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="数据库原理-SQL与范式分解练习题, 后端工程师之路">
+    <meta name="keywords" content="数据库原理-数据库练习题, 后端工程师之路">
     <meta name="description" content="第一套题Person(driver_id, name, address);
 Car(license_plate, model, year);
 Accident(report_no, year, location);
@@ -20,7 +20,7 @@ Owns(driver_">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>数据库原理-SQL与范式分解练习题 | 后端工程师之路</title>
+    <title>数据库原理-数据库练习题 | 后端工程师之路</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -337,12 +337,12 @@ Owns(driver_">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">数据库原理-SQL与范式分解练习题</h1>
+                    <h1 class="description center-align post-title">数据库原理-数据库练习题</h1>
                 </div>
             </div>
         </div>
@@ -595,7 +595,279 @@ Owns(driver_">
 <p>观察到含有<code>DEF</code></p>
 <p>说明一下:并不需要放所有的候选码,如果有多个放一个候选码就可以了</p>
 <p>然后这道题就解完了</p>
-<h2 id="第二套题"><a href="#第二套题" class="headerlink" title="第二套题"></a>第二套题</h2>
+<p>事务操作题</p>
+<table>
+<thead>
+<tr>
+<th>T0</th>
+<th>T1</th>
+<th>T2</th>
+<th>T3</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Read(A);</td>
+<td>Read(B);</td>
+<td>Read(C)</td>
+<td>Read(D)</td>
+</tr>
+<tr>
+<td>Read(B);</td>
+<td>Read(C);</td>
+<td>C:&#x3D;C-100;</td>
+<td>D:&#x3D;D+100;</td>
+</tr>
+<tr>
+<td>A:&#x3D;A-50;</td>
+<td>B:&#x3D;B-500;</td>
+<td>Write(C);</td>
+<td>Write(D)</td>
+</tr>
+<tr>
+<td>B:&#x3D;B+50;</td>
+<td>C:&#x3D;C+500;</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Write(A);</td>
+<td>Write(B);</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Write(B).</td>
+<td>Write(C)</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>Let A&#x3D;1000, B&#x3D;2000, C&#x3D;700, D&#x3D;300 as the initial values.</p>
+<p>(1) Explain the distinction between the terms <em>serial schedule</em> and <strong>serializable schedule.</strong> <strong>(2 points)</strong></p>
+<blockquote>
+<p>请你解释一下可串行化调度和串行调度的区别是什么?</p>
+<p>串行调度是由来自各个事务的指令序列组成的,其中属于同一个事务的指令必须挨在一起,不能分割</p>
+<p>可串行化调度:在并发执行中,通过保证所执行的任何调度的效果等价与一个串行调度,这种调度称为可串行化</p>
+</blockquote>
+<p>区别:可串行化调度</p>
+<p>(2) Give a concurrent execution of T0, T1, T2, and T3 that produces a serializable schedule such that the order in which the transaction commit is different from the serializable order. Then show its serializability order. <strong>(4 points)</strong></p>
+<blockquote>
+<p>题目大意,就是说,你要给出一个调度的指令序列,要满足下面两点</p>
+<ul>
+<li>事务的开始执行顺序和提交顺序不同,比如说开始执行的顺序是<code>T1 T3 T2 T0</code>,那么提交的顺序就要是<code>T0 T3 T2 T1</code>,只要保证这两个序列不一样就可以</li>
+<li>这个指令序列要满足可串行化</li>
+</ul>
+</blockquote>
+<p>思路:我们观察事务的指令序列,特点是这样的<code>T0</code>和<code>T1</code>有指令可能导致冲突,<code>T1</code>和<code>T0、T2</code>可能导致冲突,<code>T2和T1可能冲突</code>,<code>T3</code>不于其他事务冲突,因此,我们的思路就是让<code>T3</code>在前三位开始,最后一位提交,这样可以满足第一个条件,然后编排<code>T0 T1 T2</code>的顺序使之满足可串行化即可</p>
+<p>编排如下</p>
+<table>
+<thead>
+<tr>
+<th>T0</th>
+<th>T1</th>
+<th>T2</th>
+<th>T3(第二个开始,最后提交)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Read(A)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Read(B)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>A:&#x3D; A-50</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>B:&#x3D; B+50</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>Read(D)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Read(C)</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>C:&#x3D; C-100</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>Write(C)</td>
+<td></td>
+</tr>
+<tr>
+<td>Write(A)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Write(B)</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Read(B)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Read(C)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>B:&#x3D; B-500</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>C:&#x3D; C+500</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Write(B)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Write(C)</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>commit</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>commit</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>commit</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>D:&#x3D; D+100</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>Write(D)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>Commit</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>注意,这里很容易忽略的一点就是关于可恢复调度的问题,如果要求这个调度同时是可恢复的</p>
+<p>对于事务<code>Ti</code>和<code>Tj</code>而言,如果<code>Tj</code>读取了<code>Ti</code>所写的数据项,那么<code>Ti</code>应该要先提交而<code>Tj</code>后提交</p>
+<p>对应到我们的题目就是T1读取了T0的数据,那么应该T0先提交</p>
+</blockquote>
+<p>(3) Explain the checkpoint technology. (2 points)</p>
+<blockquote>
+<p>请你简述一下什么是检查点</p>
+<ul>
+<li>将当前位于主存的所有日志都输出到稳定存储器</li>
+<li>将所有修改的缓冲块输出到磁盘</li>
+<li>将一个日志记录<code>checkPoint&lt;L&gt;</code>输出到稳定存储器,其中L是执行检查点时正活跃的事务列表</li>
+</ul>
+</blockquote>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">&lt;</span>checkpoint <span class="token punctuation">&#123;</span>T1, T2<span class="token punctuation">&#125;</span><span class="token operator">></span>
+<span class="token operator">&lt;</span>T3, start<span class="token operator">></span>
+<span class="token operator">&lt;</span>T2, commit<span class="token operator">></span>
+<span class="token operator">&lt;</span>T3, D, <span class="token number">300</span>, <span class="token number">40</span><span class="token operator"><span class="token file-descriptor important">0</span>></span>
+<span class="token operator">&lt;</span>T1, B, <span class="token number">205</span><span class="token operator"><span class="token file-descriptor important">0</span>></span>
+<span class="token operator">&lt;</span>T1, abort<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>(4) Describe the change of Undo List In the Redo Pass. (3 points)</p>
+<blockquote>
+<p>请你描述一下撤销列表是如何变化的,注意,这个从前往后的过程会<code>redo</code></p>
+<p>首先我们找到<code>checkpint&lt;&#123;T1,T2&#125;&gt;</code></p>
+<p>因此初始化<code>undo-list=&#123;T1,T2&#125;</code></p>
+<p>然后从前向后扫描,发现<code>T3</code>开始,<code>undo-list=&#123;T1,T2,T3&#125;</code></p>
+<p><code>T2 commit,删除T2</code>,<code>undo-list=&#123;T1,T3&#125;</code></p>
+<p><code>T1 abort 删除T1</code>,<code>undo-list=&#123;T3&#125;</code>,开始撤销3</p>
+</blockquote>
+<p>(5) Show the log records which should be added during recovery. (2 points)</p>
+<blockquote>
+<p>在T3重做的时候,会留下那个<code>read-only</code>的日志,格式为<code>&lt;T,数据项,值&gt;</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">&lt;</span>T3, start<span class="token operator">></span>
+<span class="token operator">&lt;</span>T2, commit<span class="token operator">></span>
+<span class="token operator">&lt;</span>T3, D, <span class="token number">300</span>, <span class="token number">40</span><span class="token operator"><span class="token file-descriptor important">0</span>></span><span class="token comment">#300是旧值,400是新值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token operator">&lt;</span>T3,D,30<span class="token operator"><span class="token file-descriptor important">0</span>></span>
+<span class="token operator">&lt;</span>T3,abort<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</blockquote>
+<p>(6) List the final value of B, C and D after completing recovery. (2 points)</p>
+<p>B&#x3D;2050, C&#x3D;600, D&#x3D;300</p>
+<blockquote>
+<p>列出BCD在恢复之后的值</p>
+</blockquote>
+<p>完整的事务操作</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Beginning of log
+<span class="token operator">&lt;</span>To, start<span class="token operator">></span>
+<span class="token operator">&lt;</span>To, A, <span class="token number">1000</span>, <span class="token number">95</span><span class="token operator"><span class="token file-descriptor important">0</span>></span>
+<span class="token operator">&lt;</span>To, B, <span class="token number">2000</span>, <span class="token number">205</span><span class="token operator"><span class="token file-descriptor important">0</span>></span>
+<span class="token operator">&lt;</span>T1, start<span class="token operator">></span>
+<span class="token operator">&lt;</span>T0, commit<span class="token operator">></span>
+<span class="token operator">&lt;</span>T1, B, <span class="token number">2050</span>, <span class="token number">155</span><span class="token operator"><span class="token file-descriptor important">0</span>></span>
+<span class="token operator">&lt;</span>T2, start<span class="token operator">></span>
+<span class="token operator">&lt;</span>T2, C, <span class="token number">700</span>, <span class="token number">60</span><span class="token operator"><span class="token file-descriptor important">0</span>></span>
+<span class="token operator">&lt;</span>checkpoint <span class="token punctuation">&#123;</span>T1, T2<span class="token punctuation">&#125;</span><span class="token operator">></span><span class="token comment">#在这个点A:950 B:1550 C:600</span>
+<span class="token operator">&lt;</span>T3, start<span class="token operator">></span>
+<span class="token operator">&lt;</span>T2, commit<span class="token operator">></span>
+<span class="token operator">&lt;</span>T3, D, <span class="token number">300</span>, <span class="token number">40</span><span class="token operator"><span class="token file-descriptor important">0</span>></span><span class="token comment"># D:400</span>
+<span class="token operator">&lt;</span>T1, B, <span class="token number">205</span><span class="token operator"><span class="token file-descriptor important">0</span>></span><span class="token comment">#B:2050</span>
+<span class="token operator">&lt;</span>T1, abort<span class="token operator">></span>
+<span class="token operator">&lt;</span>T3,D,30<span class="token operator"><span class="token file-descriptor important">0</span>></span><span class="token comment">#D:300</span>
+<span class="token operator">&lt;</span>T3,abort<span class="token operator">></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>A:950 B:2050 C:600 D:300</code></p>
+
                 
             </div>
             <hr/>
@@ -748,9 +1020,9 @@ Owns(driver_">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="数据库原理-SQL与范式分解练习题">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="数据库原理-数据库练习题">
                         
-                        <span class="card-title">数据库原理-SQL与范式分解练习题</span>
+                        <span class="card-title">数据库原理-数据库练习题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
