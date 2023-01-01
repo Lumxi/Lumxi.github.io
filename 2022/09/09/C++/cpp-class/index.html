@@ -539,7 +539,7 @@ Point <span class="token function">a</span><span class="token punctuation">(</sp
 <span class="token function">f</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//函数的形参为类的对象,当调用对象的时候,复制构造函数被调用</span>
 <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>只有把对象用值进行传递的时候，才会调用复制构造函数，如果传递的是引用，那么就不会调用复制构造函数。由于这一原因，传递比较大的对象的实时，传递引用会比传值的效率高很多</p>
+<p>只有把对象用值进行传递的时候，才会调用复制构造函数，如果传递的是引用，那么就不会调用复制构造函数。由于这一原因，传递比较大的对象的时，传递引用会比传值的效率高很多</p>
 <ul>
 <li>如果函数的返回值是类的对象，函数执行完成返回调用者时</li>
 </ul>
@@ -552,7 +552,38 @@ Point <span class="token function">a</span><span class="token punctuation">(</sp
 <p>表面上<code>g()</code>将<code>a</code>返回给了主函数，但是要记住，生成<code>a</code>的对象的内存空间是位于<code>g()</code>的内存区域中的，一旦<code>g()</code>函数结束，<code>g()</code>所得到的内存区域也会随之释放。所以在返回的时候呢，编译系统会现在主函数所属的内存空间中创建一个无名的临时对象。</p>
 <p>该临时对象的生存期只在函数调用所处的表达式中，也就是表达式<code>b = g()</code>中。</p>
 <p>执行语句<code>return a</code>的时候，实际上是<strong>调用复制构造函数将a的值复制到临时对象中，函数g运行结束时对象a小时，但是临时对象会存在于表达式b&#x3D;g()中，计算完这个表达式之后，临时对象的使命也就完成了，该对象自动消失</strong></p>
-<p>另外，当类的数据成员中有指针类型的时候，默认的复制构造函数实现的只能是浅复制，浅复制会带来内存泄漏的问题，深复制必须编写复制构造函数。</p>
+<blockquote>
+<p>关于编译器优化的问题</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token class-name">Point</span><span class="token double-colon punctuation">::</span><span class="token function">Point</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    cout<span class="token operator">&lt;&lt;</span><span class="token string">"调用了拷贝构造函数"</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+Point <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    Point <span class="token function">a</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> a<span class="token punctuation">;</span><span class="token comment">//函数的返回值是类对象,返回函数值的时候,调用复制构造函数</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    Point b <span class="token operator">=</span> <span class="token function">g</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>当编译器不进行优化的时候</li>
+</ul>
+<p>不进行优化的时候,由于在g()结束的时候,a会随之被析构,因此,在这个时候需要在main()中使用复制构造函数,将这个对象在main()中保留一个无名的对象。</p>
+<p>然后这个无名的对象作为参数进行b的复制构造函数初始化,因此一共执行了两次复制构造函数,因此输出结果为:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">调用了拷贝构造函数
+调用了拷贝构造函数<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<ul>
+<li>当编译器进行优化的时候</li>
+</ul>
+<p>主函数创建一段内存空间用于存放返回的对象,主函数调用被调用的函数的时候,将该内存空间传入到被调函数中,在主调函数分配内存,在被调函数中进行构造,在这个情况下分析这段代码的执行过程:</p>
+<p><strong>其根本做法是消除了中间对象,避免了不必要的复制构造</strong>,由于在传入了一块专用的内存空间,因此在构造a的时候(因为a是返回值),这时候会直接将a写入到main()的栈空间中,然后回到main()之后,执行相应的计算,也就是</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">调用了拷贝构造函数<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>少去那一步创建匿名对象的过程</p>
+</blockquote>
+<p>另外，当类的数据成员中有指针类型的时候，默认的复制构造函数实现的只能是浅复制，浅复制会带来数据安全方面的问题，深复制必须编写复制构造函数。</p>
 <h4 id="2-5-5-析构函数"><a href="#2-5-5-析构函数" class="headerlink" title="2.5.5 析构函数"></a>2.5.5 析构函数</h4><p>构造对象时，在构造函数中分配了资源，例如动态申请了一些内存资源，在对象消失的实时就要释放这些内存单元。析构函数用来完成对象被删除前的一些清理工作，析构函数是在对象的生存期即将结束的时刻被自动调用的，它的调用完成以后，对象也就消失了，相应的内存空间也被释放</p>
 <p>一般来讲，如果希望程序在对象被删除之前的时刻自动完成某些事情，就可以把他们写到析构函数之中</p>
 <h4 id="2-5-6-移动构造函数"><a href="#2-5-6-移动构造函数" class="headerlink" title="2.5.6 移动构造函数"></a>2.5.6 移动构造函数</h4><p><code>C++11标准引入了左值和右值</code>，定义了右值引用的概念，以表明被引用对象在使用后会被销毁，不会继续使用</p>
@@ -577,6 +608,11 @@ Point <span class="token function">a</span><span class="token punctuation">(</sp
 <p>移动构造函数不分配新内存，理论上不会报错，为了配合异常捕获机制，需要声明<code>noexcept</code>表明不会抛出异常</p>
 <p>被移动的对象不应再使用，需要销毁或者重新赋值</p>
 <p>左值用的是对象，右值用的是内容</p>
+<blockquote>
+<p>关于const</p>
+<p>用const的左值可以引用右值</p>
+<p>但是右值值能引用纯右值</p>
+</blockquote>
 <h4 id="2-5-7-default、delete函数"><a href="#2-5-7-default、delete函数" class="headerlink" title="2.5.7 default、delete函数"></a>2.5.7 default、delete函数</h4><ul>
 <li><strong>default</strong>:使用<code>=default</code>可以让编译器合成简单的无参默认构造函数和复制构造函数</li>
 <li><strong>delete</strong>:当用户不希望定义的类存在复制时，可以通过<code>delete</code>进行删除，与<code>default</code>使用不同的是,<code>delete</code>不限于在无参和复制构造函数上使用，除了析构函数外</li>
@@ -1143,7 +1179,7 @@ Test t1<span class="token punctuation">;</span><span class="token comment">//调
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2022</span>
+                <span id="year">2019-2023</span>
             
             <a href="/about" target="_blank">穿山甲</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
