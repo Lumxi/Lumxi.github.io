@@ -4,11 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="剑指offer-链表, 后端工程师之路">
-    <meta name="description" content="剑指 Offer 06. 从尾到头打印链表输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。
-class Solution &amp;#123;
-    private int[] res;
-    private int len">
+    <meta name="keywords" content="深入学习Mybatis-在web开发中使用Mybatis, 后端工程师之路">
+    <meta name="description" content="1. Mybatis三大对象作用域
+为什么要将SqlSession对象放到ThreadLocal当中呢?
+
+这是为了保证一个线程对应一个SqlSession,在一个session会话中,一个线程对应一个sqlSession
+1.1 SqlS">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +21,7 @@ class Solution &amp;#123;
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>剑指offer-链表 | 后端工程师之路</title>
+    <title>深入学习Mybatis-在web开发中使用Mybatis | 后端工程师之路</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -337,12 +338,12 @@ class Solution &amp;#123;
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">剑指offer-链表</h1>
+                    <h1 class="description center-align post-title">深入学习Mybatis-在web开发中使用Mybatis</h1>
                 </div>
             </div>
         </div>
@@ -370,10 +371,6 @@ class Solution &amp;#123;
                                 <span class="chip bg-color">Java</span>
                             </a>
                         
-                            <a href="/tags/leetcode/">
-                                <span class="chip bg-color">leetcode</span>
-                            </a>
-                        
                     </div>
                     
                 </div>
@@ -382,8 +379,12 @@ class Solution &amp;#123;
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
-                                数据结构与算法
+                            <a href="/categories/Mybatis/" class="post-category">
+                                Mybatis
+                            </a>
+                        
+                            <a href="/categories/Mybatis/Mysql/" class="post-category">
+                                Mysql
                             </a>
                         
                     </div>
@@ -419,107 +420,131 @@ class Solution &amp;#123;
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="剑指-Offer-06-从尾到头打印链表"><a href="#剑指-Offer-06-从尾到头打印链表" class="headerlink" title="剑指 Offer 06. 从尾到头打印链表"></a>剑指 Offer 06. 从尾到头打印链表</h2><p>输入一个链表的头节点，从尾到头反过来返回每个节点的值（用数组返回）。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> res<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span> length<span class="token punctuation">;</span>
-    <span class="token keyword">private</span> <span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">public</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">reversePrint</span><span class="token punctuation">(</span><span class="token class-name">ListNode</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token function">traverse</span><span class="token punctuation">(</span>head<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">return</span> res<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">traverse</span><span class="token punctuation">(</span><span class="token class-name">ListNode</span> head<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>head <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            res <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span> 
-            <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        length<span class="token operator">++</span><span class="token punctuation">;</span>
-        <span class="token function">traverse</span><span class="token punctuation">(</span>head<span class="token punctuation">.</span>next<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        res<span class="token punctuation">[</span>index<span class="token operator">++</span><span class="token punctuation">]</span><span class="token operator">=</span>head<span class="token punctuation">.</span>val<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+                <h2 id="1-Mybatis三大对象作用域"><a href="#1-Mybatis三大对象作用域" class="headerlink" title="1. Mybatis三大对象作用域"></a>1. Mybatis三大对象作用域</h2><blockquote>
+<p>为什么要将SqlSession对象放到ThreadLocal当中呢?</p>
+</blockquote>
+<p>这是为了保证一个线程对应一个<code>SqlSession</code>,在一个<code>session</code>会话中,一个线程对应一个<code>sqlSession</code></p>
+<h3 id="1-1-SqlSessionFactoryBuilder"><a href="#1-1-SqlSessionFactoryBuilder" class="headerlink" title="1.1 SqlSessionFactoryBuilder"></a>1.1 SqlSessionFactoryBuilder</h3><p>这个类的使命是用来<code>创建SqlSessionFactory</code>的,因此这个类的最佳作用域就是方法作用域,它的build()方法实际上就是在读取xml文件,最好不会一直保留它,要保证所有的XML解析资源被释放给其他进程使用</p>
+<h3 id="1-2-SqlSessionFactory"><a href="#1-2-SqlSessionFactory" class="headerlink" title="1.2 SqlSessionFactory"></a>1.2 SqlSessionFactory</h3><p>这个对象的使命是用来创建<code>SqlSession</code>,它一旦被创建就应该在应用的运行期间一直存在,没有任何理论丢弃它或者重新创建新的实例,它在运行期间不要重复创建多次,因为每一次的创建都涉及到IO的操作,因此它的最佳作用域就是应用作用域,可以使用<code>单例模式</code>或者<code>静态单例模式</code>来维护这个对象</p>
+<h3 id="1-3-SqlSession"><a href="#1-3-SqlSession" class="headerlink" title="1.3 SqlSession"></a>1.3 SqlSession</h3><p><code>SqlSession</code>的最佳实践就是:每个线程都拥有自己的<code>SqlSession</code>实例,它的实例不是线程安全的,因此不能被共享,它的最佳作用域是请求域或者方法域,绝对不能将<code>SqlSession</code>实例的引用放在一个类的静态域中,甚至一个类的实例变量也是不允许的。</p>
+<blockquote>
+<p>它类似于<code>HttpSession</code>,你可以考虑将<code>SqlSession</code>放在一个和<code>Http</code>请求相似的作用域中,每次收到<code>Http</code>请求,就可以打开一个<code>SqlSession</code>,返回一个响应后就关闭它</p>
+</blockquote>
+<p>本质上,<code>SqlSession</code>是对<code>Conncetion</code>对象的封装,因此其本身就是不安全的,由于一次缓存是<code>session</code>级别的,所以如果有多个线程同时使用<code>session</code>,当A进行<code>set()</code>,而B进行<code>get()</code>的时候,这时候就会产生缓存与数据库数据不一致的问题,产生线程不安全的问题。</p>
+<blockquote>
+<p>为什么Connection是线程不安全的</p>
+</blockquote>
+<p><code>connection.commit()</code>是提交事务,假设线程A开启了事务,而线程B此时使用<code>commit()</code>提交了事务,在这种情况下,由于使用的是描述同一次连接,因此线程A就相当于没有开启事务,最终就会导致程序错误。</p>
+<h2 id="2-使用javassist生成类"><a href="#2-使用javassist生成类" class="headerlink" title="2. 使用javassist生成类"></a>2. 使用javassist生成类</h2><p>javassist是一个开源的分析、编辑和创建Java字节码的类库,通过使用Javassist对字节码操作为JBoss实现动态的AOP框架</p>
+<h3 id="2-1-示例代码"><a href="#2-1-示例代码" class="headerlink" title="2.1 示例代码"></a>2.1 示例代码</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//1.获取类池,这个类池就是用来生成class的</span>
+<span class="token class-name">ClassPool</span> pool <span class="token operator">=</span> <span class="token class-name">ClassPool</span><span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//2.制造类,需要指定类名</span>
+<span class="token class-name">CtClass</span> ctClass <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">makeClass</span><span class="token punctuation">(</span><span class="token string">"dao.StudentDAOImpl"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//3.制造方法,src里面写的是方法代码</span>
+<span class="token class-name">String</span> methodCode <span class="token operator">=</span> <span class="token string">"public void insert()&#123;System.out.println(123);&#125;"</span><span class="token punctuation">;</span>
+<span class="token class-name">CtMethod</span> ctMethod <span class="token operator">=</span> <span class="token class-name">CtMethod</span><span class="token punctuation">.</span><span class="token function">make</span><span class="token punctuation">(</span>methodCode<span class="token punctuation">,</span> ctClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ctClass<span class="token punctuation">.</span><span class="token function">addMethod</span><span class="token punctuation">(</span>ctMethod<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//生成类,在内存中生成class</span>
+ctClass<span class="token punctuation">.</span><span class="token function">toClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//类加载,返回字节码</span>
+<span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> clazz <span class="token operator">=</span> <span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"dao.StudentDAOImpl"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Object</span> newInstance <span class="token operator">=</span> clazz<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//获取方法</span>
+clazz<span class="token punctuation">.</span><span class="token function">getDeclaredMethod</span><span class="token punctuation">(</span><span class="token string">"insert"</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>newInstance<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="2-2-用类去实现接口"><a href="#2-2-用类去实现接口" class="headerlink" title="2.2 用类去实现接口"></a>2.2 用类去实现接口</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testGenerate</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//1.获取类池,这个类池就是用来生成class的</span>
+    <span class="token class-name">ClassPool</span> pool <span class="token operator">=</span> <span class="token class-name">ClassPool</span><span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//2.制造类,需要指定类名</span>
+    <span class="token class-name">CtClass</span> ctClass <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">makeClass</span><span class="token punctuation">(</span><span class="token string">"dao.TestDAOImpl"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//制造接口</span>
+    <span class="token class-name">CtClass</span> ctInterface <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">makeInterface</span><span class="token punctuation">(</span><span class="token string">"dao.TestDAO"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//3.制造方法,src里面写的是方法代码</span>
+    <span class="token class-name">String</span> methodCode <span class="token operator">=</span> <span class="token string">"public void insert()&#123;System.out.println(123);&#125;"</span><span class="token punctuation">;</span>
+    <span class="token class-name">CtMethod</span> ctMethod <span class="token operator">=</span> <span class="token class-name">CtMethod</span><span class="token punctuation">.</span><span class="token function">make</span><span class="token punctuation">(</span>methodCode<span class="token punctuation">,</span> ctClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ctClass<span class="token punctuation">.</span><span class="token function">addInterface</span><span class="token punctuation">(</span>ctInterface<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//让这个类去实现这个接口</span>
+    ctClass<span class="token punctuation">.</span><span class="token function">addMethod</span><span class="token punctuation">(</span>ctMethod<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//生成类,在内存中生成class,同时将生成的类加载到JVM中</span>
+    <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> clazz <span class="token operator">=</span> ctClass<span class="token punctuation">.</span><span class="token function">toClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">TestDAO</span> testDAO <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">TestDAO</span><span class="token punctuation">)</span> clazz<span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//获取方法</span>
+    testDAO<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h2 id="剑指-Offer-24-反转链表"><a href="#剑指-Offer-24-反转链表" class="headerlink" title="剑指 Offer 24. 反转链表"></a>剑指 Offer 24. 反转链表</h2><p>定义一个函数，输入一个链表的头节点，反转该链表并输出反转后链表的头节点。</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
-    <span class="token comment">//输出反转链表</span>
-    <span class="token comment">//先画图,后编码</span>
-    <span class="token keyword">public</span> <span class="token class-name">ListNode</span> <span class="token function">reverseList</span><span class="token punctuation">(</span><span class="token class-name">ListNode</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span>head <span class="token operator">==</span> <span class="token keyword">null</span> <span class="token operator">||</span> head<span class="token punctuation">.</span>next <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token keyword">return</span> head<span class="token punctuation">;</span><span class="token punctuation">&#125;</span>
-        <span class="token class-name">ListNode</span> pre <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
-        <span class="token class-name">ListNode</span> cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>cur<span class="token operator">!=</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token class-name">ListNode</span> next <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-            cur<span class="token punctuation">.</span>next <span class="token operator">=</span> pre<span class="token punctuation">;</span>
-            pre <span class="token operator">=</span> cur<span class="token punctuation">;</span>
-            cur <span class="token operator">=</span> next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> pre<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="剑指-Offer-35-复杂链表的复制"><a href="#剑指-Offer-35-复杂链表的复制" class="headerlink" title="剑指 Offer 35. 复杂链表的复制"></a>剑指 Offer 35. 复杂链表的复制</h2><p>请实现 <code>copyRandomList</code> 函数，复制一个复杂链表。在复杂链表中，每个节点除了有一个 <code>next</code> 指针指向下一个节点，还有一个 <code>random</code> 指针指向链表中的任意节点或者 <code>null</code>。</p>
-<p> 这道题本质上是一个模拟题,要做的就是实现链表的拷贝,难点分析:</p>
-<p>首先假设,如果不需要实现<code>random</code>指针的复制,需要怎么用?就是按照普通的做法,根据head来构造一个链表,其伪代码如下:</p>
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ListNode</span> <span class="token function">copyList</span><span class="token punctuation">(</span><span class="token class-name">ListNode</span> head<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-    <span class="token class-name">ListNode</span> dummmy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token class-name">ListNode</span> cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
-    <span class="token class-name">ListNode</span> pre <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
-    <span class="token keyword">while</span><span class="token punctuation">(</span>cur<span class="token operator">!=</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-        <span class="token class-name">ListNode</span> node <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListNode</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//复制节点</span>
-        pre<span class="token punctuation">.</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span><span class="token comment">//上一个节点的next指针指向当前节点,把它们连起来</span>
-        cur <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token punctuation">;</span><span class="token comment">//然后遍历下一个节点</span>
-        pre <span class="token operator">=</span> node<span class="token punctuation">;</span><span class="token comment">//上一个节点迭代为当前节点,准备下一次复制</span>
-    <span class="token punctuation">&#125;</span>
-    <span class="token keyword">return</span> dummy<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">/*
-// Definition for a Node.
-class Node &#123;
-    int val;
-    Node next;
-    Node random;
-
-    public Node(int val) &#123;
-        this.val = val;
-        this.next = null;
-        this.random = null;
-    &#125;
-&#125;
-*/</span>
-<span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
-    <span class="token keyword">public</span> <span class="token class-name">Node</span> <span class="token function">copyRandomList</span><span class="token punctuation">(</span><span class="token class-name">Node</span> head<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
-        <span class="token comment">//1.提前曝光,先进行普通的复制,把所有的节点都弄出来</span>
-        <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Node</span><span class="token punctuation">,</span><span class="token class-name">Node</span><span class="token punctuation">></span></span> map <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">Node</span> dummy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token class-name">Node</span> pre <span class="token operator">=</span> dummy<span class="token punctuation">;</span>
-        <span class="token class-name">Node</span> cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>cur<span class="token operator">!=</span><span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token comment">//复制节点</span>
-            <span class="token class-name">Node</span> node <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Node</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment">//连接节点</span>
-            pre<span class="token punctuation">.</span>next <span class="token operator">=</span> node<span class="token punctuation">;</span>
-            <span class="token comment">//保存节点之间的关系</span>
-            map<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>cur<span class="token punctuation">,</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            <span class="token comment">//迭代节点</span>
-            pre <span class="token operator">=</span> node<span class="token punctuation">;</span>
-            cur <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-        <span class="token punctuation">&#125;</span>
-        <span class="token comment">//2.生成随机指针</span>
-        cur <span class="token operator">=</span> head<span class="token punctuation">;</span>
-        <span class="token keyword">while</span><span class="token punctuation">(</span>cur <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-            <span class="token keyword">if</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>random <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
-                map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">.</span>random <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+<h3 id="2-3-GenerateDaoProxy"><a href="#2-3-GenerateDaoProxy" class="headerlink" title="2.3 GenerateDaoProxy"></a>2.3 GenerateDaoProxy</h3><p>作用就是:你只要给我一个接口,那我就能够根据你这个类生成一个<code>Impl</code>对象</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token class-name">Object</span> <span class="token function">generate</span><span class="token punctuation">(</span><span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> interfaceDAO<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">ClassPool</span> pool <span class="token operator">=</span> <span class="token class-name">ClassPool</span><span class="token punctuation">.</span><span class="token function">getDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//制造类</span>
+    <span class="token class-name">CtClass</span> ctClass <span class="token operator">=</span> pool<span class="token punctuation">.</span><span class="token function">makeClass</span><span class="token punctuation">(</span><span class="token string">"dao.impl"</span><span class="token operator">+</span>interfaceDAO<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"Proxy"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//制造接口</span>
+    pool<span class="token punctuation">.</span><span class="token function">makeClass</span><span class="token punctuation">(</span>interfaceDAO<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//实现接口</span>
+    ctClass<span class="token punctuation">.</span><span class="token function">addInterface</span><span class="token punctuation">(</span>ctClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//实现接口中的所有方法</span>
+    <span class="token class-name">Method</span><span class="token punctuation">[</span><span class="token punctuation">]</span> methods <span class="token operator">=</span> interfaceDAO<span class="token punctuation">.</span><span class="token function">getDeclaredMethods</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">Arrays</span><span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span>methods<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>method<span class="token operator">-></span><span class="token punctuation">&#123;</span>
+        <span class="token comment">//将method进行实现</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            <span class="token class-name">StringBuilder</span> code <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">StringBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"public "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>method<span class="token punctuation">.</span><span class="token function">getReturnType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>method<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"("</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> parameterTypes <span class="token operator">=</span> method<span class="token punctuation">.</span><span class="token function">getParameterTypes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>parameterTypes<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> parameterType <span class="token operator">=</span> parameterTypes<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+                code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>parameterType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"arg"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">!=</span>parameterTypes<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                    code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">","</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
             <span class="token punctuation">&#125;</span>
-            <span class="token comment">//否则的话就是有指向的</span>
-            map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>cur<span class="token punctuation">)</span><span class="token punctuation">.</span>random <span class="token operator">=</span> map<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>cur<span class="token punctuation">.</span>random<span class="token punctuation">)</span><span class="token punctuation">;</span>
-            cur <span class="token operator">=</span> cur<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
+            code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">")"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"&#123;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"System.out.println(\"123\")"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            code<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"&#125;"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">CtMethod</span> ctMethod <span class="token operator">=</span> <span class="token class-name">CtMethod</span><span class="token punctuation">.</span><span class="token function">make</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span> ctClass<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            ctClass<span class="token punctuation">.</span><span class="token function">addMethod</span><span class="token punctuation">(</span>ctMethod<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">&#125;</span>
-        <span class="token keyword">return</span> dummy<span class="token punctuation">.</span>next<span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">//创建对象</span>
+    <span class="token class-name">Object</span> obj <span class="token operator">=</span> ctClass<span class="token punctuation">.</span><span class="token function">toClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> obj<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">String</span> sqlId <span class="token operator">=</span> interfaceDAO<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"."</span><span class="token operator">+</span>method<span class="token punctuation">.</span><span class="token function">getName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">SqlCommandType</span> sqlCommandType <span class="token operator">=</span> sqlSession<span class="token punctuation">.</span><span class="token function">getConfiguration</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getMappedStatement</span><span class="token punctuation">(</span>sqlId<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getSqlCommandType</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>sqlCommandType <span class="token operator">==</span> <span class="token class-name">SqlCommandType</span><span class="token punctuation">.</span><span class="token constant">INSERT</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
 
+<span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>sqlCommandType <span class="token operator">==</span> <span class="token class-name">SqlCommandType</span><span class="token punctuation">.</span><span class="token constant">DELETE</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+
+<span class="token punctuation">&#125;</span><span class="token comment">//...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在Mybatis中,规定了<code>namespace</code>必须是接口的全限定类名,<code>sql的Id</code>必须是<code>接口方法名称</code>,这样的话底层才能够定位到你所需要实现的方法</p>
+<h3 id="2-4-getMapper方法"><a href="#2-4-getMapper方法" class="headerlink" title="2.4 getMapper方法"></a>2.4 getMapper方法</h3><p>Mybatis提供了相关的机制,为我们提供了生成dao接口的实现类</p>
+<p>实际上采用了代理模式,在内存中生成了dao接口的代理类,然后创建代理类的实例,使用mybatis的这种代理机制的前提,SqlMapper.xml文件中的namespace必须是dao接口的全限定类名,id是接口中的方法名</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">SqlSessionFactory</span> build <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SqlSessionFactoryBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span><span class="token punctuation">.</span><span class="token function">getSystemClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getResourceAsStream</span><span class="token punctuation">(</span><span class="token string">"mybatis-config.xml"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+build<span class="token punctuation">.</span><span class="token function">openSession</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getMapper</span><span class="token punctuation">(</span><span class="token class-name">StudentDAO</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<blockquote>
+<p>有什么用?</p>
+<p>使用场景是这样的,当实现类中的代码相对固定的时候,这时候就不需要创建新的Impl类了,只需要使用代理对象,在内存中生成这段类代码,然后执行即可</p>
+</blockquote>
+<h2 id="3-Mybatis小技巧"><a href="#3-Mybatis小技巧" class="headerlink" title="3. Mybatis小技巧"></a>3. Mybatis小技巧</h2><h3 id="3-1-和-有什么区别"><a href="#3-1-和-有什么区别" class="headerlink" title="3.1 #{}和${}有什么区别?"></a>3.1 #{}和${}有什么区别?</h3><p><code>#&#123;&#125;</code>:它是先编译语句然后再给占位符进行传值的,其底层是<code>PreparedStatement</code>,可以防止<code>sql</code>注入</p>
+<p><code>$&#123;&#125;</code>:先进行sql语句的拼接,然后再编译sql语句,底层是<code>Stament</code>实现的,存在sql注入的现象,只有在需要进行sql语句关键字的拼接的情况下才会使用</p>
+<blockquote>
+<p>为什么PreparedStatement能够防止sql的注入?</p>
+<p>这是因为PreparedStatement程序在第一次查询数据库之前sql语句就被数据库进行了分析、编译、优化、以及具体的查询计划都形成了,只有参数位置才会使用占位符</p>
+<p>当程序真正发起请求的时候,这时候传递过来的参数会被认为是某个字段的值,因而不会重新编译和优化,所以不会被认为是一个sql指令</p>
+<p>如果传递进来的参数无法被看作是sql指令,那么就无法形成sql的注入了,比如说<code>&#39;1=1&#39;</code>这样的参数值会被认为是一个字符串类型的值,而不会看作是sql查询条件</p>
+<p>正是因为sql的之喜丧计划是在sql编译和优化执行的,因此sql的注入只是在编译阶段起作用,解决办法就是不让参数参与编译的阶段,而是让占位符参与编译,从而解决了sql的注入问题。</p>
+</blockquote>
+<h3 id="3-2-什么使用使用"><a href="#3-2-什么使用使用" class="headerlink" title="3.2 什么使用使用${}"></a>3.2 什么使用使用${}</h3>
                 
             </div>
             <hr/>
@@ -545,7 +570,7 @@ class Node &#123;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lumxi.github.io/2023/01/03/algorithm/book/offer-2/">https://lumxi.github.io/2023/01/03/algorithm/book/offer-2/</a>
+                    <a href="https://lumxi.github.io/2023/01/03/Mybatis/Mybatis-3/">https://lumxi.github.io/2023/01/03/Mybatis/Mybatis-3/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -585,10 +610,6 @@ class Node &#123;
                             
                                 <a href="/tags/Java/">
                                     <span class="chip bg-color">Java</span>
-                                </a>
-                            
-                                <a href="/tags/leetcode/">
-                                    <span class="chip bg-color">leetcode</span>
                                 </a>
                             
                         </div>
@@ -667,10 +688,9 @@ class Node &#123;
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2023/01/03/algorithm/book/offer-2/">
                     <div class="card-image">
@@ -688,9 +708,9 @@ class Node &#123;
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-03
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-03
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -703,7 +723,6 @@ class Node &#123;
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -726,13 +745,13 @@ class Node &#123;
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/01/03/Mybatis/Mybatis-3/">
+                <a href="/2023/01/02/algorithm/book/offer-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="深入学习Mybatis-在web开发中使用Mybatis">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="剑指offer-栈与队列">
                         
-                        <span class="card-title">深入学习Mybatis-在web开发中使用Mybatis</span>
+                        <span class="card-title">剑指offer-栈与队列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -743,18 +762,14 @@ class Node &#123;
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-02
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Mybatis/" class="post-category">
-                                    Mybatis
-                                </a>
-                            
-                            <a href="/categories/Mybatis/Mysql/" class="post-category">
-                                    Mysql
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
+                                    数据结构与算法
                                 </a>
                             
                             
@@ -766,6 +781,10 @@ class Node &#123;
                     
                     <a href="/tags/Java/">
                         <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/leetcode/">
+                        <span class="chip bg-color">leetcode</span>
                     </a>
                     
                 </div>
