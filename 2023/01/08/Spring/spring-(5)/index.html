@@ -5,7 +5,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="从零开始学Spring-事务与框架集成, 后端工程师之路">
-    <meta name="description" content="">
+    <meta name="description" content="1. Spring与事务1.1 事务概述什么是事务
+
+在一个业务流程当中,通常需要多条DML语句共同联合才能完成,这多条DML语句必须同时成功或者同时失败,这样次才能保证数据的安全,事务Transaction(tx)
+
+事务的四个处理过程
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -412,7 +417,214 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="1-Spring与事务"><a href="#1-Spring与事务" class="headerlink" title="1. Spring与事务"></a>1. Spring与事务</h2><h3 id="1-1-事务概述"><a href="#1-1-事务概述" class="headerlink" title="1.1 事务概述"></a>1.1 事务概述</h3><p>什么是事务</p>
+<ul>
+<li>在一个业务流程当中,通常需要多条DML语句共同联合才能完成,这多条DML语句必须同时成功或者同时失败,这样次才能保证数据的安全,事务Transaction(tx)</li>
+</ul>
+<p>事务的四个处理过程</p>
+<ul>
+<li>开启事务</li>
+<li>执行核心业务代码</li>
+<li>提交事务</li>
+<li>回滚事务</li>
+</ul>
+<p>事务的四个特性</p>
+<ul>
+<li>A原子性:事务是最小的工作单元,不可再分</li>
+<li>C一致性:事务要求要么同时成功,要么同时失败,事务前和事务后的总量不变</li>
+<li>I隔离性:事务和事务之间因为有隔离性,才可以保证互不干扰</li>
+<li>D持久性:持久性是事务结束的标志</li>
+</ul>
+<h3 id="1-2-Spring事务管理器接口"><a href="#1-2-Spring事务管理器接口" class="headerlink" title="1.2 Spring事务管理器接口"></a>1.2 Spring事务管理器接口</h3><p><code>PlatformTransactionManager接口</code>:Spring事务管理器的核心接口,在Spring中有两个实现</p>
+<ul>
+<li>DataSourceTransactionManager:支持JdbcTemplate、Mybatis、Hibernate等事务管理</li>
+<li>JtaTransactionManager:支持分布式事务管理</li>
+</ul>
+<p><strong>声明式事务之注解的实现方式</strong></p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>transactionManager<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>org.springframework.jdbc.datasource.DataSourceTransactionManager<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup">?xml version="1.0" encoding="UTF-8"?>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>beans</span> <span class="token attr-name">xmlns</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xmlns:</span>xsi</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.w3.org/2001/XMLSchema-instance<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xmlns:</span>context</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/context<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xmlns:</span>tx</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/tx<span class="token punctuation">"</span></span>
+       <span class="token attr-name"><span class="token namespace">xsi:</span>schemaLocation</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>配置事务管理命名空间</p>
+<p>然后在Spring配置文件中配置事务注解驱动器</p>
+<pre class="line-numbers language-markup" data-language="markup"><code class="language-markup"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.alibaba.druid.pool.DruidDataSource<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>driverClassName<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>com.mysql.cj.jdbc.Driver<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>url<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>jdbc:mysql://localhost:3306/orm<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>username<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>root<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>password<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>root<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>bean</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>transactionManager<span class="token punctuation">"</span></span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>org.springframework.jdbc.datasource.DataSourceTransactionManager<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>property</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span> <span class="token attr-name">ref</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dataSource<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>bean</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span><span class="token namespace">tx:</span>annotation-driven</span> <span class="token attr-name">transaction-manager</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>transactionManager<span class="token punctuation">"</span></span><span class="token punctuation">/></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="1-3-事务的传播行为"><a href="#1-3-事务的传播行为" class="headerlink" title="1.3 事务的传播行为"></a>1.3 事务的传播行为</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Target</span><span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">TYPE</span><span class="token punctuation">,</span> <span class="token class-name">ElementType</span><span class="token punctuation">.</span><span class="token constant">METHOD</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Retention</span><span class="token punctuation">(</span><span class="token class-name">RetentionPolicy</span><span class="token punctuation">.</span><span class="token constant">RUNTIME</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Inherited</span>
+<span class="token annotation punctuation">@Documented</span>
+<span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">Transactional</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@AliasFor</span><span class="token punctuation">(</span><span class="token string">"transactionManager"</span><span class="token punctuation">)</span>
+    <span class="token class-name">String</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
+    <span class="token annotation punctuation">@AliasFor</span><span class="token punctuation">(</span><span class="token string">"value"</span><span class="token punctuation">)</span>
+    <span class="token class-name">String</span> <span class="token function">transactionManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
+    <span class="token class-name">Propagation</span> <span class="token function">propagation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token class-name">Propagation</span><span class="token punctuation">.</span><span class="token constant">REQUIRED</span><span class="token punctuation">;</span><span class="token comment">//事务的传播行为</span>
+    <span class="token class-name">Isolation</span> <span class="token function">isolation</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token class-name">Isolation</span><span class="token punctuation">.</span><span class="token constant">DEFAULT</span><span class="token punctuation">;</span><span class="token comment">//事务的隔离级别  </span>
+    <span class="token keyword">int</span> <span class="token function">timeout</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">//配置事务的超时时间</span>
+    <span class="token keyword">boolean</span> <span class="token function">readOnly</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token boolean">false</span><span class="token punctuation">;</span><span class="token comment">//只读事务</span>
+    <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Throwable</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">rollbackFor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span class="token comment">//出现什么情况下回滚?</span>
+    <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">rollbackForClassName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span class="token operator">/</span>
+    <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span> <span class="token keyword">extends</span> <span class="token class-name">Throwable</span><span class="token punctuation">></span></span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">noRollbackFor</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span class="token comment">//出现什么情况下不回滚?</span>
+    <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">noRollbackForClassName</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">enum</span> <span class="token class-name">Propagation</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">REQUIRED</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">SUPPORTS</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">MANDATORY</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">REQUIRES_NEW</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">NOT_SUPPORTED</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">NEVER</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">NESTED</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> value<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">Propagation</span><span class="token punctuation">(</span><span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>当事务中嵌套了其他的事务的时候,这时候就可能会产生事务的传播问题,七种传播行为</p>
+<ul>
+<li>REQUIRED:支持当前事务,如果不存在就新建一个,也就是说,原本如果有事务的话,那么就加入到原来的那个事务中去执行,否则的话就自己新建一个事务,比如说A()去调用B(),如果B()失败了,那么A之前执行的就会回滚,如果执行完B()了而A()失败了,那么都回滚</li>
+<li>SUPPORTS:支持当前事务,如果当前没有事务,就以非事务的方式执行,如果原本有事务的话,那么就加入,没有的话就不管了</li>
+<li>MANDATORY:必须运行在一个事务中,如果当前没有事务发生,就抛出一个异常</li>
+<li>REQUIRES_NEW:开启一个新的事务,如果一个事务已经存在,那么就将这个存在的事务挂起的,开启的新事务和之前的事务不存在嵌套关系,之前的事务被挂起了,比如说A()去调用B(),而此时B()失败了,而A()不会受到影响而回滚</li>
+<li>NOT_SUPPORTED：以非事务的方式运行,如果有事务存在,则挂起当前的事务</li>
+<li>NEVER:以非事务的方式运行,如果有事务存在,那么就抛出异常</li>
+<li>NESTED:如果有一个事务在进行中,则该方法应该允许在一个嵌套式事务中,被嵌套的事务可以独立于外层事务进行提交或者回滚,如果外层事务不存在,行为就像<code>REQUIRED</code>一样</li>
+</ul>
+<h3 id="1-4-事务的隔离级别"><a href="#1-4-事务的隔离级别" class="headerlink" title="1.4 事务的隔离级别"></a>1.4 事务的隔离级别</h3><p>数据库中读取数据存在三大问题</p>
+<ul>
+<li>脏读:读取到还没有提交到数据库的数据</li>
+<li>不可重复读:在同一个事务中,第一次和第二次读取到的数据是不一样的</li>
+<li>幻读:读取到的数据是假的</li>
+</ul>
+<blockquote>
+<p>简单理解一下以上三种问题</p>
+<ul>
+<li>脏读就是读取到了缓存当中的数据,当事务A和事务B同时操作内存,对内存进行写入的时候,A写入了内存,但是还没有提交,但是A的时间片到了,让B去执行,这时候B同样会去读缓存,假设A回滚了,A写入的数据作废,那么这时候就产生了脏读的问题</li>
+<li>不可重复读:实际上不可重复读是程序正确执行的表现,但是可能会影响程序后续的执,这个会有什么危害呢?我们说数据库有两个区域,第一个区域是每个事务所独占的工作空间,这个工作空间每个事务之间相互独立,比如说当A执行读取,它会将第二个区域,也就是磁盘区域中的磁盘块通过bus传输到工作空间中待用,假设A执行了两次读取,第一次读取了a变量为100,第二次读取了a变量还是100,然而这时候A的时间片到,到B执行,B修改了a变量为300,然而由于A后续不再执行读取操作,因此这时候它一直认为a变量为100,这时候依然会按照 a&#x3D;100来进行处理,最终可能会导致程序的错误。</li>
+<li>幻读:幻读就是读取到的数据与实际的操作是不一致的,比如说事务A先delete了表中的所有数据,然后A挂起,B去执行插入了,然后A再执行查询,发现又多了一条数据,那么这时候就会产生问题,<code>一次事务中前后数据量发生变化</code></li>
+<li>要特别注意不可重复读和幻读的区别<ul>
+<li>不可重复读指的是并发更新的时候,另一个事务前后查询相同的数据的时候,数据不符合预期</li>
+<li>幻读指的是并发新增、删除这种会产生数量变化的操作的时候,另一个事务前后查询相同数据的时候不符合预期</li>
+<li>如果还是不懂可以看下面的</li>
+</ul>
+</li>
+</ul>
+<p>解决这些问题本质上就是并发的问题,因此可以通过CAS，悲观锁等方式进行解决</p>
+<ul>
+<li>最简单的悲观锁就是串行化执行,让这些线程挨个排队,不允许并发执行操作数据</li>
+</ul>
+</blockquote>
+<p>事务隔离级别包括四个级别</p>
+<ul>
+<li>读未提交:READ_UNCOMMITTED:存在脏读的问题,也就是说能够读取到其他事务没有提交的数据</li>
+<li>读提交:READ_COMMITTED:解决了脏读的问题,其他事务提交之后才能读取到,但是存在不可重复读的问题</li>
+<li>可重复读:REPEATABLE_READ:解决了不可重复读，可以达到可重复读的效果,只要当前事务不结束,读取到的数据一直都是一样的,但是存在幻读的问题(mysql)</li>
+<li>串行化:SERIALIZAABLE:解决了幻读的问题,事务排队执行,不支持并发</li>
+</ul>
+<blockquote>
+<p>重点理解可重复读的实现,可重复读的实现,可以对已经查询到的结果集进行加锁,如果加锁完了之后,其他事务就不能对结果集进行操作,然后读取这些数据的时候一直就会读取到这个数据。</p>
+<p>但是假设,B插入了数据,插入数据是不会造成约束的,假设B插入的数据有符合A事务所查询的条件的话,那么A事务后续就会查询出这些新的数据,这样的话,又造成了相同的查询语句,不同的查询结果,为了更加细粒度的区分问题以及提出解决方案,因此为这些问题划分为不可重复读和幻读</p>
+</blockquote>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">enum</span> <span class="token class-name">Isolation</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">DEFAULT</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">READ_UNCOMMITTED</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">READ_COMMITTED</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">REPEATABLE_READ</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">SERIALIZABLE</span><span class="token punctuation">(</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> value<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">Isolation</span><span class="token punctuation">(</span><span class="token keyword">int</span> value<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>value <span class="token operator">=</span> value<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">value</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>value<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="1-5-事务常见设置"><a href="#1-5-事务常见设置" class="headerlink" title="1.5 事务常见设置"></a>1.5 事务常见设置</h3><p><strong>事务超时</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>timeout <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>以上代码标识设置事务的超时时间为10s</p>
+<p>表示超过10s后如果该事务中的所有DML语句还没有执行完毕的话,最终结果会选择回滚</p>
+<p>默认值为-1,表示没有时间限制</p>
+<p>这里有个坑,事务的超时时间指的是哪段时间</p>
+<p><code>在当前事务中,最后一条DML语句执行完毕之前的时间,而后续的业务代码是不算的</code></p>
+<p><strong>只读事务</strong></p>
+<p>将当前的事务设置为只读事务,在该事务执行过程中只允许select语句执行,而delete insert update都不可以执行</p>
+<p>这个特性的作用是:<code>启动spring的优化策略,提高select语句的执行效率</code>,这是最主要的。</p>
+<p>如果该事务中确实没有增伤查改的操作,建议设置为只读事务</p>
+<p><strong>遇到哪些异常时回滚</strong></p>
+<p>遇到这个异常或者异常的子类异常,都回滚</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>rollbackFor <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token class-name">NullPointerException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token class-name">ClassCastException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>遇到哪些异常时不回滚</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Transactional</span><span class="token punctuation">(</span>noRollbackFor <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token class-name">NullPointerException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span><span class="token class-name">ClassCastException</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="1-6-事务的全注解式开发"><a href="#1-6-事务的全注解式开发" class="headerlink" title="1.6 事务的全注解式开发"></a>1.6 事务的全注解式开发</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Configuration</span>
+<span class="token annotation punctuation">@ComponentScan</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">"com.dao"</span><span class="token punctuation">,</span><span class="token string">"com.service"</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@EnableTransactionManagement</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpringConfig</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">//纳入SpringIoc容器进行管理,返回的对象就是bean了</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"dataSource"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">DruidDataSource</span> <span class="token function">getDataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">DruidDataSource</span> dataSource <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DruidDataSource</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        dataSource<span class="token punctuation">.</span><span class="token function">setUsername</span><span class="token punctuation">(</span><span class="token string">"root"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        dataSource<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"root"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        dataSource<span class="token punctuation">.</span><span class="token function">setDriverClassName</span><span class="token punctuation">(</span><span class="token string">"com.mysql.cj.jdbc.Driver"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        dataSource<span class="token punctuation">.</span><span class="token function">setUrl</span><span class="token punctuation">(</span><span class="token string">"jdbc:mysql//localhost:3306/orm"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> dataSource<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//传参原理:Spring在生产这个Bean的时候,会扫描你的方法中的参数,然后看你方法中的参数有没有在IoC容器中</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"jdbcTemplate"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">JdbcTemplate</span> <span class="token function">getJdbcTemplate</span><span class="token punctuation">(</span><span class="token class-name">DataSource</span> dataSource<span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//会自动注入</span>
+        <span class="token class-name">JdbcTemplate</span> jdbcTemplate <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">JdbcTemplate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        jdbcTemplate<span class="token punctuation">.</span><span class="token function">setDataSource</span><span class="token punctuation">(</span>dataSource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> jdbcTemplate<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">//采用Bean注解进行标记</span>
+    <span class="token annotation punctuation">@Bean</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"txManager"</span><span class="token punctuation">)</span>
+    <span class="token keyword">public</span> <span class="token class-name">DataSourceTransactionManager</span> <span class="token function">getDataSourceTransactionManager</span><span class="token punctuation">(</span><span class="token class-name">DataSource</span> dataSource<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token class-name">DataSourceTransactionManager</span> transactionManager <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DataSourceTransactionManager</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        transactionManager<span class="token punctuation">.</span><span class="token function">setDataSource</span><span class="token punctuation">(</span>dataSource<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> transactionManager<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>外部的Bean通过这种方式进行注入</li>
+<li>内部的Bean通过普通Compoent进行注入</li>
+</ul>
+
                 
             </div>
             <hr/>
@@ -556,18 +768,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/01/08/Spring/spring-(5)/">
+                <a href="/2023/01/09/JAVA-pro/java-work-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="从零开始学Spring-事务与框架集成">
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="JavaGuide面试题-Java基础专题">
                         
-                        <span class="card-title">从零开始学Spring-事务与框架集成</span>
+                        <span class="card-title">JavaGuide面试题-Java基础专题</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -577,9 +788,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-08
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-09
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -592,7 +803,6 @@
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
