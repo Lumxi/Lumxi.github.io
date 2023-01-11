@@ -393,7 +393,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-01-09
+                    2023-01-11
                 </div>
                 
 
@@ -474,7 +474,45 @@
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="剑指-Offer-46-把数字翻译成字符串"><a href="#剑指-Offer-46-把数字翻译成字符串" class="headerlink" title="剑指 Offer 46. 把数字翻译成字符串"></a>剑指 Offer 46. 把数字翻译成字符串</h2><p>给定一个数字，我们按照如下规则把它翻译为字符串：0 翻译成 “a” ，1 翻译成 “b”，……，11 翻译成 “l”，……，25 翻译成 “z”。一个数字可能有多个翻译。请编程实现一个函数，用来计算一个数字有多少种不同的翻译方法。</p>
-<h3 id="1-解题思路-1"><a href="#1-解题思路-1" class="headerlink" title="1. 解题思路"></a>1. 解题思路</h3><h3 id="2-AC代码-1"><a href="#2-AC代码-1" class="headerlink" title="2.AC代码"></a>2.AC代码</h3>
+<h3 id="1-解题思路-1"><a href="#1-解题思路-1" class="headerlink" title="1. 解题思路"></a>1. 解题思路</h3><p>这道题问的是方案数,方案数一般都是用动态规划进行求解的</p>
+<p>既然是动态规划的话,那么就涉及到状态、选择、状态转移方程了。</p>
+<p>状态:既然是字符串问题,那么可以这样定义以<code>s[i]</code>结尾的字符串有<code>dp[i]</code>种翻译方式</p>
+<p>选择:选择的,由于这道题求的是最大的翻译方法,因此具有一种贪心的特质,在这种特质下:</p>
+<p>如果<code>xixi-1</code>可以被翻译,那么<code>dp[i]=dp[i-1]+dp[i-2]</code></p>
+<p>如果<code>xixi-1</code>不可以被翻译,那么<code>dp[i] = dp[i-1]</code></p>
+<p>下面讲一下这个递推的式子是怎么出来的</p>
+<p><code>dp[i-2]</code>:就是以<code>s[i-2]</code>为结尾的字符串,这个的话其实就是将<code>xixi-1</code>看作为一个整体,这个整体如何翻译是确定的,因此只需要加上<code>dp[i-2]</code>的数量即可</p>
+<p><code>dp[i-1]</code>:就是以<code>s[i-1]</code>为结尾的字符串,这个的话其实就是将<code>xi</code>看作单独一个,这个单独的个体是如何翻译是确定的,因此只需要加上<code>dp[i-1]</code>的数量即可</p>
+<ul>
+<li>base-case</li>
+</ul>
+<p><code>dp[0]=dp[1]=1</code></p>
+<h3 id="2-AC代码-1"><a href="#2-AC代码-1" class="headerlink" title="2.AC代码"></a>2.AC代码</h3><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">translateNum</span><span class="token punctuation">(</span><span class="token keyword">int</span> num<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">//将num变成字符串</span>
+        <span class="token class-name">String</span> s <span class="token operator">=</span> <span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>num<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> length <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>length <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> dp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>length<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        dp<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        dp<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>i<span class="token operator">&lt;=</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+            <span class="token comment">//判断是否可以是一个整体</span>
+            <span class="token keyword">int</span> target <span class="token operator">=</span> <span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token char">'0'</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">10</span><span class="token operator">+</span><span class="token punctuation">(</span>s<span class="token punctuation">.</span><span class="token function">charAt</span><span class="token punctuation">(</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token char">'0'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">//System.out.println(target);</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>target <span class="token operator">&lt;</span><span class="token number">10</span> <span class="token operator">||</span> target <span class="token operator">></span> <span class="token number">25</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+                dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+                dp<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>dp<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> dp<span class="token punctuation">[</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
                 
             </div>
             <hr/>
@@ -500,7 +538,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lumxi.github.io/2023/01/09/algorithm/book/offer-4/">https://lumxi.github.io/2023/01/09/algorithm/book/offer-4/</a>
+                    <a href="https://lumxi.github.io/2023/01/11/algorithm/book/offer-4/">https://lumxi.github.io/2023/01/11/algorithm/book/offer-4/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -622,17 +660,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/01/09/Redis/Reids-1/">
+                <a href="/2023/01/11/algorithm/book/offer-4/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="深入学习Redis-基础篇">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="剑指offer-动态规划">
                         
-                        <span class="card-title">深入学习Redis-基础篇</span>
+                        <span class="card-title">剑指offer-动态规划</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -642,29 +681,22 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-11
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/java%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    java基础
-                                </a>
-                            
-                            <a href="/categories/java%E5%9F%BA%E7%A1%80/Redis/" class="post-category">
-                                    Redis
-                                </a>
-                            
-                            <a href="/categories/java%E5%9F%BA%E7%A1%80/Redis/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-category">
-                                    分布式与中间件
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
+                                    数据结构与算法
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -672,8 +704,8 @@
                         <span class="chip bg-color">Java</span>
                     </a>
                     
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
+                    <a href="/tags/leetcode/">
+                        <span class="chip bg-color">leetcode</span>
                     </a>
                     
                 </div>
@@ -687,13 +719,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/01/08/Spring/spring-(5)/">
+                <a href="/2023/01/11/Java-work/java-work-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="从零开始学Spring-事务与框架集成">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="JavaGuide面试题-Java基础专题(一)">
                         
-                        <span class="card-title">从零开始学Spring-事务与框架集成</span>
+                        <span class="card-title">JavaGuide面试题-Java基础专题(一)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -704,7 +736,7 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-11
                             </span>
                         <span class="publish-author">
                             
