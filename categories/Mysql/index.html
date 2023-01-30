@@ -428,11 +428,11 @@
                 </a>
                 
                 
-                <a href="/categories/Mysql/" title="Mysql: 2">
+                <a href="/categories/Mysql/" title="Mysql: 4">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
                             style="background-color: #FEF9E7;">Mysql
-                        <span class="tag-length">2</span>
+                        <span class="tag-length">4</span>
                     </span>
                 </a>
                 
@@ -500,11 +500,11 @@
                 </a>
                 
                 
-                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法: 44">
+                <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" title="数据结构与算法: 45">
                     <span class="chip center-align waves-effect waves-light
                              chip-default "
                             style="background-color: #FFF;">数据结构与算法
-                        <span class="tag-length">44</span>
+                        <span class="tag-length">45</span>
                     </span>
                 </a>
                 
@@ -558,28 +558,84 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/10/17/Mysql-basic/Mysql-basic-02/">
+                    <a href="/2023/01/27/Mysql-basic/Mysql-basic-04/">
                         <div class="card-image tag-image">
                             
                             
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Mysql的日志系统">
+                            <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Mysql-深入浅出索引">
                             
-                            <span class="card-title">Mysql的日志系统</span>
+                            <span class="card-title">Mysql-深入浅出索引</span>
                         </div>
                     </a>
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                在上文的基础架构介绍中，我们明白了一条查询语句是如何工作的，接下来，我们将探究一条更新语句是如何工作的。
-先从一个表的一条更新语句来看:
-create table T(ID int primary key,c int)
+                                
+索引是面试的必考题,这个专题值得花费1-2天进行专门理解
 
-如果要将ID = 
+1. 什么是索引索引:索引是一种用于快速查询和检索数据的数据结构,其本质可以看成是一种排序好的数据结构
+索引的作用就类似于书的目录。
+通过索引,可以大大加快索引的检索速度,这也是
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-17
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-27
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                            <span class="chip bg-color">后端</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                            <span class="chip bg-color">数据库</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/01/23/Mysql-basic/Mysql-basic-03/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Mysql-事务的隔离性机制">
+                            
+                            <span class="card-title">Mysql-事务的隔离性机制</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                
+事务就是要保证一组数据库操作要么全部成功,要么全部失败,事务支持是在引擎层实现的,而MyISAM是不支持事务的
+
+1. 隔离性与隔离级别当数据库上有多个事务同时执行的时候,就可能出现
+
+脏读(dirty read):读取到其他事务还没有提
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-23
                             </span>
                             <span class="publish-author">
                                 
@@ -612,7 +668,61 @@ create table T(ID int primary key,c int)
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/09/09/Mysql-basic/Mysql-basic-01/">
+                    <a href="/2023/01/20/Mysql-basic/Mysql-basic-02/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Mysql的日志系统">
+                            
+                            <span class="card-title">Mysql的日志系统</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                在上文的基础架构介绍中，我们明白了一条查询语句是如何工作的，接下来，我们将探究一条更新语句是如何工作的。
+先从一个表的一条更新语句来看:
+create table T(ID int primary key,c int)
+
+如果要将ID = 
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-20
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Java/">
+                            <span class="chip bg-color">Java</span>
+                        </a>
+                        
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                            <span class="chip bg-color">后端</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/01/20/Mysql-basic/Mysql-basic-01/">
                         <div class="card-image tag-image">
                             
                             
@@ -632,7 +742,7 @@ Server层包括:链接器、查询缓存、分析器、
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-09
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-20
                             </span>
                             <span class="publish-author">
                                 

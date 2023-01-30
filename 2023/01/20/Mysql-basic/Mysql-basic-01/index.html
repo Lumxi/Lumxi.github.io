@@ -395,7 +395,7 @@ Server层包括:链接器、查询缓存、分析器、">
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-09-09
+                    2023-01-20
                 </div>
                 
 
@@ -429,7 +429,7 @@ Server层包括:链接器、查询缓存、分析器、">
 <p>从图中不难看出，<strong>不同的存储引擎是公用一个Server层的</strong>，也就是从链接器到执行器的部分。</p>
 <h2 id="1-2-连接器-管理连接、权限认证"><a href="#1-2-连接器-管理连接、权限认证" class="headerlink" title="1.2 连接器(管理连接、权限认证)"></a>1.2 连接器(管理连接、权限认证)</h2><p>要使用Mysql数据库，你要做的第一件事是连接到Mysql数据库上，这时候接待你的就是连接器。</p>
 <p> <strong>连接器</strong>负责跟客户端<code>建立连接</code>、<code>获取权限</code>、<code>维持和管理连接</code>。连接命令一般是这么写的:</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">mysql -h$ip -P$port -u$user -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql <span class="token operator">-</span>h$ip <span class="token operator">-</span>P$port <span class="token operator">-</span>u$<span class="token keyword">user</span> <span class="token operator">-</span>p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>$符号表示要输入的内容限制，输完该命令后，你就需要在交互对话里面输入密码。虽然密码也可以直接跟在-p后面写在单条命令行中，但是这样可能会导致你的密码泄露。<strong>如果你连接的是生产服务器，强烈建议你不要这么做</strong></p>
 <p>解析:连接命令中的mysql是客户端工具，是用来跟服务端建立连接的。在完成经典的<code>TCP</code>握手后，链接器就要开始认证你的身份，这时候用的就是你输入的用户名和密码</p>
@@ -497,6 +497,25 @@ Server层包括:链接器、查询缓存、分析器、">
 <p>问题:</p>
 <p>如果表 T 中没有字段 k，而你执行了这个语句 select * from T where k&#x3D;1, 那肯定是会报“不存在这个列”的错误： “Unknown column ‘k’ in ‘where clause’”。你觉得这个错误是在我们上面提到的哪个阶段报出来的呢？</p>
 <p>解答：应该是分析器,分析器会对传入的SQL执行词法解析和语法分析，其中词法分析会分析出SQL想要操作DB中的的哪张表，哪个字段，然后语法解析会在词法解析的基础上进一步做表名和字段名称的验证和解析。</p>
+<h2 id="1-7-用自己的话描述一下答案"><a href="#1-7-用自己的话描述一下答案" class="headerlink" title="1.7 用自己的话描述一下答案"></a>1.7 用自己的话描述一下答案</h2><p>我认为这个问题首先要从<code>Mysql</code>的内部组件开始回答</p>
+<p><code>Mysql</code>从内部服务组件分类可以分为<code>server层</code>和<code>存储引擎层</code>,其中跨存储引擎的功能都在<code>server</code>实现,比如说触发器,视图等,而存储引擎层执行实际的<code>I/O</code>操作,完成数据的存储和提取</p>
+<p>那么当我们执行<code>sql</code>语句的时候,首先我们以客户端的身份,向服务端<code>mysql</code>的连接器发起<code>TCP</code>连接请求,当连接建立完毕后,就建立了一条<code>mysql</code>连接,就可以通过此连接交换数据了</p>
+<blockquote>
+<p>数据库里面,长连接是指连接成功后,如果客户端持续有请求,那么就一直使用同一个连接,短连接则是指每次执行完很少的几次查询就断开连接,下次查询再建立一个</p>
+</blockquote>
+<p>在<code>mysql8.0</code>以前,执行查询的sql会先经过<code>缓存</code>,查询缓存是否命中,如果缓存命中,那么就会直接返回结果,否则就会走查询流程,而查询流程会先经过<code>分析器</code>,分析器要完成两个事情,第一个事情是做词法分析,词法分析这个过程完成了两个工作,第一个工作是解析器解析,这个过程是解析你的sql里面的字段,提取出来备用,第二个工作就是分析这些字段的含义,比如说<code>select</code>等</p>
+<p>然后会紧接着做第二个事情,第二个事情叫做<code>语法分析</code>,语法分析的过程实际上就是分析你的<code>sql</code>语句是否符合mysql的语法规定</p>
+<p>当mysql知道你的操作意图后,会先经过优化器,这个优化器会针对你的操作意图生成一个执行计划</p>
+<p>当mysql知道你要做什么,你要怎么做之后,就会开始执行</p>
+<blockquote>
+<p>在执行之前会先判断你是否有操作的权限,当你没有操作的权限的时候,就会报错</p>
+<p>在工程的实现上,对于查询缓存,也是会针对你的权限进行判断的</p>
+</blockquote>
+<blockquote>
+<p>为什么权限检查不在优化器之前做?</p>
+<p>因为有些操作是无法预知的,比如说在sql中执行<code>update</code>操作会触发一个触发器,但是在优化器之前是无法预知到你的这个操作的,只有在你触发的时候才会感知到,而如果你恰好触发器中有权限相关的操作,这时候需要再检查一次了</p>
+</blockquote>
+<p>执行的过程是交给执行器的,执行器调用这张表所定义的存储引擎中所提供的服务,进行操作,最终将数据收集,返回给客户端程序。</p>
 
                 
             </div>
@@ -523,7 +542,7 @@ Server层包括:链接器、查询缓存、分析器、">
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lumxi.github.io/2022/09/09/Mysql-basic/Mysql-basic-01/">https://lumxi.github.io/2022/09/09/Mysql-basic/Mysql-basic-01/</a>
+                    <a href="https://lumxi.github.io/2023/01/20/Mysql-basic/Mysql-basic-01/">https://lumxi.github.io/2023/01/20/Mysql-basic/Mysql-basic-01/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -649,13 +668,13 @@ Server层包括:链接器、查询缓存、分析器、">
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/09/09/JAVA-pro/java-bas-coll/">
+                <a href="/2023/01/20/cs-work/cs-work02/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="JAVA常用类集框架">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">JAVA常用类集框架</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -666,14 +685,51 @@ Server层包括:链接器、查询缓存、分析器、">
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-09
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-20
                         </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            穿山甲
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/01/20/Mysql-basic/Mysql-basic-02/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Mysql的日志系统">
+                        
+                        <span class="card-title">Mysql的日志系统</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/java%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    java基础
+                            <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
                                 </a>
                             
                             
@@ -687,53 +743,8 @@ Server层包括:链接器、查询缓存、分析器、">
                         <span class="chip bg-color">Java</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/09/09/dbs/dbs-(1)/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="数据库原理-概述">
-                        
-                        <span class="card-title">数据库原理-概述</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-09
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%8E%9F%E7%90%86/" class="post-category">
-                                    数据库原理
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">计算机基础</span>
+                    <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                        <span class="chip bg-color">后端</span>
                     </a>
                     
                 </div>
