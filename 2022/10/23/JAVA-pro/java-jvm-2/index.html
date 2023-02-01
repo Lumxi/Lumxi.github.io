@@ -666,7 +666,7 @@
 <li>转移线程处理:将所有地址视图为<code>Marked0</code>的对象进行转移，随后将该转移后的对象地址视图修改为<code>Remapped</code>，如果某些对象在转移的时候发现某些对象的地址视图为<code>Remapped</code>的话就无序进行任何处理。</li>
 <li>应用线程处理:在此阶段所有新创建的对象以及引用对象都标记为<code>Remapped</code>，并且新创建的对象不需要进行转移处理，而如果访问的是已有的活跃对象，并且该对象的地址视图为<code>Marked0</code>则需要进行转移处理，随后还需要将地址视图变更为<code>Remapped</code></li>
 </ul>
-<h1 id="补充-可达性分析原理"><a href="#补充-可达性分析原理" class="headerlink" title="补充:可达性分析原理"></a>补充:可达性分析原理</h1>
+
                 
             </div>
             <hr/>
