@@ -470,7 +470,14 @@ Server层包括:链接器、查询缓存、分析器、">
 <p>做完了这些识别以后，就是做<code>语法分析</code>，根据词法分析的结果，语法分析器会根据语法规则，判断你输入的这个SQL语句是否满足<code>MySQL</code>语法。</p>
 <p>如果你的语句不对，就会接收到<code>You have an error in your SQL syntax</code></p>
 <p>一般语法错误会提示出第一个出现错误的位置。请关注<code>user near</code>的内容</p>
-<h2 id="1-5-优化器-执行计划生成、索引选择"><a href="#1-5-优化器-执行计划生成、索引选择" class="headerlink" title="1.5 优化器(执行计划生成、索引选择)"></a>1.5 优化器(执行计划生成、索引选择)</h2><p>经过了分析器之后，MySQL就知道你想要做什么了，在开始执行之前，还要先经过优化器的处理(数据库就要针对你的需求想一个<code>最优的解决方案</code>，也就是<code>执行计划</code>，这个最优方案选择的操作，这个就是优化器要做的事情了)</p>
+<h2 id="1-5-优化器-执行计划生成、索引选择"><a href="#1-5-优化器-执行计划生成、索引选择" class="headerlink" title="1.5 优化器(执行计划生成、索引选择)"></a>1.5 优化器(执行计划生成、索引选择)</h2><p><strong>prepare阶段</strong></p>
+<p>在这个阶段中,完成的是程序的预处理</p>
+<ul>
+<li>它先要检查SQL查询语句中的表或者字段是否存在</li>
+<li><code>将select * 中的* 符号</code>,解析为表上的所有列</li>
+</ul>
+<p><strong>optimize 阶段</strong></p>
+<p>经过了分析器之后，MySQL就知道你想要做什么了，在开始执行之前，还要先经过优化器的处理(数据库就要针对你的需求想一个<code>最优的解决方案</code>，也就是<code>执行计划</code>，这个最优方案选择的操作，这个就是优化器要做的事情了)</p>
 <p>优化器是<code>在表里面有多个索引的时候，决定使用哪一个索引</code>，<code>或者在一个语句有多表关联(join)的时候,决定各个表的连接顺序</code>，比如执行下面这样的语句:</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select * from t1 join t2 using(ID) where t1.c &#x3D;10 and t2.d&#x3D;20;
 # using 表示两张表的字段关于ID关联<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
@@ -479,7 +486,9 @@ Server层包括:链接器、查询缓存、分析器、">
 <li>它既可以先从表t1里面取出c&#x3D;10记录的ID值，再根据ID值关联到表t2，再判断t2里面的d的值是否等于20</li>
 <li>也可以先从表t2里面取出d&#x3D;20的记录的ID值，在根据ID值关联到表t1，在判断t1里面c的值是否等于10</li>
 </ul>
-<p>以上这两种方案的逻辑结果是一致的，但是执行的效率会有不同，而优化器的作用就是决定选择使用哪一个方案</p>
+<p>以上这两种方案的逻辑结果是一致的，但是执行的效率会有不同，而优化器的作用就是决定选择使用哪一个方案,如果想要查看它使用了哪个索引,那么你应该要使用</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">explain</span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> t1 <span class="token keyword">join</span> t2 <span class="token keyword">using</span><span class="token punctuation">(</span>ID<span class="token punctuation">)</span> <span class="token keyword">where</span> t1<span class="token punctuation">.</span>c <span class="token operator">=</span><span class="token number">10</span> <span class="token operator">and</span> t2<span class="token punctuation">.</span>d<span class="token operator">=</span><span class="token number">20</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>简单来说就是优化器会改写sql，包括join的连接顺序，匹配索引，找到最优的sql策略</p>
 <h2 id="1-6-执行器"><a href="#1-6-执行器" class="headerlink" title="1.6  执行器"></a>1.6  执行器</h2><p>MySQL通过分析器知道了你要做什么，通过优化器知道了怎么做，于是进入了执行器阶段，开始执行语句</p>
 <p>开始执行的时候，会先做一个判断，判断你对这个表T有没有执行查询的权限，如果没有，那么就会返回没有权限的错误。如果命中了查询缓存了，会在查询返回结果的时候，做权限验证，查询也会在优化器之前调用precheck验证权限。而precheck是无法对运行时涉及到的表进行权限验证的。</p>
@@ -516,6 +525,38 @@ Server层包括:链接器、查询缓存、分析器、">
 <p>因为有些操作是无法预知的,比如说在sql中执行<code>update</code>操作会触发一个触发器,但是在优化器之前是无法预知到你的这个操作的,只有在你触发的时候才会感知到,而如果你恰好触发器中有权限相关的操作,这时候需要再检查一次了</p>
 </blockquote>
 <p>执行的过程是交给执行器的,执行器调用这张表所定义的存储引擎中所提供的服务,进行操作,最终将数据收集,返回给客户端程序。</p>
+<h2 id="1-8-存储引擎的特点知道多少"><a href="#1-8-存储引擎的特点知道多少" class="headerlink" title="1.8 存储引擎的特点知道多少?"></a>1.8 存储引擎的特点知道多少?</h2><p><code>存储引擎</code>是存储数据、建立索引、更新&#x2F;查询数据等技术的具体实现,存储引擎是基于表的,而不是基于库的,所以存储引擎也可以被称为表的类型</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">-- 当前数据库所支持的引擎类型</span>
+<span class="token keyword">show</span> engines<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">create</span> <span class="token keyword">table</span><span class="token punctuation">(</span>
+<span class="token punctuation">)</span><span class="token keyword">engine</span> <span class="token operator">=</span> MyISAM<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><code>InnoDB</code>存储引擎的特点如下</p>
+<ul>
+<li><code>事务</code>:DML操作遵循ACID模型,支持事务,ACID分别是原子性、持久性、隔离性、一致性</li>
+<li><code>行级锁</code>:支持行级锁,提高并发访问的性能</li>
+<li><code>外键</code>:支持外键,保证数据的完整性和正确性</li>
+</ul>
+<p>它存储的文件在磁盘上是<code>xxx.ibd</code>,这个叫做表空间文件,用于对表的描述,包括有<code>索引</code>、<code>表结构</code>、<code>具体数据</code></p>
+<p><code>MyISAM</code>存储引擎的特点如下:</p>
+<ul>
+<li><code>事务</code>:不支持事务</li>
+<li><code>外键</code>:不支持外键</li>
+<li><code>行级锁</code>:不支持行级锁,仅支持表级锁</li>
+</ul>
+<p><code>Memory</code>存储引擎的特点如下:</p>
+<p>这个存储引擎非常特殊,它的表数据是临时存储在内存中的,在读写速度快的同时,由于存储在不可靠的设备上,因此使用该引擎的表只能够作为临时表或者缓存进行使用</p>
+<ul>
+<li>特点:访问速度快、支持哈希索引,xxx.sdi</li>
+</ul>
+<h2 id="1-9-怎么来选择存储引擎"><a href="#1-9-怎么来选择存储引擎" class="headerlink" title="1.9 怎么来选择存储引擎?"></a>1.9 怎么来选择存储引擎?</h2><p><code>在合适的业务下选择合理的存储引擎</code></p>
+<ul>
+<li><p><code>InnoDB</code>:对事务的完整性有要求,在并发下要求数据的一致性,数据除了插入和查询之外,还包括很多的更新、删除操作,选用此引擎</p>
+<p><code>MyISAM</code>:如果这个引擎是以插入和读取操作为主,只有很少的更新和删除操作,并且对事务的完整性、并发性要求不是很高的话,可以选择这个引擎</p>
+<p><code>Memory</code>:表大小有限制,太大的表无法缓存到内存中,无法保证数据的安全性</p>
+</li>
+</ul>
 
                 
             </div>
