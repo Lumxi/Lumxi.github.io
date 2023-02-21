@@ -1,0 +1,1329 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Mysql-Mysql到底是如何上锁的?, 后端工程师之路">
+    <meta name="description" content="1. 什么样的SQL语句会加行级锁?普通的select语句属于快照读,它不会通过加锁来实现并发安全,而是通过MVCC实现并发安全
+如果要在查询的时候对记录加行级锁,那么就可以使用以下两种方式,这两种查询会给相关的记录加锁,这种查询方式叫做锁">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Mysql-Mysql到底是如何上锁的? | 后端工程师之路</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">后端工程师之路</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">后端工程师之路</div>
+        <div class="logo-desc">
+            
+            华南农业大学软件工程学生博客
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Mysql-Mysql到底是如何上锁的?</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
+                                <span class="chip bg-color">后端开发基础</span>
+                            </a>
+                        
+                            <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                <span class="chip bg-color">数据库</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Mysql/" class="post-category">
+                                Mysql
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-02-20
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="1-什么样的SQL语句会加行级锁"><a href="#1-什么样的SQL语句会加行级锁" class="headerlink" title="1. 什么样的SQL语句会加行级锁?"></a>1. 什么样的SQL语句会加行级锁?</h2><p>普通的<code>select</code>语句属于快照读,它不会通过加锁来实现并发安全,而是通过<code>MVCC</code>实现并发安全</p>
+<p>如果要在查询的时候对记录加行级锁,那么就可以使用以下两种方式,这两种查询会给相关的记录加锁,这种查询方式叫做锁定读</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">//对读取的记录加S锁</span>
+<span class="token keyword">select</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">lock</span> <span class="token operator">in</span> <span class="token keyword">share</span> <span class="token keyword">mode</span><span class="token punctuation">;</span>
+<span class="token comment">//对读取的记录加X锁</span>
+<span class="token keyword">select</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意:锁的特性是必须在事务中执行,当事务结束之后,锁就被释放了,因此在加锁之前须需要开启事务</p>
+<p>除了这两种查询语句会加行级锁之外,<code>update</code>和<code>delete</code>类型都会加独占锁</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token comment">//对操作的记录加独占锁</span>
+<span class="token keyword">update</span> <span class="token keyword">table</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">where</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token comment">//对操作的记录加独占锁</span>
+<span class="token keyword">delete</span> <span class="token keyword">from</span> <span class="token keyword">table</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token keyword">where</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="2-具体加锁过程"><a href="#2-具体加锁过程" class="headerlink" title="2. 具体加锁过程?"></a>2. 具体加锁过程?</h2><p><code>行级锁</code>的加锁规则比较复杂,在不同的场景下加锁的形式是不同的</p>
+<ul>
+<li>加锁的对象是索引</li>
+<li>加锁的基本单位是<code>next-key lock</code>,它是由记录锁和间隙锁组合而成的</li>
+<li>查找过程中访问到的对象才会加锁</li>
+</ul>
+<p><code>next- key lock</code>的区间是<code>(]</code>,而<code>gap lock</code>的加锁区间是<code>()</code></p>
+<p>但是,<code>next-key lock</code>在一些场景下会退化成记录锁或者间隙锁,比如说在使用<code>gap lock</code>或者<code>record lock</code>就能够解决幻读问题的情况下,就会使得<code>next-key lock</code>退化为记录锁或者间隙锁。</p>
+<h2 id="3-使用唯一索引的等值查询过程是如何加锁的"><a href="#3-使用唯一索引的等值查询过程是如何加锁的" class="headerlink" title="3. 使用唯一索引的等值查询过程是如何加锁的?"></a>3. 使用唯一索引的等值查询过程是如何加锁的?</h2><p>当使用唯一索引进行等值查询的时候,查询的记录存在与否,会导致加锁的规则不一致</p>
+<ul>
+<li>当查询的记录是存在的时候,在索引树上定位到这一条记录后,会将记录的索引中的<code>next-key lock</code>退化为<code>record lock</code></li>
+</ul>
+<p>如果记录存在,那么就是能够精准命中这条记录,因此在这种情况下,就会为这条记录加上一个<code>X型</code>的独占锁,如果有其他事务对这条记录进行<code>update或者delete</code>的话,就都会被阻塞</p>
+<blockquote>
+<p>有什么命令可以分析加了什么锁?</p>
+</blockquote>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> performance_schema<span class="token punctuation">.</span>data_lock\G<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>因为锁退化为了<code>record lock</code>,因此加了两种锁</p>
+<ul>
+<li>表级意向X锁:代表当前表中有记录被上锁了</li>
+<li>行级X锁:代表<code>id = 1 </code>的那条记录被上锁了,其他记录不能够修改</li>
+</ul>
+<blockquote>
+<ul>
+<li>如果 LOCK_MODE 为 <code>X</code>，说明是 next-key 锁；</li>
+<li>如果 LOCK_MODE 为 <code>X, REC_NOT_GAP</code>，说明是记录锁；</li>
+<li>如果 LOCK_MODE 为 <code>X, GAP</code>，说明是间隙锁；</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>为什么唯一索引的等值查询并且记录存在的场景下会导致记录中的索引<code>next-key lock</code>会退化为记录锁?</p>
+</blockquote>
+<p>首先要搞清楚,为什么要退化?这个锁明明也能解决问题啊,原因在于,当锁的粒度越大,越容易发生死锁</p>
+<p>原因就是在唯一索引等值查询并且查询记录存在的场景下,仅靠记录锁也能够避免幻读的问题</p>
+<p><strong>幻读:当一个事务前后两次查询的结果集的数量不相同的时候,就认为发生了幻读,因此,要避免幻读的发生,就是要避免某一个范围内被插入或者删除</strong></p>
+<p>那么分析我们的原场景</p>
+<ol>
+<li>由于主键具有唯一性,所以其他事务插入<code>id = 1</code>的时候,会因为主键冲突,导致无法插入<code>id = 1</code>的新记录,这样的话事务在多次查询<code>id = 1</code>的时候,就不会出现新的记录,解决了第一个插入异常问题</li>
+<li>那么要解决的问题就是,避免这条记录被删除,那么很简单,只需要给这条记录上一个记录锁,就可以对其他事务的操作做一个阻塞操作,从而解决了第二个删除异常的问题</li>
+</ol>
+<p>因此,从这个角度上看,记录锁就能够解决幻读问题,那么<code>next-key lock</code>就会退化为<code>记录锁</code></p>
+<ul>
+<li>当查询的记录是不存在的时候,在索引树找到第一条大于这条查询记录的记录后,就会将记录中的索引<code>nect-key lock</code>退化为<code>gap lock</code></li>
+</ul>
+<blockquote>
+<p>如果使用二级索引进行锁定读查询的时候,除了会对二级索引项加一个行级锁之外,还会对查询到的记录的主键索引上加上记录锁。</p>
+</blockquote>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql"><span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> id <span class="token operator">=</span> <span class="token number">2</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>假设事务A执行了这条等值查询语句,查询的记录是不存在于表中的,通过查询的SQL可知,加的锁是一个<code>意向X锁+X型的间隙锁</code></p>
+<p><img src="data:image/png;base64,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"></p>
+<blockquote>
+<p>为什么会退化为间隙锁?</p>
+</blockquote>
+<p>原因依然是通过间隙锁就能够解决幻读的问题</p>
+<p>我们知道,如果要防止再次查询<code>id = 2</code>的时候出现新的记录,那么就最保险的做法就是禁止在<code>2</code>附近的区间插入数据,那么在这里的话如何确定的呢?首先事务会通过索引的查询规则,查找到大于这条记录的第一条记录,那么这就是第一个边界,然后再去查询这第一个边界的上一条记录,就能够确定出来这个区间了</p>
+<p>因此只需要加上一个间隙锁就能够防止其他事务插入<code>id = 2</code>的记录了</p>
+<p>至于为什么不加记录锁,这是因为记录锁要上锁的前提是这个记录存在,而记录都不存在了,那么自然就不能上这个锁了</p>
+<h2 id="4-使用唯一索引的范围查询过程是如何加锁的"><a href="#4-使用唯一索引的范围查询过程是如何加锁的" class="headerlink" title="4. 使用唯一索引的范围查询过程是如何加锁的?"></a>4. 使用唯一索引的范围查询过程是如何加锁的?</h2><p>当唯一索引进行范围查询的时候,会对每一个扫描到的索引加一个<code>next-key</code>锁,<code>(]</code>区间,如果遇到下面的情况,就会退化为记录锁或者间隙锁</p>
+<p>情况1:当查询条件是<code>&gt;=</code>的范围查询,因为存在着等值查询的条件,如果等值查询的记录是存在于表中的,那么这个记录就会退化为<code>record锁</code></p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> id <span class="token operator">></span> <span class="token number">15</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+-----------+-----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name      <span class="token operator">|</span> age <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+-----------+-----+</span>
+<span class="token operator">|</span> <span class="token number">20</span> <span class="token operator">|</span> 香克斯    <span class="token operator">|</span>  <span class="token number">39</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+-----------+-----+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>问你这种情况下加了什么锁?首先它要找的第一行是<code>id = 20</code>,由于这个查询不是一个等值的查询,所以对该主键索引要加的是范围为<code>(15,20]</code>的锁,在这个过程中,由于<code>id = 20</code>的记录被记录到了,因此不会退化</p>
+<p>第二个,这个查询条件是<code>id &gt; 15</code>,因此会查询到后续所有的记录,但是20就是最后一条记录,因此在这时候,就会使用该页中的最后一条记录作为<code>正无穷</code>的一个标识,也就是再加一个<code>(20,+无穷)</code>,这种情况下一共加了两个锁</p>
+<p>来看这一条查询语句</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> id <span class="token operator">>=</span> <span class="token number">15</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+-----------+-----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name      <span class="token operator">|</span> age <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+-----------+-----+</span>
+<span class="token operator">|</span> <span class="token number">15</span> <span class="token operator">|</span> 乌索普    <span class="token operator">|</span>  <span class="token number">20</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">20</span> <span class="token operator">|</span> 香克斯    <span class="token operator">|</span>  <span class="token number">39</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+-----------+-----+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这条查询语句中,首先查询到了<code>id = 15</code>记录是存在的,因此此时<code>next-key lock</code>将会退化为记录锁,也就是先上一把锁,将<code>id = 15</code>的记录给锁住</p>
+<p>接着,由于是范围查询,因此主键索引<code>next-key lock</code>就会退化为记录锁,继续向后扫描</p>
+<p>接着扫描到<code>id = 20</code>,于是上了一个<code>(15,20]</code>的<code>next-key lock</code></p>
+<p>然后是无穷范围的<code>(20,+无穷]</code></p>
+<p>情况2:针对<code>&lt; || &lt;=</code>的范围查询,要看条件值是否存在于表中</p>
+<p>当条件值的记录不在表中的时候,那么不管是小于还是小于等于条件的范围查询都会退化为间隙锁,这是因为表中的记录不在表中,因此这种情况下不需要锁住那一条记录</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> id <span class="token operator">&lt;</span> <span class="token number">6</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+--------+-----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name   <span class="token operator">|</span> age <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+-----+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span> 路飞   <span class="token operator">|</span>  <span class="token number">19</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">5</span> <span class="token operator">|</span> 索隆   <span class="token operator">|</span>  <span class="token number">21</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+-----+</span>
+<span class="token number">3</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>来看这个查询</p>
+<p>①注意索引树的结构,是从小的索引值指向大的索引值,因此先查询到<code>id = 1</code> 的记录,此时访问到了<code>id = 1</code>的对象,因此需要对这条记录加锁,因此加的第一个锁是<code>(-无穷,1]</code></p>
+<p>②然后查询到第二条记录,<code>id = 5</code>,于是再上一把锁<code>(1,5]</code></p>
+<p>③然后接着扫描到6,发现并没有6这个对象,于是上了一个间隙锁<code>(5,6)</code></p>
+<p>结束</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> id <span class="token operator">&lt;=</span> <span class="token number">5</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+--------+-----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name   <span class="token operator">|</span> age <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+-----+</span>
+<span class="token operator">|</span>  <span class="token number">1</span> <span class="token operator">|</span> 路飞   <span class="token operator">|</span>  <span class="token number">19</span> <span class="token operator">|</span>
+<span class="token operator">|</span>  <span class="token number">5</span> <span class="token operator">|</span> 索隆   <span class="token operator">|</span>  <span class="token number">21</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+-----+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>首先这个加锁的过程和之前的加锁过程也是类似的,只不过:</p>
+<p>②然后查询到第二条记录,<code>id = 5</code>,于是再上一把锁<code>(1,5]</code></p>
+<p>在这之后就结束了,因为后续不涉及到访问</p>
+<h2 id="5-使用非唯一索引的等值查询过程是如何加锁的"><a href="#5-使用非唯一索引的等值查询过程是如何加锁的" class="headerlink" title="5. 使用非唯一索引的等值查询过程是如何加锁的?"></a>5. 使用非唯一索引的等值查询过程是如何加锁的?</h2><blockquote>
+<p>关于非索引的查询,就是其结束条件改变了而已,也就是什么时候停止或者什么时候开始</p>
+</blockquote>
+<p>我们以例子的方式进行理解</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> age <span class="token operator">=</span> <span class="token number">25</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
+Empty <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>在这个例子中,首先<code>age</code>是一个等值的查询,然后对应的记录不在表中,我们来分析一下加了哪些锁</p>
+<p><img src="data:image/png;base64,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">在这个例子中,<code>25</code>夹在<code>22和39</code>之间,那么避免在这个区间产生幻读的现象,因此加了一把锁<code>(22,39)</code>,退化为间隙锁</p>
+<p>同时,知道一个原则:<code>访问到了的对象就会加锁</code>,我们利用二级索引进行查询,而且没有做索引覆盖,所以肯定要回表查别的数据,因此在主表中,主索引<code>(10,20)</code>就会被上锁</p>
+<p>二级索引树是按照二级索引值（age列）按顺序存放的，在相同的二级索引值情况下， 再按主键 id 的顺序存放。知道了这个前提，我们才能知道执行插入语句的时候，插入的位置的下一条记录是谁。</p>
+<p><strong>插入age &#x3D; 22,id &#x3D; 3</strong>能成功吗?</p>
+<blockquote>
+<p>可以成功,因为都没有锁的冲突</p>
+</blockquote>
+<p><strong>插入age &#x3D; 22,id &#x3D; 12能成功吗</strong></p>
+<blockquote>
+<p>不能够成功,因为id&#x3D;12在间隙<code>(10,20)</code>中</p>
+</blockquote>
+<p>来看看关于等值查询-值存在的现象</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> age <span class="token operator">=</span> <span class="token number">22</span> <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+--------+-----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name   <span class="token operator">|</span> age <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+-----+</span>
+<span class="token operator">|</span> <span class="token number">10</span> <span class="token operator">|</span> 山治   <span class="token operator">|</span>  <span class="token number">22</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+--------+-----+</span>
+<span class="token number">1</span> <span class="token keyword">row</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>由于非唯一索引的限制,而且为了避免再插入<code>age = 22</code>的情况,因此先分析对二级索引的加锁情况:</p>
+<ul>
+<li>第一把锁:锁住本记录因此需要加一个<code>next-key lock</code>,锁的范围是<code>(21,22]</code>,可以避免左边被插入<code>22</code></li>
+<li>第二把锁:锁住右边的间隙,因此需要加一个<code>gap lock</code>,锁的范围是<code>(22,39)</code></li>
+</ul>
+<p>同时,由于需要回表,因此主索引中的也需要上锁:</p>
+<ul>
+<li>第一把锁,锁住本记录,因此需要加一个<code>record lock</code>,锁住10</li>
+</ul>
+<h2 id="6-使用非唯一索引的范围查询过程是如何加锁的"><a href="#6-使用非唯一索引的范围查询过程是如何加锁的" class="headerlink" title="6. 使用非唯一索引的范围查询过程是如何加锁的?"></a>6. 使用非唯一索引的范围查询过程是如何加锁的?</h2><p>根据原则,我们直接来看sql吧</p>
+<pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">mysql<span class="token operator">></span> <span class="token keyword">begin</span><span class="token punctuation">;</span>
+Query OK<span class="token punctuation">,</span> <span class="token number">0</span> <span class="token keyword">rows</span> affected <span class="token punctuation">(</span><span class="token number">0.00</span> sec<span class="token punctuation">)</span>
+
+mysql<span class="token operator">></span> <span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> <span class="token keyword">user</span> <span class="token keyword">where</span> age <span class="token operator">>=</span> <span class="token number">22</span>  <span class="token keyword">for</span> <span class="token keyword">update</span><span class="token punctuation">;</span>
+<span class="token operator">+</span><span class="token comment">----+-----------+-----+</span>
+<span class="token operator">|</span> id <span class="token operator">|</span> name      <span class="token operator">|</span> age <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+-----------+-----+</span>
+<span class="token operator">|</span> <span class="token number">10</span> <span class="token operator">|</span> 山治      <span class="token operator">|</span>  <span class="token number">22</span> <span class="token operator">|</span>
+<span class="token operator">|</span> <span class="token number">20</span> <span class="token operator">|</span> 香克斯    <span class="token operator">|</span>  <span class="token number">39</span> <span class="token operator">|</span>
+<span class="token operator">+</span><span class="token comment">----+-----------+-----+</span>
+<span class="token number">2</span> <span class="token keyword">rows</span> <span class="token operator">in</span> <span class="token keyword">set</span> <span class="token punctuation">(</span><span class="token number">0.01</span> sec<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里的查询是<code>&gt;=22</code></p>
+<p>①从左到右查询,发现有22这一条记录,因此需要锁住左边,不让插入,因此是需要插入一个<code>next-key lock</code>,也就是<code>(21,22]</code></p>
+<p>②然后继续查询,发现<code>age = 39</code>符合条件,因此需要将这个间隙和这条记录进行锁定,因此需要插入一个<code>next-key lock</code>,也就是<code>(22,39]</code></p>
+<p>③然后39之后没有数据了,因此上一个无穷的相关锁,也就是<code>(39,+无穷)</code></p>
+<p>而主键索引呢,就是根据只有访问了的对象才会被锁定</p>
+<p>因此主键索引是对记录<code>id = 10</code>和<code>id = 20</code>进行了上锁</p>
+<h2 id="7-没有加索引的查询是如何加锁的"><a href="#7-没有加索引的查询是如何加锁的" class="headerlink" title="7. 没有加索引的查询是如何加锁的?"></a>7. 没有加索引的查询是如何加锁的?</h2><p><strong>如果锁定读查询语句，没有使用索引列作为查询条件，或者查询语句没有走索引查询，导致扫描是全表扫描。那么，每一条记录的索引上都会加 next-key 锁，这样就相当于锁住的全表，这时如果其他事务对该表进行增、删、改操作的时候，都会被阻塞</strong>。</p>
+<p>不只是锁定读查询语句不加索引才会导致这种情况，update 和 delete 语句如果查询条件不加索引，那么由于扫描的方式是全表扫描，于是就会对每一条记录的索引上都会加 next-key 锁，这样就相当于锁住的全表。</p>
+<p>因此，<strong>在线上在执行 update、delete、select … for update 等具有加锁性质的语句，一定要检查语句是否走了索引，如果是全表扫描的话，会对每一个索引加 next-key 锁，相当于把整个表锁住了</strong>，这是挺严重的问题。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">穿山甲</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lumxi.github.io/2023/02/20/Mysql-basic/Mysql-basic-06/">https://lumxi.github.io/2023/02/20/Mysql-basic/Mysql-basic-06/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">穿山甲</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
+                                    <span class="chip bg-color">后端开发基础</span>
+                                </a>
+                            
+                                <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                                    <span class="chip bg-color">数据库</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2023/02/20/Mysql-basic/Mysql-basic-06/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Mysql-Mysql到底是如何上锁的?">
+                        
+                        <span class="card-title">Mysql-Mysql到底是如何上锁的?</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-20
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">后端开发基础</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/02/19/Mysql-basic/Mysql-basic-05/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Mysql-深入理解Mysql中的锁">
+                        
+                        <span class="card-title">Mysql-深入理解Mysql中的锁</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                        <span class="chip bg-color">后端</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                        <span class="chip bg-color">数据库</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <a href="/about" target="_blank">穿山甲</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

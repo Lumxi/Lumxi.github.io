@@ -428,11 +428,11 @@
                 </a>
                 
                 
-                <a href="/categories/Mysql/" title="Mysql: 7">
+                <a href="/categories/Mysql/" title="Mysql: 8">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
                             style="background-color: #FEF9E7;">Mysql
-                        <span class="tag-length">7</span>
+                        <span class="tag-length">8</span>
                     </span>
                 </a>
                 
@@ -567,6 +567,111 @@
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
+                    <a href="/2023/02/20/Mysql-basic/Mysql-basic-06/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Mysql-Mysql到底是如何上锁的?">
+                            
+                            <span class="card-title">Mysql-Mysql到底是如何上锁的?</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                1. 什么样的SQL语句会加行级锁?普通的select语句属于快照读,它不会通过加锁来实现并发安全,而是通过MVCC实现并发安全
+如果要在查询的时候对记录加行级锁,那么就可以使用以下两种方式,这两种查询会给相关的记录加锁,这种查询方式叫做锁
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-20
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
+                            <span class="chip bg-color">后端开发基础</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                            <span class="chip bg-color">数据库</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/02/19/Mysql-basic/Mysql-basic-05/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="Mysql-深入理解Mysql中的锁">
+                            
+                            <span class="card-title">Mysql-深入理解Mysql中的锁</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                1. Mysql中有哪些锁?Mysql中,根据加锁的范围可以分为全局锁,表级锁和行锁三种
+表级锁:表锁,元数据锁,意向锁,AUTO-INC锁
+全局锁
+行级锁:Record Lock、Gap Locl、New Key Lock
+2. 全局锁是
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-19
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Mysql/" class="post-category">
+                                    Mysql
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E5%90%8E%E7%AB%AF/">
+                            <span class="chip bg-color">后端</span>
+                        </a>
+                        
+                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
+                            <span class="chip bg-color">数据库</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
                     <a href="/2023/02/15/cs-work/cs-work08/">
                         <div class="card-image tag-image">
                             
@@ -667,56 +772,6 @@ varchar(n) 中 n 最大取值为多少？
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2023/02/07/Mysql-basic/Mysql-basic-05/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="Mysql-深入锁机制">
-                            
-                            <span class="card-title">Mysql-深入锁机制</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-07
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Mysql/" class="post-category">
-                                    Mysql
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E5%90%8E%E7%AB%AF/">
-                            <span class="chip bg-color">后端</span>
-                        </a>
-                        
-                        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">
-                            <span class="chip bg-color">数据库</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
                     <a href="/2023/01/27/Mysql-basic/Mysql-basic-04/">
                         <div class="card-image tag-image">
                             
@@ -787,67 +842,16 @@ varchar(n) 中 n 最大取值为多少？
                                 
 事务就是要保证一组数据库操作要么全部成功,要么全部失败,事务支持是在引擎层实现的,而MyISAM是不支持事务的
 
-1. 隔离性与隔离级别当数据库上有多个事务同时执行的时候,就可能出现
+事务的四大特性
 
-脏读(dirty read):读取到其他事务还没有提
+原子性:事务中的指令序列要么全部成功,要么全部失败
+一致性:事务操作前和操作后,数据满足完整性的约束
+隔离
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
                                 <i class="far fa-clock fa-fw icon-date"></i>2023-01-23
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/Mysql/" class="post-category">
-                                    Mysql
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Java/">
-                            <span class="chip bg-color">Java</span>
-                        </a>
-                        
-                        <a href="/tags/%E5%90%8E%E7%AB%AF/">
-                            <span class="chip bg-color">后端</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2023/01/20/Mysql-basic/Mysql-basic-01/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Mysql基础架构介绍">
-                            
-                            <span class="card-title">Mysql基础架构介绍</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                1.Mysql基础架构:一条SQL查询语句是如何查询的?1.1 Mysql的基础架构介绍Mysql的基础架构可以从下图来进行展示
-
-大体来说，Mysql可以分为Server层和存储引擎层两部分
-Server层包括:链接器、查询缓存、分析器、
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-20
                             </span>
                             <span class="publish-author">
                                 
