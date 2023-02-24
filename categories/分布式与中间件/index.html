@@ -536,11 +536,11 @@
                 </a>
                 
                 
-                <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="分布式与中间件: 6">
+                <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/" title="分布式与中间件: 7">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
                             style="background-color: #FFF;">分布式与中间件
-                        <span class="tag-length">6</span>
+                        <span class="tag-length">7</span>
                     </span>
                 </a>
                 
@@ -564,6 +564,56 @@
 
     <article id="articles" class="container articles">
         <div class="row tags-posts">
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/02/24/Redis/Redis-7/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="深入学习Redis-底层数据结构详解">
+                            
+                            <span class="card-title">深入学习Redis-底层数据结构详解</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                1. 动态字符串SDSRedis中保存的key是字符串,value往往是字符串或者是字符串的集合,可见字符串是Redis中最常用的一种数据结构。Redis构建了一种新的字符串结构称为简单动态字符串(Simple Dynamic String
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-24
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-category">
+                                    分布式与中间件
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/Java/">
+                            <span class="chip bg-color">Java</span>
+                        </a>
+                        
+                        <a href="/tags/Redis/">
+                            <span class="chip bg-color">Redis</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
@@ -821,61 +871,33 @@ public Result likeBlog(@PathVariable("id") Long id) &#123;
                 </div>
             </div>
             
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2023/01/13/Redis/Redis-1/">
-                        <div class="card-image tag-image">
-                            
-                            
-                            <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="深入学习Redis-缓存原理">
-                            
-                            <span class="card-title">深入学习Redis-缓存原理</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                1. 项目架构说明
-首先这个项目的整体架构如上图所示,用户端向NGINX发起请求,NGINX响应静态资源或者动态资源,当需要请求动态资源的时候,NGINX转发用户的请求到tomcat,由tomcat完成此次请求的响应
-注意,当负载过重的时候
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-13
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-category">
-                                    分布式与中间件
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Java/">
-                            <span class="chip bg-color">Java</span>
-                        </a>
-                        
-                        <a href="/tags/Redis/">
-                            <span class="chip bg-color">Redis</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
         </div>
     </article>
 </main>
+
+
+<div class="container paging">
+    <div class="row">
+        <div class="col s6 m4 l4">
+            
+            <a class="left btn-floating btn-large disabled">
+                <i class="fas fa-angle-left"></i>
+            </a>
+            
+        </div>
+        <div class="page-info col m4 l4 hide-on-small-only">
+            <div class="center-align b-text-gray">1 / 2</div>
+        </div>
+        <div class="col s6 m4 l4">
+            
+            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/page/2/"
+               class="right btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fas fa-angle-right"></i>
+            </a>
+            
+        </div>
+    </div>
+</div>
 
 
 
