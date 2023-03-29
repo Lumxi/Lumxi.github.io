@@ -558,7 +558,7 @@ ZUNIONSTORE destkey numberkeys key <span class="token punctuation">[</span>key<s
 ZINTERSTORE destkey numberkeys key <span class="token punctuation">[</span>key<span class="token punctuation">..</span>.<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="6-BITMAP类型"><a href="#6-BITMAP类型" class="headerlink" title="6. BITMAP类型"></a>6. BITMAP类型</h2><p><code>BitMap</code>也就是位图,是一连串的二进制数组,可以通过偏移量<code>offset</code>来定位元素,<code>BitMap</code>通过最小的单位<code>bit</code>来进行<code>0|1</code>的设置,表示某个元素的值或者状态,时间复杂度为<code>O(1)</code></p>
-<p> 特别适合一些二值统计的场景,<code>BitMap</code>本身使用<code>String</code>类型作为底层数据结构实现的一种统计二值状态的数据类型,<code>String</code>类型由于底层是<code>SDS</code>,其API在处理的时候会将字符以<code>二进制的形式</code>进行解析,因此完全就可以利用这些个特性来表示一个二值的状态</p>
+<p>特别适合一些二值统计的场景,<code>BitMap</code>本身使用<code>String</code>类型作为底层数据结构实现的一种统计二值状态的数据类型,<code>String</code>类型由于底层是<code>SDS</code>,其API在处理的时候会将字符以<code>二进制的形式</code>进行解析,因此完全就可以利用这些个特性来表示一个二值的状态</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 设置值,其中value只能是1或者0</span>
 SETBIT key offset value
 <span class="token comment"># 获取值</span>

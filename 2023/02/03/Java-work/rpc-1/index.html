@@ -610,6 +610,14 @@
 	<span class="token builtin">int32</span> age <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<blockquote>
+<p><strong>为什么使用Kryo</strong>?</p>
+<p>了解过的序列化协议为JDK的序列化协议,<code>Kryo</code>序列化协议以及<code>protobuf</code>协议</p>
+<p>先说说各自的优点吧,由于这个RPC框架是基于<code>Java</code>开发的,因此是没有跨语言的,调用JDK的序列化协议也相当简单,但是JDK的序列化后的字节码中,存在着很多诸如类信息之类冗余信息,因此表现出来的就是字节数组体积很大,传输成本也就被同时加大了。</p>
+<p><code>Kryo</code>序列化协议的最大优点就是它所产生的字节码体积很小,但是其缺点是在使用过程中存在线程安全的问题,需要使用<code>ThreadLocal</code>进行保护</p>
+<p><code>protobuf</code>需要自定义<code>IDL</code>文件和生成的序列化代码,因此是没有反序列化漏洞的,但是它的缺点就是:传输每一个类的结构都需要生成对应的<code>proto</code>文件,如果某个类发生了改变,那么就需要重新生成这个类的对应的文件</p>
+<p>那么为什么使用<code>Kryo</code>呢?<code>Dubbo</code>底层也是基于<code>Kryo</code>的,它的核心设计理念就是尽最大可能减少序列化后的文件大小,采用变长字节存储来代替<code>Java</code>中使用固定4&#x2F;8字节的模式,而在<code>Kryo</code>是用变长的字节来进行描述的,就好像<code>Redis</code>中的<code>ZipList</code>一样,其次就是使用了类似缓存的机制,在一次序列化对象之后,相同的对象只会序列化一次,后续的用一个局部的<code>int</code>来代替</p>
+</blockquote>
 <p><strong>Hessian</strong></p>
 <p>它是一个轻量级的,自定义描述的<code>RPC</code>协议,<code>Hessain</code>是一个比较老的序列化实现,支持跨语言</p>
 <p><strong>基于Kyro实现序列化协议</strong></p>

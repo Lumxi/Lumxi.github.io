@@ -767,7 +767,7 @@ psvm<span class="token punctuation">&#123;</span>
 <p>那么关键是:统计当前这个数,它右边小于当前元素的个数</p>
 <p>假设我们通过二分,将数组分成了两部分<code>[lo,mid]</code>和<code>[mid+1,hi]</code></p>
 <p>然后执行<code>merge()</code>,使用双指针法<code>i指向lo,j指向mid+1</code></p>
-<p>如果我们发现<code>nums[i]&lt;=nums[j]</code>,那么也就是说<code>j往后到hi</code>中的数都是大于等于<code>nums[i]</code>的</p>
+<p>如果我们发现<code>nums[i]&lt;=nums[j]</code></p>
 <p>那么也就是说,<code>[mid+1,j)</code>的这一段都是小于当前元素的,那么我们只需要统计这一段就可以了</p>
 <p>那么有几个元素呢?我们以区间计算<code>[mid+1,j-1]</code>,也就是<code>(j-1-mid-1)+1</code>&#x3D; <code>j-mid-1</code></p>
 <blockquote>
