@@ -1,0 +1,1430 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="深入理解Dubbo-分布式系统原理与实现, 后端工程师之路">
+    <meta name="description" content="1. 为什么项目中要将系统进行拆分?如何进行系统拆分?拆分后不用Dubbo可以吗?这是为了实现了系统解耦,比如说在虚拟实验系统中,一般来说会分为两个业务部分
+
+业务实现部分,这部分要实现的主要是用户的基本使用接口,这个接口主要要完成的是用户">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>深入理解Dubbo-分布式系统原理与实现 | 后端工程师之路</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">后端工程师之路</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">后端工程师之路</div>
+        <div class="logo-desc">
+            
+            华南农业大学软件工程学生博客
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">深入理解Dubbo-分布式系统原理与实现</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                            <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+                                <span class="chip bg-color">分布式与中间件</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/" class="post-category">
+                                后端开发基础
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-04-07
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h2 id="1-为什么项目中要将系统进行拆分-如何进行系统拆分-拆分后不用Dubbo可以吗"><a href="#1-为什么项目中要将系统进行拆分-如何进行系统拆分-拆分后不用Dubbo可以吗" class="headerlink" title="1. 为什么项目中要将系统进行拆分?如何进行系统拆分?拆分后不用Dubbo可以吗?"></a>1. 为什么项目中要将系统进行拆分?如何进行系统拆分?拆分后不用Dubbo可以吗?</h2><p>这是为了实现了系统解耦,比如说在虚拟实验系统中,一般来说会分为两个业务部分</p>
+<ul>
+<li>业务实现部分,这部分要实现的主要是用户的基本使用接口,这个接口主要要完成的是用户注册，登录，班级等基本业务的管理</li>
+<li><code>Docker</code>容器实现部分,这部分要实现的主要是<code>Dokcer</code>服务,比如说在多个物理节点上,需要发布多个<code>Docker Daemon</code>,使用这个<code>Dockerd</code>来实现<code>Docker</code>服务,然后通过中控节点分发请求去调用<code>Docker</code>节点的上的服务,这个还要要求服务端主动去收集Docker宿主机上的负载情况以及容器的负载情况</li>
+</ul>
+<p>如果不拆分的话,那么一个中控节点就需要完成上述的所有操作,包括与远程的<code>Dockerd</code>后台线程建立<code>UNIX/TCP/HTTPS</code>远程通信连接,保持这条连接,还要和宿主机维持<code>SSH</code>的通信,同时还需要完成用户传递过来的业务请求,这样的话就会导致中控节点的任务量过大,而且如何来维护中控节点和这些物理节点的关系也是一个问题,要使用<code>cache</code>吗?要使用<code>MySQL</code>吗?</p>
+<p>(1)服务监控：其中一个最重要的问题就是,中控节点如果要调用<code>Docker</code>服务,首先要求<code>Docker</code>服务存活,如果不做服务拆分,那么中控节点还需要动态地去维护&#x2F;轮询节点的健康状态</p>
+<p>(2)开发效率:可以让一部分擅长业务开发的同学去做中控节点上的任务,让一部分擅长Docker服务的通信去做计算节点的开发,两边互不干扰</p>
+<p><strong>拆分后不用dubbo可以吗?</strong></p>
+<p>完全可以,在项目的初期也是这样做的,它是通过<code>HTTP远程调用+Redis假注册中心</code>实现的,通过中控节点查询<code>Redis</code>中的相关IP地址,就可以组装一个HTTP请求</p>
+<p>但是这样的缺点很明显:</p>
+<p>(1)项目开发过程对于bug的排查非常不友好,如果计算节点上的服务出问题了,需要到Docker容器中去查看,具体步骤是:<code>登录到宿主机=&gt;通过读取日志文件/或者进入docker容器进行日志的查询</code></p>
+<p>(2)超时重试,需要自己编写</p>
+<p>(3)负载均衡,也需要完全由自己来代理</p>
+<h2 id="2-Dubbo的SPI机制"><a href="#2-Dubbo的SPI机制" class="headerlink" title="2. Dubbo的SPI机制"></a>2. Dubbo的SPI机制</h2><p><strong>API和SPI有什么区别?</strong></p>
+<ul>
+<li><code>API</code>:是应用程序接口<code>(Application Programming Interface)</code>,它的实现一般是框架开发者完成的,也就是说,无论有多少个API,这些接口的实现都是在内部完成的</li>
+<li><code>SPI</code>:是服务提供接口<code>(Service Provider Interface)</code>,用来提供远程支持,比如说<code>JDBC</code>,它本身并没有绑定过任何的数据库底层驱动,那么在JDK中的JDBC,需要调用者显式的调用<code>Class.forname()</code>加载本地驱动,<strong>只提供接口,不提供实现,实现由使用者使用</strong></li>
+</ul>
+<p><strong>JDK的SPI是如何使用的?</strong></p>
+<p>第一步:向外暴露接口,自己并不实现接口</p>
+<p>第二步:在不同的工程下实现不同的接口</p>
+<p>第三步:在<code>resource</code>下新建<code>META-INF/service</code></p>
+<p>第四步:基于下面的代码进行扫描</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">ServiceLoader</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">SPIInterface</span><span class="token punctuation">></span></span> load <span class="token operator">=</span> <span class="token class-name">ServiceLoader</span><span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span><span class="token class-name">SPIInterface</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">SPIInterface</span> spiInterface <span class="token operator">:</span> load<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    spiInterface<span class="token punctuation">.</span><span class="token function">send</span><span class="token punctuation">(</span><span class="token string">"haha"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>SPI的目的就是为了增强它的扩展性,将固定的配置提取出来,通过SPI机制来配置,一般都会有一个默认的配置,然后通过SPI文件配置不同的实现,这样就会存在一个接口存在多个实现的问题,如果找到了多个实现,那么哪个实现作为最后的实例呢</strong></p>
+<p><code>关于JDK的SPI机制的缺点</code>:在启动项目的时候,这个<code>ServiceLoader</code>的顺序是基于<code>运行时的ClassPath</code>的配置,在前面加载的<code>jar</code>包自然在前面,最后的jar里的自然也在后面,所以用户的包在<code>ClassPath</code>中的顺序比<code>super-log</code>的包更加靠后, 才会处于最后一个位置</p>
+<p>因此:<code>JDK的SPI机制无法确认具体加载哪一个的实现,也无加载指定的实现,它仅依靠ClassPath</code>的顺序</p>
+<p><strong>DubboSPI机制</strong></p>
+<ul>
+<li>Dubbo自主实现了SPI机制</li>
+<li>SPI提高了加载速度和降低了资源消耗</li>
+<li>Apache Dubbo为SPI提供的IOC和AOP的支持?**</li>
+</ul>
+<p><code>DubboSPI</code>就是通过<code>SPI</code>机制来加载所有的组件,不过<code>Dubbo</code>并未使用<code>JDK</code>原生的SPI机制,而是对其进行了增强,使其能够更好的满足需求,基于SPI,可以很容易地对Dubbo进行扩张</p>
+<p>它的核心关键类是<code>ExtensionLoader</code>类,通过<code>ExtensionLoader</code>,可以加载指定的实现类,<code>DubboSPI</code>所需的配置文档需要放在<code>META-INF/dubbo</code>的路径下</p>
+<p>与<code>JavaSPI</code>实现类配置不同,<code>DubboSPI</code>是通过键值对的方式进行配置,这样的话就可以按照需求加载指定的实现类,另外在使用的时候还需要在接口上标注<code>@SPI</code></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@SPI</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Robot</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">void</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OptimusPrime</span> <span class="token keyword">implements</span> <span class="token class-name">Robot</span> <span class="token punctuation">&#123;</span>
+    
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello, I am Optimus Prime."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Bumblebee</span> <span class="token keyword">implements</span> <span class="token class-name">Robot</span> <span class="token punctuation">&#123;</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Hello, I am Bumblebee."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DubboSPITest</span> <span class="token punctuation">&#123;</span>
+    <span class="token annotation punctuation">@Test</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">ExtensionLoader</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Robot</span><span class="token punctuation">></span></span> extensionLoader <span class="token operator">=</span> 
+            <span class="token class-name">ExtensionLoader</span><span class="token punctuation">.</span><span class="token function">getExtensionLoader</span><span class="token punctuation">(</span><span class="token class-name">Robot</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Robot</span> optimusPrime <span class="token operator">=</span> extensionLoader<span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span><span class="token string">"optimusPrime"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        optimusPrime<span class="token punctuation">.</span><span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Robot</span> bumblebee <span class="token operator">=</span> extensionLoader<span class="token punctuation">.</span><span class="token function">getExtension</span><span class="token punctuation">(</span><span class="token string">"bumblebee"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bumblebee<span class="token punctuation">.</span><span class="token function">sayHello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-txt" data-language="txt"><code class="language-txt">optimusPrime = org.apache.spi.OptimusPrime
+bumblebee = org.apache.spi.Bumblebee<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p><strong>DubboSPI和JDKde SPI的最大区别就在于支持别名</strong>,可以通过某个扩展点的别名来获取固定的扩展点,比如说上面的<code>Robot</code>的实现,我们可以在元信息文件中配置相关的实现类,最终就可以在代码中,通过<code>getExtension()</code>来获取具体的实现了</p>
+<h2 id="3-Spring的SPI机制"><a href="#3-Spring的SPI机制" class="headerlink" title="3. Spring的SPI机制"></a>3. Spring的SPI机制</h2><p><code>Spring</code>的SPI配置文件是一个固定的文件<code>META-INF/spring.factories</code>,功能上和JDK是类似的,每个接口可以有多个扩展实现,使用方式</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//获取所有factories文件中配置的LoggingSystemFactory</span>
+<span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">LoggingSystemFactory</span><span class="token punctuation">></span></span><span class="token operator">></span> factories <span class="token operator">=</span> 
+    <span class="token class-name">SpringFactoriesLoader</span><span class="token punctuation">.</span><span class="token function">loadFactories</span><span class="token punctuation">(</span><span class="token class-name">LoggingSystemFactory</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> classLoader<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p><code>Spring</code>也是支持<code>ClassPath</code>中存在多个配置文件的,加载的时候会按照<code>classpath</code>的顺序去依次加载这个<code>spring.factories</code>文件,添加到一个<code>ArrayList</code>中,由于没有别名,所以没有去重的概念,有多少就会添加多少,但是由于Spring的SPI主要用在<code>SpringBoot</code>中,而<code>SpringBoot</code>中的<code>ClassLoader</code>会优先加载项目中的文件,而不是依赖包的文件,所以如果你在项目中定义了<code>Spring.factories</code>文件,那么项目中的文件就会被第一个加载,得到的<code>Factories</code>中,项目所定义的<code>spring.factories</code>中配置的那个实现类也会排在第一个。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>JDKSPI</th>
+<th>DUBBO SPI</th>
+<th>Spring SPI</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文件方式</td>
+<td>每个扩展点单独一个文件</td>
+<td>每个扩展点单独一个文件</td>
+<td>所有的扩展点在一个文件</td>
+</tr>
+<tr>
+<td>获取某个固定的实现</td>
+<td>不支持,只能按照顺序获取所有的实现</td>
+<td>有别名的概念,可以通过名称获取扩展点的某个固定实现,可以配合DubboSPI的注解</td>
+<td>不支持,只能按照顺序获取所有实现,但是由于SpringClassLoader会保证优先加载用户代码中的文件,因此可以保障用户自定义的文件在第一个</td>
+</tr>
+<tr>
+<td>其他</td>
+<td>无</td>
+<td>支持Dubbo内部的依赖注入，通过目录来区分Dubbo 内置SPI和外部SPI，优先加载内部，保证内部的优先级最高</td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="4-DubboSPI详解"><a href="#4-DubboSPI详解" class="headerlink" title="4. DubboSPI详解"></a>4. DubboSPI详解</h2><h2 id="5-Dubbo负载均衡算法"><a href="#5-Dubbo负载均衡算法" class="headerlink" title="5. Dubbo负载均衡算法"></a>5. Dubbo负载均衡算法</h2><p><code>服务负载均衡</code>:负载均衡的本质就是通过算法选择节点,避免过热的节点</p>
+<p>实际上就是我们的<code>consumer</code>去用一定的策略去调用不同的<code>provider</code>,核心目的:防止过热节点,防止流量一直打到同一个节点上,可以通过<code>loadbalance</code>配置</p>
+<p>JVM的稳启动:就是说因为JVM中的一些加载设定都是懒加载的,因此初始化的时候尽量不要让JVM满负荷运载,这样不但影响QPS,还容易使得服务的宕机</p>
+<p><strong>RandomLoadBalance</strong>:加权随机算法,随机访问,黑盒访问</p>
+<p><strong>RoundRobinLoadBalance</strong>:加权轮询算法</p>
+<p><strong>LeastActiveLoadBalance</strong>:最少活跃优先+加权随机</p>
+<p><strong>ShortestReponseLoadBalance</strong>:最短响应优先+加权随机</p>
+<p><strong>ConsistentHashLoadBalance</strong>:确定的入参,确定的提供者,适用于有状态的请求,访问同一台机器</p>
+<blockquote>
+<p>有状态的请求,就是consumer去调用provider的两次请求之间是有关系的,必须要使得这两次请求都打到同一台实例上</p>
+</blockquote>
+<p><strong>如何自定义LoadBalance?</strong></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RandomLoadBalance</span> <span class="token keyword">extends</span> <span class="token class-name">AbstractLoadBalanc</span><span class="token punctuation">&#123;</span><span class="token comment">//继承这个方法</span>
+    
+    <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token class-name">Invoker</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token function">select</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Invoker</span><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span><span class="token punctuation">></span></span> invokers<span class="token punctuation">,</span> <span class="token class-name">URL</span> url<span class="token punctuation">,</span> <span class="token class-name">Invocation</span> invocation<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">RpcException</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>首先先来看是如何定义权重值的</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token keyword">int</span> <span class="token function">getWeight</span><span class="token punctuation">(</span><span class="token class-name">Invoker</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> invoker<span class="token punctuation">,</span> <span class="token class-name">Invocation</span> invocation<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token comment">//获取权重值，默认为100</span>
+	<span class="token keyword">int</span> weight <span class="token operator">=</span> invoker<span class="token punctuation">.</span><span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getMethodParameter</span><span class="token punctuation">(</span>invocation<span class="token punctuation">.</span><span class="token function">getMethodName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"weight"</span><span class="token punctuation">,</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>weight <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token comment">//服务提供者启动时间戳</span>
+		<span class="token keyword">long</span> timestamp <span class="token operator">=</span> invoker<span class="token punctuation">.</span><span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"remote.timestamp"</span><span class="token punctuation">,</span> <span class="token number">0L</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>timestamp <span class="token operator">></span> <span class="token number">0L</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token comment">//当前时间-启动时间=运行时长</span>
+			<span class="token keyword">int</span> uptime <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> timestamp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token comment">//获取服务预热时间 默认10分钟 </span>
+			<span class="token keyword">int</span> warmup <span class="token operator">=</span> invoker<span class="token punctuation">.</span><span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getParameter</span><span class="token punctuation">(</span><span class="token string">"warmup"</span><span class="token punctuation">,</span> <span class="token number">600000</span> <span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token comment">//如果服务运行时间小于预热时间，即服务启动未到达10分钟</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>uptime <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> uptime <span class="token operator">&lt;</span> warmup<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				<span class="token comment">//重新计算服务权重</span>
+				weight <span class="token operator">=</span> <span class="token function">calculateWarmupWeight</span><span class="token punctuation">(</span>uptime<span class="token punctuation">,</span> warmup<span class="token punctuation">,</span> weight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span> weight<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>大致的流程是这样的:</p>
+<ul>
+<li>首先获取配置的权重值,它默认是100</li>
+<li>然后获取服务启动的时间戳</li>
+<li>当前时间-服务启动时间&#x3D;服务运行时长</li>
+<li>获取服务温启动时间,默认是10分钟</li>
+<li>判断服务运行的时长是否小于预热的时间,条件的成立就会重新计算权重</li>
+</ul>
+<p>这个所谓的重新计算权重其实就是降权,也就是说不要让在还处于一个温启动的服务承载太高的流量,如果都处于一个温启动的状态,那么就让启动时间最长的来承载流量</p>
+<p><strong>服务预热是一个优化手段,与之类似的还有JVM预热,主要目的是服务启动后低功率运行,使其效率慢慢提升到最佳的状态,比如说在线程池中创建线程,加载常见的类</strong></p>
+<p><strong>权重随机算法</strong></p>
+<p>权重随机算法是加权随机算法的具体实现,是Dubbo默认的,首先需要将服务器按照权重进行分区</p>
+<p>假设有三台服务器<code>A、B、C</code>,对应的权重为<code>1 3 6 </code></p>
+<p>那么分区就有三个,权重总和为<code>10</code></p>
+<p>那么通过分区<code>[0,1)</code>,就将服务分发到<code>A</code>上</p>
+<p>通过分区<code>[1,4)</code>,将服务分发到B上</p>
+<p>通过分区<code>[4,10)</code>,将服务分发到C上</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token class-name">Invoker</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token function">doSelect</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Invoker</span><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span><span class="token punctuation">></span></span> invokers<span class="token punctuation">,</span> 
+				<span class="token class-name">URL</span> url<span class="token punctuation">,</span> <span class="token class-name">Invocation</span> invocation<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	
+	<span class="token comment">//服务提供者列表数量</span>
+	<span class="token keyword">int</span> length <span class="token operator">=</span> invokers<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token comment">//总权重</span>
+	<span class="token keyword">int</span> totalWeight <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+	<span class="token comment">//是否具有相同的权重</span>
+	<span class="token keyword">boolean</span> sameWeight <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span> 
+	
+	<span class="token comment">//循环服务列表，计算总权重和检测每个服务权重是否相同</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	
+		<span class="token comment">//获取单个服务的权重值</span>
+		<span class="token keyword">int</span> weight <span class="token operator">=</span> <span class="token function">getWeight</span><span class="token punctuation">(</span>invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span> invocation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">//累加 计算总权重</span>
+		totalWeight <span class="token operator">+=</span> weight<span class="token punctuation">;</span> 
+		<span class="token comment">//校验服务权重是否相同</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>sameWeight <span class="token operator">&amp;&amp;</span> i <span class="token operator">></span> <span class="token number">0</span>
+				<span class="token operator">&amp;&amp;</span> weight <span class="token operator">!=</span> <span class="token function">getWeight</span><span class="token punctuation">(</span>invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> invocation<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			sameWeight <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>totalWeight <span class="token operator">></span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span>sameWeight<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token comment">//获取[0-totalWeight]之间的随机数</span>
+		<span class="token keyword">int</span> offset <span class="token operator">=</span> random<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>totalWeight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">//计算随机数处于哪个区间，返回对应invoker</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			offset <span class="token operator">-=</span> <span class="token function">getWeight</span><span class="token punctuation">(</span>invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span> invocation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>offset <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				<span class="token keyword">return</span> invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">//如果权重相同，随机返回</span>
+	<span class="token keyword">return</span> invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>random<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>length<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>简述流程:</p>
+<p>获取服务提供者的数量,累加,计算权重和,检验服务权重是否相等</p>
+<p>如果服务权重都是相等,那么直接随机返回</p>
+<p>如果服务权重都是不相等的,获取0~10的随机数,然后判断随机数在哪个区间,根据区间来返回具体的调用者</p>
+<p><strong>最小活跃数算法</strong></p>
+<p>大体思路,通过统计各个调用者的调用次数,如果有一个实例的调用次数是最少的,那么优先选择这个实例</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token class-name">Invoker</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token function">doSelect</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Invoker</span><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span><span class="token punctuation">></span></span> invokers<span class="token punctuation">,</span> <span class="token class-name">URL</span> url<span class="token punctuation">,</span> <span class="token class-name">Invocation</span> invocation<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+
+	<span class="token comment">//服务提供者列表数量</span>
+	<span class="token keyword">int</span> length <span class="token operator">=</span> invokers<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token comment">//默认的最小活跃数值</span>
+	<span class="token keyword">int</span> leastActive <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token comment">//最小活跃数invoker的数量</span>
+	<span class="token keyword">int</span> leastCount <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+	
+	<span class="token comment">//最小活跃数invoker索引</span>
+	<span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> leastIndexs <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token comment">//总权重</span>
+	<span class="token keyword">int</span> totalWeight <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+	<span class="token comment">//第一个Invoker权重值 用于比较invoker直接的权重是否相同</span>
+	<span class="token keyword">int</span> firstWeight <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">boolean</span> sameWeight <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	<span class="token comment">//循环比对Invoker的活跃数大小</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token comment">//获取当前Invoker对象</span>
+		<span class="token class-name">Invoker</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> invoker <span class="token operator">=</span> invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">//获取活跃数大小</span>
+		<span class="token keyword">int</span> active <span class="token operator">=</span> <span class="token class-name">RpcStatus</span><span class="token punctuation">.</span><span class="token function">getStatus</span><span class="token punctuation">(</span>invoker<span class="token punctuation">.</span><span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> invocation<span class="token punctuation">.</span><span class="token function">getMethodName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getActive</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+		<span class="token comment">//获取权重值</span>
+		<span class="token keyword">int</span> weight <span class="token operator">=</span> invoker<span class="token punctuation">.</span><span class="token function">getUrl</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getMethodParameter</span><span class="token punctuation">(</span>invocation<span class="token punctuation">.</span><span class="token function">getMethodName</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"weight"</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+		
+		<span class="token comment">//对比发现更小的活跃数，重置(打擂算法)</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>leastActive <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span> <span class="token operator">||</span> active <span class="token operator">&lt;</span> leastActive<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token comment">//更新最小活跃数</span>
+			leastActive <span class="token operator">=</span> active<span class="token punctuation">;</span> 
+			<span class="token comment">//更新最小活跃数 数量为1</span>
+			leastCount <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+			<span class="token comment">//记录坐标</span>
+			leastIndexs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span> 
+			totalWeight <span class="token operator">=</span> weight<span class="token punctuation">;</span> 
+			firstWeight <span class="token operator">=</span> weight<span class="token punctuation">;</span> 
+			sameWeight <span class="token operator">=</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+			
+		<span class="token comment">//如果当前Invoker的活跃数 与 最小活跃数相等</span>
+		<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>active <span class="token operator">==</span> leastActive<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+			leastIndexs<span class="token punctuation">[</span>leastCount<span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> i<span class="token punctuation">;</span><span class="token comment">//调用次数是最小的</span>
+			totalWeight <span class="token operator">+=</span> weight<span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>sameWeight <span class="token operator">&amp;&amp;</span> i <span class="token operator">></span> <span class="token number">0</span>
+					<span class="token operator">&amp;&amp;</span> weight <span class="token operator">!=</span> firstWeight<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+				sameWeight <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+			<span class="token punctuation">&#125;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">//如果只有一个Invoker具有最小活跃数，直接返回即可 </span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>leastCount <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">return</span> invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>leastIndexs<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">//多个Invoker具体相同的最小活跃数，但权重不同，就走权重的逻辑</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>sameWeight <span class="token operator">&amp;&amp;</span> totalWeight <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">int</span> offsetWeight <span class="token operator">=</span> random<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>totalWeight<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> leastCount<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token keyword">int</span> leastIndex <span class="token operator">=</span> leastIndexs<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+			offsetWeight <span class="token operator">-=</span> <span class="token function">getWeight</span><span class="token punctuation">(</span>invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>leastIndex<span class="token punctuation">)</span><span class="token punctuation">,</span> invocation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>offsetWeight <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+				<span class="token keyword">return</span> invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>leastIndex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token comment">//从leastIndexs中随机获取一个返回</span>
+	<span class="token keyword">return</span> invokers<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>leastIndexs<span class="token punctuation">[</span>random<span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span>leastCount<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>简述流程:第一个通过比较,确定最小活跃数的<code>Invoker</code>,第二是根据权重来确定<code>Invoker</code></p>
+<p><strong>第一步:定义变量-最小活跃数大小等基础变量</strong></p>
+<p><strong>第二步:循环invokers数组,获取当前invoker的活跃数和权重</strong></p>
+<p><strong>第三步:打擂算法,比较出最小的活跃次数所对应的invoker</strong></p>
+<p><strong>第四步:比对完成,如果只有一个最小活跃数,那么直接返回这个invoker</strong></p>
+<p><strong>第五步:如果有多个invoker,那么就走权重的逻辑</strong></p>
+<p><strong>第六步:如果权重都相同,或者是活跃数都相同,那么就随机返回</strong></p>
+<blockquote>
+<p>问题:活跃数是在哪里改变的?</p>
+</blockquote>
+<p>它是通过<code>ActiveLimitFilter</code>这个类实现的</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token comment">//触发active自增操作</span>
+<span class="token class-name">RpcStatus</span><span class="token punctuation">.</span><span class="token function">beginCount</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> methodName<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Result</span> result <span class="token operator">=</span> invoker<span class="token punctuation">.</span><span class="token function">invoke</span><span class="token punctuation">(</span>invocation<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//触发active自减操作</span>
+<span class="token class-name">RpcStatus</span><span class="token punctuation">.</span><span class="token function">endCount</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> methodName<span class="token punctuation">,</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> begin<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">return</span> result<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><strong>一致性哈希算法</strong></p>
+<p>原理是这样的:</p>
+<p>首先先构造一个长度为<code>2^32</code>的整数环<code>(一致性哈希环)</code>,然后根据节点名称的<code>Hash值(分布在0-2^32-1)</code>将服务器节点放置在这个<code>Hash环上</code>,最后根据数据的<code>Key</code>值来计算得到它的<code>Hash值</code>,在<code>Hash环</code>上顺时针查找距离这个Key值最近的<code>Hash</code>值最近的服务节点,完成Key到服务器的映射查找</p>
+<p>一致性哈希算法也是使用取模的方式,但是取模算法是对服务器的数量进行取模,而一致性哈希算法则是对<code>2^32</code>进行取模,具体的步骤是这样的:</p>
+<ul>
+<li>一致性哈希算法将整个哈希值空间按照顺时针方向组织成一个虚拟的圆环,称为是<code>Hash环</code></li>
+<li>接着将各个服务器使用<code>Hash函数</code>进行哈希,具体可以选择服务器的IP或者是主机的关键字进行哈希,从而确定每台及其在哈希环上的位置</li>
+<li>最后使用定位数据访问到相应服务器,将数据key使用相同的函数Hash计算出哈希值,并且确定此数据在环上的位置,从此位置沿环顺时针寻找,第一台遇到的服务器就是这个算法定位到的服务器</li>
+</ul>
+<p>如果简单对服务器的数量进行取模,那么服务器数量发生变化的时候,就会发生缓存的雪崩,从而可能导致系统的崩溃,而使用一致性哈希可以很好的解决这个问题</p>
+<p>虽然一致性哈希算法对于节点的增减都只需要重定位环空间中的一小部分数据,只有部分缓存会失效,不至于将所有的压力都在同一个时间集中到后台服务器上,具有很好的容错性和可扩张性</p>
+<p><code>关于一致性Hash算法</code>,在<code>Dubbo</code>中引入了一个虚拟节点用来解决数据倾斜的问题</p>
+<p>一致性哈希算法在服务节点太少的情况下,容易因为节点分布不均匀而导致一个数据的倾斜的问题,也就是被缓存的对象大部分集中在某一台服务器上,从而出现数据分布不均匀的情况,这种情况就被称作是hash环的倾斜</p>
+<p><strong>hash环的倾斜在极端情况下,依然有可能引起系统的崩溃,为了解决这种数据倾斜的问题,一致性哈希算法引入了虚拟节点的机制,也就是对每一个服务节点计算多个哈希,每个计算结果位置都防止一个服务节点,称为是虚拟节点,一个物理节点可能对应了有多个虚拟节点,虚拟节点越多,hash环上的节点就越多,缓存被均匀分布的概率就越大,hash环倾斜所带来的影响就会越小,同时数据定位算法不变,只是多了一步虚拟节点到实际节点的映射,具体做法可以在服务器ip或者主机名后面添加编号来实现</strong></p>
+<p><strong>加权轮询算法</strong></p>
+<p>加权轮询简单来说就是通过动态改变各个机器在请求后的权重,从而实现动态调度的效果</p>
+<p>三个服务提供者的固定权重分别是10，20，50，假设其当前权重依次为0，0，0</p>
+<p>计算总权重 10+20+50 &#x3D; 80<br>当请求来了，更新三个服务提供者的当前权重，当前权重 &#x3D; 当前权重+固定权重，依次结果为10，20，50.<br>从中选择最大的一个，也就是第三个用于处理请求，同时将其当前权重更新：当前权重 &#x3D; 50 - 80 &#x3D; -30<br>所以此时三个服务提供者的当前权重依次为10，20，-30<br>当第二个请求来的时候，更新三个服务提供者的当前权重，当前权重 &#x3D; 当前权重+固定权重，依次结果为20，40，20<br>从重选择最大的一个，也就是第二个用于处理请求，同时将其当前权重更新：当前权重 &#x3D; 40 - 80 &#x3D; -40.<br>依次类推。</p>
+<h2 id="6-热插拔问题"><a href="#6-热插拔问题" class="headerlink" title="6. 热插拔问题"></a>6. 热插拔问题</h2>
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">穿山甲</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lumxi.github.io/2023/04/07/Dubbo/dubbo-3/">https://lumxi.github.io/2023/04/07/Dubbo/dubbo-3/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">穿山甲</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
+                                <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+                                    <span class="chip bg-color">分布式与中间件</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/04/08/Java-work/java-work-10/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="存储原理">
+                        
+                        <span class="card-title">存储原理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-04-08
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/java%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    java基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">后端开发基础</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/04/07/Spring/spring-(6)/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="从零开始学Spring-Spring知识点梳理">
+                        
+                        <span class="card-title">从零开始学Spring-Spring知识点梳理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Java%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    Java基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <a href="/about" target="_blank">穿山甲</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

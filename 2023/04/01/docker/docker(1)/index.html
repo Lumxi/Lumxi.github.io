@@ -429,10 +429,10 @@
 </ul>
 <h2 id="3-容器是如何实现标准化的"><a href="#3-容器是如何实现标准化的" class="headerlink" title="3. 容器是如何实现标准化的?"></a>3. 容器是如何实现标准化的?</h2><p>首先,<code>docker</code>它本身并不等价于<code>container</code>,这句话可以从两个角度来解读</p>
 <p><code>container</code>本身来说是一项技术标准,它规定以什么样的方式来构建软件,而<code>docker</code>只是实现了这一项技术标准</p>
-<p>而<code>docker</code>除了<code>container</code>这一项技术标准之外,还涉及到<code>镜像</code>、<code>仓库</code>等核心概念,这些概念丰富了容器构建</p>
+<p>而<code>docker</code>除了<code>container</code>这一项技术标准之外,还涉及到<code>镜像</code>、<code>仓库</code>等核心概念,这些概念丰富了容器构建技术标准   </p>
 <p>那么docker在实现这些标准化的时候,它实现了两个标准</p>
 <ul>
-<li>容器运行时标准化：规定了容器的基本操作规范,比如说如何创建容器,如何开始容器,如何启动容器</li>
+<li>容器运行时标准化:规定了容器的基本操作规范,比如说如何创建容器,如何开始容器,如何启动容器</li>
 <li>容器构建时标准化:主要规定了构建容器的镜像模板</li>
 </ul>
 <h2 id="4-Docker的架构是怎么样的"><a href="#4-Docker的架构是怎么样的" class="headerlink" title="4. Docker的架构是怎么样的?"></a>4. Docker的架构是怎么样的?</h2><p><code>Docker</code>的架构从整体上来说是一个<code>C/S</code>架构,Client通过发送诸如<code>docker build、docker pull、docker run</code>等指令,从<code>Client</code>来看,它就好像是<code>Docker_Host</code>接收了指令并且执行,但是实际上是<code>Docker daemon</code>后台线程在解析这些指令,然后根据这些指令的意图,调用底层重要的三个部分的内容,分别是:</p>
@@ -588,7 +588,7 @@ CMD["/hello"]<span aria-hidden="true" class="line-numbers-rows"><span></span><sp
 </blockquote>
 <p>比如说使用<code>ADD</code>等,因为需要获取文件夹中的资源,因此这个<code>.</code>它指代的是<code>build context</code>,它用来表达构建镜像的上下文环境,<code>docker-client</code>会将我们当前所指定的这个<code>build context</code>发送给<code>docker-server</code>,如果是<code>.</code>,它会将当前目录下的所有东西都给发送到<code>docker-server</code>中,这可能会导致构建速度过慢</p>
 <p>在这种情况下,可以使用</p>
-<pre class="line-numbers language-.dockerigore" data-language=".dockerigore"><code class="language-.dockerigore">.vscode
+<pre class="line-numbers language-.dockerignore" data-language=".dockerignore"><code class="language-.dockerignore">.vscode
 env&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>通过这个文件就可以排除掉当前目录下的不需要的文件了</p>

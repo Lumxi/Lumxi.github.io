@@ -4,8 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="后端工程师之路">
-    <meta name="description" content="">
+    <meta name="keywords" content="从零开始学Spring-Spring知识点梳理, 后端工程师之路">
+    <meta name="description" content="1. 什么是Spring框架Spring是一款开源的Java开发框架,旨在于提高开发人员的效率,它是很多模块的集合,使用这些模块可以很方便地协助进行开发,基于IoC(Inversion of Control)控制反转和APO(Aspect-">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>后端工程师之路</title>
+    <title>从零开始学Spring-Spring知识点梳理 | 后端工程师之路</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -334,12 +334,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title"></h1>
+                    <h1 class="description center-align post-title">从零开始学Spring-Spring知识点梳理</h1>
                 </div>
             </div>
         </div>
@@ -361,12 +361,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Java/">
+                                <span class="chip bg-color">Java</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Java%E5%9F%BA%E7%A1%80/" class="post-category">
+                                Java基础
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -375,7 +388,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-03-24
+                    2023-04-07
                 </div>
                 
 
@@ -399,7 +412,204 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                
+                <h2 id="1-什么是Spring框架"><a href="#1-什么是Spring框架" class="headerlink" title="1. 什么是Spring框架"></a>1. 什么是Spring框架</h2><p><code>Spring</code>是一款开源的Java开发框架,旨在于提高开发人员的效率,它是很多模块的集合,使用这些模块可以很方便地协助进行开发,基于<code>IoC(Inversion of Control)控制反转</code>和<code>APO(Aspect-Oriented Programming)面向切面编程</code>,可以很方便地对数据库进行访问,可以很方便地集成第三方组件,支持<code>RestfultJava</code>应用程序的开发</p>
+<p><code>Spring</code>通过其内置的<code>IoC</code>和<code>AOP</code>功能实现了这些功能集成的开箱即用的特性</p>
+<h2 id="2-Spring中包含了什么模块"><a href="#2-Spring中包含了什么模块" class="headerlink" title="2. Spring中包含了什么模块?"></a>2. Spring中包含了什么模块?</h2><ul>
+<li><p>两大核心模块:<code>AOP</code>+<code>IoC</code>,而<code>AOP</code>是依赖于<code>IoC</code>执行的。</p>
+<ul>
+<li>Spring-core:这是Spring框架最基础的部分,它提供了依赖注入<code>DI</code>特征来实现容器对Bean的管理,核心容器的主要组件就是<code>BeanFactory</code>,是任何<code>Spring</code>应用的核心,它将<code>IoC</code>将应用配置和依赖从实际的应用代码中分离出来了。</li>
+<li>Spring-Context:如果说BeanFactory使得Spring成为容器的话,那么上下文模块就是Spring成为框架的原因。因为它扩展了BeanFactory,增加了对国际化消息，事件传播、验证的支持。</li>
+<li>SpringAOP:Spring在它的AOP模块中提供了面向切面编程的丰富支持,SpringAOP模块为基于Spring的应用程序提供了事务管理服务,提供使用SpringAOP,不用依赖于组件，就可以将声明性事务集成到应用程序中。可以自定义拦截器、切点、日志等操作</li>
+<li>SpringDAO：提供了JDBC的抽象层和异常层次结构，消除了繁琐的JDBC编码和数据库厂商特有的错误代码解析，用于简化JDBC</li>
+<li>SpringORM:Spring提供了ORM模块,Spring并不试图实现自己的ORM方案，而是为ORM框架提供了集成方案</li>
+<li>SpringWebMVC:Spirng为构建web应用提供了一个功能完全的MVC框架,使用IoC对控制逻辑和业务对象提供了完全的分离</li>
+<li>SpringWebFlux模块:SpringFramework支持反映流<code>ReactiveStream</code>背压</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-Spring、SpringMVC、SpringBoot之间的关系"><a href="#3-Spring、SpringMVC、SpringBoot之间的关系" class="headerlink" title="3. Spring、SpringMVC、SpringBoot之间的关系"></a>3. Spring、SpringMVC、SpringBoot之间的关系</h2><p><code>Spring</code>:包含了多个功能模块,其中最重要的是Spring-core(主要提供了IoC依赖注入功能的支持),Spring中的其他模块(例如Spring MVC)的功能基本都需要依赖于这个模块</p>
+<p><strong>SpringMVC</strong>:是Spring中一个很重要的模块,主要赋予了Spring快速构建MVC应用程序的能力,MVC是<code>Model、View、Controller</code>的简写,其核心思想是通过将业务逻辑、数据、显示分离来组织代码</p>
+<p><strong>SpringBoot</strong>的出现简化了Spring的配置,如果需要构建MVC架构的Web程序,那么还是需要使用MVC作为框架,但是SpringBoot为我们简化了MVC中的很多配置</p>
+<h2 id="4-对SpringIoC的理解"><a href="#4-对SpringIoC的理解" class="headerlink" title="4. 对SpringIoC的理解"></a>4. 对SpringIoC的理解</h2><p><code>IoC(Inversion of Control)控制翻转</code>:它是一种控制思想,而不是一个具体的技术实现,IoC思想简单来说就是将程序中手动创建对象的控制权,交给Spring框架来管理</p>
+<p><strong>控制翻转</strong></p>
+<ul>
+<li><code>控制</code>:指的是对象创建(实例化、管理)的权力</li>
+<li><code>反转</code>:控制权交给外部环境(Spring框架、IoC容器)</li>
+</ul>
+<p>将对象之间的相互依赖关系交给<code>IoC</code>容器来管理,并且由<code>IoC</code>容器完成对象的注入,这样可以很大程度上简化应用的开发,把应用从复杂的依赖关系中解放出来,<code>IoC</code>容器就像一个工厂一样,当我们需要创建一个对象的时候,只需要配置好配置文件&#x2F;注解即可,完全不用考虑对象是如何被创建出来的</p>
+<p>在实际项目中一个<code>Service</code>类可能依赖了很多其他的类,假如我们需要实例化这个<code>Service</code>,可能需要每次都搞清楚这个<code>Service</code>所有底层类的构造函数,如果利用<code>IoC</code>的话,就只需要配置好,你的这个<code>Service</code>需要哪些实例作为依赖,然后在需要地方引用就可以了,增加了项目的可维护性而且降低了开发难度</p>
+<p><code>IoC</code>容器本质上就是一个<code>Map</code>,这个<code>Map</code>是以<code>&#123;name&#125; =&gt; &#123;bean&#125;</code>作为键值对格式的一个<code>Map</code>,<code>Spring</code>我们一般通过<code>XML</code>配置来配置<code>Bean</code>,后来<code>SpringBoot</code>就以一种简略的<code>注解配置</code>来替代了<code>XML配置</code></p>
+<h2 id="5-谈谈对SpringBean的理解"><a href="#5-谈谈对SpringBean的理解" class="headerlink" title="5. 谈谈对SpringBean的理解"></a>5. 谈谈对SpringBean的理解</h2><p>简单来说,<code>Bean</code>就是那些被<code>IoC</code>容器所管理的对象,我们需要告诉<code>IoC</code>容器要注册那些对象,这个是通过配置元数据来实现的,配置元数据可以是<code>XML</code>文件、<code>注解</code>或者<code>Java</code>配置类</p>
+<p><strong>如何将一个类声明为Bean</strong></p>
+<ul>
+<li><code>@Component</code>:通用的注解,可以标注任意可和Spring组件,如果一个Bean不知道属于哪个层,就可以使用<code>@Component</code>注解标注</li>
+<li><code>@Repository</code>:对应持久层也就是DAO层,主要用来执行对数据库的操作</li>
+<li><code>@Service</code>:对应服务层,主要涉及一些复杂的逻辑,需要使用到<code>DAO</code></li>
+<li><code>@Controller</code>:对应<code>SpringMVC</code>控制层,主要用来接收用户的请求并且调用<code>Service</code>层返回数据给前端页面</li>
+</ul>
+<p><strong>@Component和@Bean的区别是什么?</strong></p>
+<ul>
+<li><code>@Component</code>注解是用在类上的,而<code>@Bean</code>是用在方法上的</li>
+<li>SpringIoC容器管理一个或者多个<code>Bean</code>,这些<code>Bean</code>都需要在<code>@Configuration</code>注解下进行创建,在一个方法下使用<code>@Bean</code>注解就表明这个方法需要交给<code>Spring</code>进行管理</li>
+<li><code>@Bean</code>是一个方法级别上的注解,添加的<code>beanId</code>为方法名</li>
+<li><code>@Component</code>通常是通过类路径扫描来自动侦测以及自动装配到<code>Spring</code>容器中,可以使用<code>@ComponentScan</code>注解定义要扫描的路径,从中找出表示了需要装配的类,自动装配到<code>Spring</code>的容器中,<code>@Bean</code>注解通常是我们在标有该注解的方法中定义这个<code>bean</code>,<code>@Bean</code>告诉了Spring容器这是某个类的实例,当需要使用到的时候,就将这个<code>Bean</code>返回来</li>
+<li><code>@Bean</code>注解比<code>@Component</code>注解的自定义性更强,而且很多地方都只能够通过<code>@Bean</code>来实现Bean的注册</li>
+</ul>
+<h2 id="6-Autowired和-Resource的区别是什么"><a href="#6-Autowired和-Resource的区别是什么" class="headerlink" title="6. @Autowired和@Resource的区别是什么?"></a>6. @Autowired和@Resource的区别是什么?</h2><p><code>Autowired</code>属于是Spring的内置注解,默认的注入方式为<code>byType(根据类型进行注入)</code>,也就是说会优先根据接口类型去匹配并且注入<code>Bean(接口的实现类)</code></p>
+<p><code>byType</code>的最大问题在于,当接口存在多个实现类的话,<code>byType</code>这种方式就无法正确注入对象了,因为这时候Spring会同时找到多个满足条件的选择,默认情况下它不知道选择哪一个</p>
+<p>这种情况下,<code>Autowired</code>的注入方式会自动变成<code>byName</code>,这个名称通常就是类名<code>首字母小写</code></p>
+<p>比如说有这样的实现类</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">SmsServiceImpl1</span> <span class="token keyword">implements</span> <span class="token class-name">SmsService</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">class</span> <span class="token class-name">SsmServiceImpl2</span> <span class="token keyword">implements</span> <span class="token class-name">SmsService</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+<span class="token comment">//正确注入了对象</span>
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> <span class="token class-name">SmsService</span> smsServiceImpl1<span class="token punctuation">;</span>
+
+<span class="token comment">//没有正确注入对象</span>
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token keyword">private</span> <span class="token class-name">SmsService</span> smsService<span class="token punctuation">;</span>
+
+<span class="token comment">//可以使用@Qualified</span>
+<span class="token annotation punctuation">@Autowired</span>
+<span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"smsServiceImpl"</span><span class="token punctuation">)</span>
+<span class="token keyword">private</span> <span class="token class-name">SmsService</span> smsService<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>@Resource</code>是属于<code>JDK</code>提供的注解,默认的注入方式为<code>byName</code>,如果无法通过名称匹配到对应的<code>Bean</code>的话,注入方式会变成<code>byType</code></p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token annotation punctuation">@interface</span> <span class="token class-name">Resource</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">String</span> <span class="token function">name</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token string">""</span><span class="token punctuation">;</span>
+    <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> <span class="token function">type</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">default</span> <span class="token class-name">Object</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>使用方法</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token annotation punctuation">@Resource</span> 
+<span class="token keyword">private</span> <span class="token class-name">SmsService</span> smsService<span class="token punctuation">;</span><span class="token comment">//byName和byType都无法匹配到Bean</span>
+<span class="token annotation punctuation">@Resource</span>
+<span class="token keyword">private</span> <span class="token class-name">SmsService</span> smsServiceImpl1<span class="token punctuation">;</span><span class="token comment">//可以正确注入</span>
+<span class="token annotation punctuation">@Resource</span><span class="token punctuation">(</span>name <span class="token operator">=</span> <span class="token string">"smsServiceImpl1"</span><span class="token punctuation">)</span>
+<span class="token keyword">private</span> <span class="token class-name">SmsService</span> smsService<span class="token punctuation">;</span><span class="token comment">//可以正确注入</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>简单总结</p>
+<p><strong>@Autowired</strong>是Spring提供的注解,<code>@Resource</code>是JDK提供的注解</p>
+<p><strong>@Autowired</strong>默认的注入方式为<code>byType(根据类型进行匹配)</code>,当有多个候选的话,就会转换为<code>byName</code>,<code>@Resource</code>默认注入的方式为<code>byName(根据名字进行匹配)</code>,在<code>byName</code>不成功后,才会<code>byType</code></p>
+<p><strong>当一个接口存在多个实现类,@Autowired和@Resource都需要通过名称才能正确匹配到对应的Bean,@Autowired可以通过@Qualified注解来显式指定名称,@Resource可以通过name来显式指定名称</strong></p>
+<h2 id="7-Bean的作用域有哪些"><a href="#7-Bean的作用域有哪些" class="headerlink" title="7. Bean的作用域有哪些?"></a>7. Bean的作用域有哪些?</h2><p><strong>singleton</strong>:IoC容器中只有唯一的<code>bean</code>实例,Spring中的bean默认都是单例的,是对单例设计模式的使用</p>
+<p><strong>prototype</strong>:每次获取都会创建一个新的<code>bean</code>实例,也就是说,连续<code>getBean()</code>两次,得到的<code>bean</code>实例是不一致的</p>
+<p><strong>request(Web服务)</strong>:每一次的HTTP请求都会产生一个新的<code>bean(请求bean)</code>,这个<code>bean仅在当前HTTP request</code>内有效</p>
+<p><strong>session(Web服务)</strong>:每一次来自新<code>Session</code>的<code>Http</code>请求都会产生一个新的<code>bean(会话bean)</code>,该bean仅在当前<code>HTTP session</code>内有效</p>
+<p><strong>application&#x2F;global-session(Web服务)</strong>:每一个Web应用在启动的时候创建一个<code>bean(应用该Bean)</code>,该<code>Bean</code>仅在当前应用启动时间内有效</p>
+<p><strong>websocket</strong>:每一次<code>webSocket</code>会话都会产生一个新的<code>bean</code></p>
+<h2 id="8-单例Bean存在线程安全问题吗"><a href="#8-单例Bean存在线程安全问题吗" class="headerlink" title="8. 单例Bean存在线程安全问题吗?"></a>8. 单例Bean存在线程安全问题吗?</h2><p>大部分时候我们并没有在项目中使用多线程,因此很少会有人关注这个问题,单例Bean存在线程安全问题,主要是因为多个线程操作同一个对象的时候是存在资源的竞争的</p>
+<p><strong>常见的有两种解决办法</strong>:</p>
+<ul>
+<li>在Bean中尽量避免定义可变的成员变量</li>
+<li>在类中定义一个<code>ThreadLocal</code>成员变量,将需要的可变成员变量保存在<code>ThreadLocal</code>中</li>
+</ul>
+<p>不过大部分的Bean都是无状态的,也就是说没有实例变量,在这种情况下Bean是线程安全的</p>
+<h2 id="9-Bean的生命周期说一下"><a href="#9-Bean的生命周期说一下" class="headerlink" title="9. Bean的生命周期说一下"></a>9. Bean的生命周期说一下</h2><p>首先<code>Bean</code>它首先是一个普通的<code>Java对象</code>,那么<code>Java</code>对象的初始化大致可以划分为:</p>
+<p><strong>类加载检查(如果类被加载过了,那么就不需要加载了,否则就会进入类的初始化流程)&#x3D;&gt;根据对象所属于的类,为这个对象分配内存空间,通常来说有<code>指针碰撞法和空闲链表法</code>,在对象内存分配完毕后,先会设置对象头,比如说设置它的hashcode()等&#x3D;&gt;然后将对象的内存空间对应的变量设置为0值&#x3D;&gt;然后执行<init>方法&#x3D;&gt;对象投入使用&#x3D;&gt;被GC</strong>,因此大致就是<code>实例化=&gt;该对象不再使用的时候被GC</code></p>
+<p>而对于SpringBean来说,就是</p>
+<p><code>实例化=&gt;属性赋值=&gt;初始化=&gt;销毁</code></p>
+<p>可以这样进行描述,首先对<code>bean</code>进行初始化,需要设定一个<code>init-method()</code>,然后在配置文件中显式的配置它,接着对于<code>bean</code>的优雅删除策略,需要设定一个<code>destory-method()</code></p>
+<p>那么在Bean的初始化过程中,它首先设置了两个切入点,一个切入点是<code>Bean后</code>处理器<code>before()</code>方法,这个方法设定在<code>init()</code>之前实现,然后在<code>init()</code>之后,还设定了<code>Bean后处理器的after()</code>方法</p>
+<p>然后在执行<code>init()</code>方法之前还会执行<code>initalizing方法</code></p>
+<p>同时,对于这个<code>Bean</code>的一些基础属性,比如说设定<code>Bean</code>的名称,它是在<code>Bean后处理器before()</code>之前执行的,通过一些专属接口比如说<code>BeanNameAware</code>、<code>BeanClassLoaderAware</code>等这些接口来实现</p>
+<p>在初始化完毕后,就会投入使用,当<code>Bean</code>下线的时候,会有两个动作,第一个动作是先检查<code>是否实现DisposableBean接口</code>,然后执行<code>destory()</code>,当要销毁<code>Bean</code>的时候,如果<code>Bean</code>在配置文件中定义包含有<code>destory-method</code>属性的时候,就会执行指定的方法</p>
+<h2 id="10-谈谈对SpringAOP的理解"><a href="#10-谈谈对SpringAOP的理解" class="headerlink" title="10. 谈谈对SpringAOP的理解"></a>10. 谈谈对SpringAOP的理解</h2><p><code>AOP</code>的作用主要是将我们在业务开发中的那些横向交叉业务进行分离,什么叫横向交叉业务?</p>
+<p>就是那些与实际的业务无关,但是却必须在业务模块编写相关的业务代码,比如说日志,在执行之前都要执行日志的记录,比如说事务的开启,在执行数据库操作之前选择是否开启事务,在业务结束之后提交事务,权限控制,在某段特定的业务代码执行之前要判断这个代码的执行者是否有权限。</p>
+<p>这样的话可以减少系统的重复代码,降低模块间的耦合度,并且有利于未来的扩张和维护</p>
+<p><code>Spring AOP</code>是基于动态代理实现的,如果要带代理的对象实现了某个接口,那么<code>Spring AOP</code>就会使用<code>JDK Proxy</code>,去创建一个代理对象,而对于没有实现接口的对象,就无法使用<code>JDK Proxy</code>去代理了,此时<code>Spring AOP</code>就会使用<code>CG  lib</code>去生成一个被代理对象的子类来作为代理</p>
+<ul>
+<li><p><strong>连接点 Joinpoint</strong></p>
+</li>
+<li><ul>
+<li>在程序的整个执行流程中，<strong>可以织入</strong>切面的位置。方法的执行前后，异常抛出之后等位置。</li>
+</ul>
+</li>
+<li><p><strong>切点 Pointcut</strong></p>
+</li>
+<li><ul>
+<li>在程序执行流程中，<strong>真正织入</strong>切面的方法。（一个切点对应多个连接点）</li>
+</ul>
+</li>
+<li><p><strong>通知 Advice</strong></p>
+</li>
+<li><ul>
+<li>通知又叫增强，就是具体你要织入的代码。</li>
+<li>通知包括：</li>
+</ul>
+</li>
+<li><ul>
+<li><ul>
+<li>前置通知</li>
+<li>后置通知</li>
+<li>环绕通知</li>
+<li>异常通知</li>
+<li>最终通知</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>切面 Aspect</strong></p>
+</li>
+<li><ul>
+<li><strong>切点 + 通知就是切面。</strong></li>
+</ul>
+</li>
+<li><p>织入 Weaving</p>
+</li>
+<li><ul>
+<li>把通知应用到目标对象上的过程。</li>
+</ul>
+</li>
+<li><p>代理对象 Proxy</p>
+</li>
+<li><ul>
+<li>一个目标对象被织入通知后产生的新对象。</li>
+</ul>
+</li>
+</ul>
+<p>目标对象 Target</p>
+<h2 id="11-SpringAOP和AspectJ-AOP有什么区别"><a href="#11-SpringAOP和AspectJ-AOP有什么区别" class="headerlink" title="11. SpringAOP和AspectJ AOP有什么区别"></a>11. SpringAOP和AspectJ AOP有什么区别</h2><p>SpringAOP属于是运行时增强,AspectJ是编译时增强,SpringAOP基于代理实现的,而AspectJ是基于字节码操作实现的,SpringAOP已经集成了AspectJ,如果切面太多了最好使用AspectJ,它比SpringAOP要快很多</p>
+<p><strong>AspectJ定义的通知类型有哪些?</strong></p>
+<ul>
+<li>Before(前置通知)</li>
+<li>After(后置通知)</li>
+<li>AfterReturning(返回通知):目标对象的方法调用完成,返回结果值之后触发</li>
+<li>AfterThrowing(异常通知):目标方法的对象在运行中抛出&#x2F;触发异常后触发</li>
+<li>Around(环绕通知)</li>
+</ul>
+<p><strong>切面的执行顺序如何控制</strong></p>
+<ul>
+<li><strong>@Order</strong></li>
+<li><strong>实现Ordered</strong></li>
+</ul>
+<h2 id="12-谈谈你对SpringMVC的理解"><a href="#12-谈谈你对SpringMVC的理解" class="headerlink" title="12. 谈谈你对SpringMVC的理解"></a>12. 谈谈你对SpringMVC的理解</h2><p>可以这样说,SpringMVC是Spring全家桶中对<code>MVC</code>架构实现得最淋漓尽致的一个框架</p>
+<p>要谈到<code>SpringMVC</code>,那么就必须要先了解<code>什么是MVC</code>,<code>MVC</code>机制是这样的:</p>
+<ul>
+<li><strong>Model</strong>:是数据层,在开发中就是处理数据&#x2F;或者数据本身的组件,比如说DAO&#x2F;Service等</li>
+<li><strong>View</strong>:负责将产生的数据回显给用户,通过页面或者其他形式渲染数据,不负责数据的产生</li>
+<li><strong>Controller</strong>:它是MVC架构的核心,实际上它并不参与实际数据的操作,而是说起到一个中转站的作用,它负责解析用户的请求,选定要用什么样的逻辑来处理这些请求参数,然后交给<code>Model</code>层来处理数据,等到<code>Model</code>层返回数据后,将这些做好的数据返回给<code>view</code>,然后view渲染数据即可</li>
+</ul>
+<p>一般来说,MVC架构在开发体现为三层架构</p>
+<p>第一层:<code>View层</code>,也就是前面的页面</p>
+<p>第二层:<code>Service层</code>,负责具体的业务的处理,不涉及到底层数据的操作</p>
+<p>第三层:<code>DAO层</code>,负责具体的数据的处理,它负责与DB操作</p>
+<p>第四层:DB,负责具体的数据的持久化工作</p>
+<h2 id="13-SpringMVC的核心组件有哪些"><a href="#13-SpringMVC的核心组件有哪些" class="headerlink" title="13. SpringMVC的核心组件有哪些?"></a>13. SpringMVC的核心组件有哪些?</h2><p>它的核心组件其实也是围绕着<code>Servlet</code>来进行布局的,首先是Controller</p>
+<p><strong>DispatcherServlet</strong>:核心的中央处理器,它的作用是将来自用户的请求进行分发,并且将解析完成的数据完成分发</p>
+<p><strong>HandlerMapping</strong>:在一个Web服务中,通常会有很多的URI,那么如何来确定这些<code>URI</code>所对应的具体处理逻辑?此时就需要一个容器,通过这个容器就能够找到对应的处理器,然后基于这个处理器来执行相关的操作</p>
+<p><strong>HandlerAdapter</strong>:它是适配器,简单来说就是基于<code>Handler</code>和<code>HandlerMapping</code>之间的桥梁,通常的逻辑就是<code>中央控制器</code>通过查询<code>HandlerMapping</code>查询到了具体的<code>Handler</code>,然后将参数等信息交给<code>HandlerAdapter</code>,由这个组件完成参数的相关封装,然后将参数传给<code>Handler</code>使用</p>
+<p><strong>Handler</strong>:真正业务逻辑的处理者,负责接收来自<code>Adapter</code>的请求,并且将数据返回回去</p>
+<p><strong>ViewResolver</strong>:视图解析器,根据<code>Handler</code>返回的逻辑视图&#x2F;视图,解析并渲染真正的视图,并且渲染真正的视图,并且传递给<code>DispatcherServlet</code></p>
+<h2 id="14-SpringMVC的执行流程是怎么样的"><a href="#14-SpringMVC的执行流程是怎么样的" class="headerlink" title="14. SpringMVC的执行流程是怎么样的?"></a>14. SpringMVC的执行流程是怎么样的?</h2><p>首先是客户端发送一个<code>HTTP</code>请求,然后<code>Dispatcher</code>就拦截到了这个请求,然后<code>Dispatcher</code>拿着这个请求所对应的URL,去查找内部的<code>HandlerMapping</code>,然后就会找到这个<code>URL</code>所对应的<code>Handler以及一系列的拦截器</code></p>
+<p>接着<code>Dispatcher</code>就会将这个请求的相关参数给到<code>HandlerAdapter</code>,这个适配器会将相关的参数进行封装,将封装好的参数传递给具体的<code>Handler</code>,<code>Handler</code>完成这些操作之后,会产生一个<code>ModelAndView</code>,这个包含了具体的数据模型和逻辑视图,逻辑视图并不是用户看到的真正的视图,而是这个视图的一部分,因此<code>Dispatcher</code>就还要将这个<code>ModelAndView</code>基于<code>ViewResolve</code>解析成真正的视图,接着还要完成<code>Model</code>的渲染,也就是具体的数据体现,它会将数据传给<code>View</code>,由<code>View</code>将数据渲染上去,最终将View返回给用户</p>
+<p><strong>为什么SpringMVC要这样设计?</strong></p>
+<p>这是因为一个<code>Web</code>服务非常复杂,比如说,基于HTTP协议传输的话,那么在<code>HTTP/1.0</code>的时候,里面的数据都是文本类型的,那么如果只有简单的三层结构,比如说<code>Controller</code>负责将请求丢给<code>Service</code>完事,那么<code>Service</code>就要负责将一个String解析成对象,还要将计算出来的结果转换为String,然而,这些和业务完全没有关系,那么能否提供一个中间层,它可以在Service都没有察觉的情况下,就将前台的参数转换为Service想要的参数,然后将Serivce计算结果转换成想要的结果呢?</p>
+<p>这就是引入<code>HandlerAdapter</code>以及各种解析器原因了</p>
+<h2 id="15-统一异常处理要怎么做"><a href="#15-统一异常处理要怎么做" class="headerlink" title="15. 统一异常处理要怎么做?"></a>15. 统一异常处理要怎么做?</h2><p>统一的异常处理通常是通过<code>AOP+提前注册的Handler</code>实现的</p>
+<p><code>AOP</code>是基于捕获到异常的通知实现的,当捕捉到异常后,就会执行相关的<code>Handler</code>方法</p>
+
                 
             </div>
             <hr/>
@@ -425,7 +635,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lumxi.github.io/2023/03/24/Java-work/java-work-9/">https://lumxi.github.io/2023/03/24/Java-work/java-work-9/</a>
+                    <a href="https://lumxi.github.io/2023/04/07/Spring/spring-(6)/">https://lumxi.github.io/2023/04/07/Spring/spring-(6)/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -462,7 +672,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/Java/">
+                                    <span class="chip bg-color">Java</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -543,13 +757,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/03/27/view/3.27%E7%BE%8E%E5%9B%A2%E6%80%BB%E7%BB%93/">
+                <a href="/2023/04/07/Dubbo/dubbo-3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="美团平台一面凉经">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="深入理解Dubbo-分布式系统原理与实现">
                         
-                        <span class="card-title">美团平台一面凉经</span>
+                        <span class="card-title">深入理解Dubbo-分布式系统原理与实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -560,63 +774,14 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-27
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-04-07
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                    面经
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%A0%A1%E6%8B%9B/">
-                        <span class="chip bg-color">校招</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2023/03/19/Redis/Redis-6/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="深入学习Redis-集群与淘汰策略">
-                        
-                        <span class="card-title">深入学习Redis-集群与淘汰策略</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-19
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-category">
-                                    分布式与中间件
+                            <a href="/categories/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    后端开发基础
                                 </a>
                             
                             
@@ -630,8 +795,57 @@
                         <span class="chip bg-color">Java</span>
                     </a>
                     
-                    <a href="/tags/Redis/">
-                        <span class="chip bg-color">Redis</span>
+                    <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/">
+                        <span class="chip bg-color">分布式与中间件</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/04/04/Java-work/java-work-9/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="JVM原理">
+                        
+                        <span class="card-title">JVM原理</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/java%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    java基础
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">后端开发基础</span>
                     </a>
                     
                 </div>
