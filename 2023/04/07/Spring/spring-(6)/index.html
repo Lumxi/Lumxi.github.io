@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="从零开始学Spring-Spring知识点梳理, 后端工程师之路">
-    <meta name="description" content="1. 什么是Spring框架Spring是一款开源的Java开发框架,旨在于提高开发人员的效率,它是很多模块的集合,使用这些模块可以很方便地协助进行开发,基于IoC(Inversion of Control)控制反转和APO(Aspect-">
+    <meta name="description" content="1. 什么是Spring框架Spring是一款开源的Java开发框架,旨在于提高开发人员的效率,它是很多模块的集合,使用这些模块可以很方便地协助进行开发,基于IoC(Inversion of Control)控制反转和AOP(Aspect-">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -412,7 +412,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-什么是Spring框架"><a href="#1-什么是Spring框架" class="headerlink" title="1. 什么是Spring框架"></a>1. 什么是Spring框架</h2><p><code>Spring</code>是一款开源的Java开发框架,旨在于提高开发人员的效率,它是很多模块的集合,使用这些模块可以很方便地协助进行开发,基于<code>IoC(Inversion of Control)控制反转</code>和<code>APO(Aspect-Oriented Programming)面向切面编程</code>,可以很方便地对数据库进行访问,可以很方便地集成第三方组件,支持<code>RestfultJava</code>应用程序的开发</p>
+                <h2 id="1-什么是Spring框架"><a href="#1-什么是Spring框架" class="headerlink" title="1. 什么是Spring框架"></a>1. 什么是Spring框架</h2><p><code>Spring</code>是一款开源的Java开发框架,旨在于提高开发人员的效率,它是很多模块的集合,使用这些模块可以很方便地协助进行开发,基于<code>IoC(Inversion of Control)控制反转</code>和<code>AOP(Aspect-Oriented Programming)面向切面编程</code>,可以很方便地对数据库进行访问,可以很方便地集成第三方组件,支持<code>RestfultJava</code>应用程序的开发</p>
 <p><code>Spring</code>通过其内置的<code>IoC</code>和<code>AOP</code>功能实现了这些功能集成的开箱即用的特性</p>
 <h2 id="2-Spring中包含了什么模块"><a href="#2-Spring中包含了什么模块" class="headerlink" title="2. Spring中包含了什么模块?"></a>2. Spring中包含了什么模块?</h2><ul>
 <li><p>两大核心模块:<code>AOP</code>+<code>IoC</code>,而<code>AOP</code>是依赖于<code>IoC</code>执行的。</p>
@@ -442,7 +442,7 @@
 <h2 id="5-谈谈对SpringBean的理解"><a href="#5-谈谈对SpringBean的理解" class="headerlink" title="5. 谈谈对SpringBean的理解"></a>5. 谈谈对SpringBean的理解</h2><p>简单来说,<code>Bean</code>就是那些被<code>IoC</code>容器所管理的对象,我们需要告诉<code>IoC</code>容器要注册那些对象,这个是通过配置元数据来实现的,配置元数据可以是<code>XML</code>文件、<code>注解</code>或者<code>Java</code>配置类</p>
 <p><strong>如何将一个类声明为Bean</strong></p>
 <ul>
-<li><code>@Component</code>:通用的注解,可以标注任意可和Spring组件,如果一个Bean不知道属于哪个层,就可以使用<code>@Component</code>注解标注</li>
+<li><code>@Component</code>:通用的注解,可以标注任意一个 Spring组件,如果一个Bean不知道属于哪个层,就可以使用<code>@Component</code>注解标注</li>
 <li><code>@Repository</code>:对应持久层也就是DAO层,主要用来执行对数据库的操作</li>
 <li><code>@Service</code>:对应服务层,主要涉及一些复杂的逻辑,需要使用到<code>DAO</code></li>
 <li><code>@Controller</code>:对应<code>SpringMVC</code>控制层,主要用来接收用户的请求并且调用<code>Service</code>层返回数据给前端页面</li>
@@ -472,7 +472,7 @@
 
 <span class="token comment">//可以使用@Qualified</span>
 <span class="token annotation punctuation">@Autowired</span>
-<span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"smsServiceImpl"</span><span class="token punctuation">)</span>
+<span class="token annotation punctuation">@Qualifier</span><span class="token punctuation">(</span>value <span class="token operator">=</span> <span class="token string">"smsServiceImpl1"</span><span class="token punctuation">)</span>
 <span class="token keyword">private</span> <span class="token class-name">SmsService</span> smsService<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>@Resource</code>是属于<code>JDK</code>提供的注解,默认的注入方式为<code>byName</code>,如果无法通过名称匹配到对应的<code>Bean</code>的话,注入方式会变成<code>byType</code></p>

@@ -647,7 +647,7 @@ mydocker0               <span class="token number">8000.000000000000</span>     
 <li><code>Mount Namespace</code>:隔离不同的进程或者进程组看到的挂载点,实现容器内只能看到自己的挂载信息,在容器内的挂载操作不会影响主机的挂载目录,简单来说,就是在不同的<code>进程</code>中可以看到不同的挂载目录</li>
 </ul>
 <p><strong>什么叫做挂载?</strong></p>
-<p><code>挂载</code>就是说将设备文件中的<code>顶级目录</code>连接到<code>Linux</code>根目录下的某一个目录<code>(最好是空的目录)</code>,访问这个目录就相当于访问设备文件,就好像是<code>windows</code>中的快捷访问方式,本质应该是符号连接</p>
+<p><code>挂载</code>就是说将设备文件中的<code>顶级目录</code>连接到<code>Linux</code>根目录下的某一个目录<code>(最好是空的目录)</code>,访问这个目录就相当于访问设备文件,就好像是<code>windows</code>中的快捷访问方式,本质应该是软连接</p>
 <p>比如说,当你插入一个U盘的时候,这时候由于Linux系统和U盘分属于两个文件系统,因此通过<code>Linux</code>系统无法直接访问到<code>U盘</code>中的系统目录,因此在这种情况下<strong>Linux系统使用任何硬件设备,都必须建立一个连接,使得访问Linux下的文件就好像在访问U盘上的文件一样</strong></p>
 <ul>
 <li><code>unshare</code>:是<code>util-linux</code>工具包中的一个工具,可以实现创建并且访问不同类型的<code>Namespace</code></li>
@@ -706,7 +706,7 @@ mydocker0               <span class="token number">8000.000000000000</span>     
 <p><code>CGroup</code>的工作目录<code>/sys/fs/cgroup</code>下包含了<code>Cgroups</code>的所有内容</p>
 <p>当我们创建一个容器的时候,就会得到一个容器的ID,这个ID作为<code>Docker area</code>的存储凭证,它会将容器相关信息存储在工作目录<code>/sys/fs/cgroup/memory/docker/ID</code>下,其中文件<code>memory.limit_in_bytes</code>就存储了<code>memory</code>中的相关信息,<code>/sys/fs/cgroup/memory/docker/ID</code></p>
 <p>通过这个例子就可以知道,它是通过读取<code>cgroup</code>下的文件信息来获取的</p>
-<p>如何查看网络的数据?就可以读取到相关的信息</p>
+<p>如何查看网络的数据? </p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">cat</span> /proc/PID/net/dev<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>容器的监控原理其实就是定时读取<code>Linux</code>主机上的相关的文件并且展示给用户</p>
@@ -836,7 +836,7 @@ nginx<span aria-hidden="true" class="line-numbers-rows"><span></span><span></spa
 <ul>
 <li>第二步:启动容器,并且挂载</li>
 </ul>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span><span class="token operator">=</span>log-producer <span class="token parameter variable">--miunt</span>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> run <span class="token parameter variable">-d</span> <span class="token parameter variable">--name</span><span class="token operator">=</span>log-producer <span class="token parameter variable">--mount</span>
 <span class="token builtin class-name">source</span> <span class="token operator">=</span> log-vol,
 <span class="token assign-left variable">target</span><span class="token operator">=</span>/tmp/log
 busybox<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>

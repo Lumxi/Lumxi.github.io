@@ -1,0 +1,1271 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="虚拟实验云平台阶段性阶段, 后端工程师之路">
+    <meta name="description" content="虚拟实验云平台目前已经完成了绝大多数的技术点
+现在从项目最开始的设计和开发过程中遇到的各种技术点进行总计
+1. 项目介绍与项目需求梳理首先虚拟实验云平台的主要功能是提供一个统一的终端,然后在这个终端上,对在其他节点上部署的docker容器进">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>虚拟实验云平台阶段性阶段 | 后端工程师之路</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">后端工程师之路</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">后端工程师之路</div>
+        <div class="logo-desc">
+            
+            华南农业大学软件工程学生博客
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">虚拟实验云平台阶段性阶段</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%80%BB%E7%BB%93/">
+                                <span class="chip bg-color">总结</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" class="post-category">
+                                项目开发
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-04-15
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>虚拟实验云平台目前已经完成了绝大多数的技术点</p>
+<p>现在从项目最开始的<code>设计</code>和<code>开发过程中</code>遇到的各种技术点进行总计</p>
+<h2 id="1-项目介绍与项目需求梳理"><a href="#1-项目介绍与项目需求梳理" class="headerlink" title="1. 项目介绍与项目需求梳理"></a>1. 项目介绍与项目需求梳理</h2><p>首先虚拟实验云平台的主要功能是提供一个<strong>统一的终端</strong>,然后在这个终端上,对在其他节点上部署的docker容器进行操作。比如说连接到容器中,然后在容器中执行一些计算任务,这样做的好处是:可以将多个节点上的计算资源进行同一调度,从而充分利用各个计算节点上的资源,这是愿景。</p>
+<p>那么项目的总体架构是这样的:</p>
+<p>首先在一台主服务器上部署一个主程序,这个主程序的功能是负责接收前端的请求,然后将响应返回到前端,前端的请求类型可以分为两种:</p>
+<p><strong>普通业务类型</strong>,它指的是只需要调度本机上的资源就可以完成的,比如说有<code>添加学生到班级中</code>、<code>添加新班级</code>、<code>添加用户</code>这些功能只需要连接到MySQL就能够完成了</p>
+<p><strong>远程资源调度业务类型</strong>,它指的是需要调度别的节点上的资源才能完成的,这就涉及到一个计算节点的概念,所谓计算节点,就是指在上面部署一些计算任务,然后通过网络传输的方式,将这些计算任务的结果汇总返回的任务节点,中控节点的作用就是通过远程命令的方式,给计算节点发送执行任务的命令,但是具体的难点是<strong>如何来分发请求?<strong>、</strong>怎么管理连接?<strong>、</strong>如何来监控这些节点的监控状态?<strong>、</strong>如果有节点故障了怎么办?<strong>、</strong>Docker如何管理?</strong></p>
+<p>这些任务有的处理起来会相当复杂,因此最好的可以是使用一个外部的框架,比如说<code>k8s</code>等来实现容器的调度,但是目前因为还没有到达能力,因此在后续需要用k8s进行改造,这里先说一下目前的一些实现。</p>
+<h2 id="2-数据库的设计"><a href="#2-数据库的设计" class="headerlink" title="2. 数据库的设计"></a>2. 数据库的设计</h2><p>首先要明确,这个项目中,<code>MySQL</code>中的数据主要是用来存储一些归档数据的,比如说是用户表、学生分组表<code>(也就是班级表和学生表的一个关系表)</code>、分组表<code>(也就是班级表)</code>、使用时长表<code>(用来统计用户使用容器的时长)</code>、使用明细表<code>(统计用户使用某个容器所需要的时长)</code></p>
+<p><strong>镜像表:这个表主要是用来做一个归档的,这个镜像表中规定了从这个镜像创建出来一个容器具体需要哪些信息,比如说,这个镜像的仓库地址,创建容器的时候就可以通过这个URL来创建容器了,比如说command,表示启动时的指令,这个主要是用来给审核人员审核的,因为镜像是规定好的才能用的,这个平台主要是centos7或者乌班图为主的容器,还有规定镜像是什么类型的,比如说是CPU&#x2F;GPU类型</strong></p>
+<p><strong>节点表:表示计算节点的IP、连接端口、一些基本的硬件信息等,那么问题是:连接节点的密钥如何来管理呢?这个是存储在NoSQL Redis中的,至于为什么不存放在MySQL中,在后面在说</strong></p>
+<p><strong>容器表:主要是用来给用户显示使用,当删除容器的时候,也会同步将他在容器表中删除</strong></p>
+<p>设计数据库,首先就是要根据给的用例图,根据这个用例图来确定到底需要哪些数据,比如说容器表吧,容器要求要实现一个新增,删除,查询,那么最直白的想法就是在MySQL中设计一个字段<code>容器ID</code>、<code>容器映射的端口</code>、<code>容器所在节点的ID</code>等等信息,这样本质上也是可以的,但是在这个系统中,我们将一些比较多变的数据,比如说像容器这样的数据,基本上是经常新增,经常删除的,对于这样动态的数据,我们将其放在<code>Redis</code>这样的<code>NoSQL</code>中,对于那些不经常变化的数据,比如说<code>镜像</code>等,这种数据一般不会经常修改,因此就将这种数据放在<code>MySQL</code>中,这样做的意义是做一个归档</p>
+<blockquote>
+<p>问题来了,这样做有什么好处呢?</p>
+</blockquote>
+<p><strong>数据的管理更加有条理了</strong>,这是因为每个计算节点上都要配备一个守护容器,这个守护容器负责定期上报机器的负责,以及动态监控容器的使用状态,容器这种数据如果完全存储在MySQL中,假设这样一种场景,有一个用户开了一个100M内存限制的容器,但是违规使用导致容器挂掉了,那么在这种情况下,MySQL能够检测出来吗?方案是通过一个轮询的机制,就是定期比对数据库中的容器的数据和机器上存活的容器的数据的情况,这样也能完成功能,<strong>但将导致MySQL的存储压力是巨大的,因为后续还有相当多的操作都需要存储,如果仅用MySQL的话就会造成压力过大的问题</strong></p>
+<p><strong>缓冲压力</strong>:如果是采用<code>Redis</code>等具有过期功能的数据库,就可以将容器数据存储在Redis中,这样的话即使容器挂掉,这样也有一个兜底的方案,就是容器挂掉了之后,数据在一定时间内会被删除,同时由于因为有监控容器的需求,因此也是要频繁对容器相关的数据进行读写修改的,一台4核8GB的机器可以运行快200个容器,然后在后期需要每隔10s或者更短的时间内上报一次监控数据,那么对数据库的读写量就会非常大了,基本的流程是这样的:</p>
+<p>在几千上万条的容器数据中执行一个查询SQL,然后更新其中一条数据,然后中控节点从SQL中读取这几千上万条数据,由于是实时监控,因此对数据库的访问量非常恐怖!</p>
+<p>如果是用redis的话,那么在运行的时候,只需要用<code>node+ip</code>查询出来一个Hash,然后覆盖原来的数据,读写的速度是比较快的,这样的性能,就相当于在MySQL中做分表,分表又会加重系统的复杂度,而引入了Redis,在开发中也简便了,降低了系统的复杂度,同时在MySQL宕机的情况下,节点之间基于Redis也能够实现自治,提高了可用性</p>
+<p>总而言之,由于系统比较复杂,因此核心设计思路是将MySQL作为普通业务和归档数据的数据库,而那些动态的数据,就放在NoSQL中,提升了性能和可用性</p>
+<blockquote>
+<p>为什么不使用<code>ETCD</code></p>
+</blockquote>
+<p>理论上来说,ETCD是这个项目中的中间数据库的非常好的候选者,因为它可以实现基本的<code>&#123;key=&gt;value&#125;</code>存储,就可以监听机制,<code>key</code>的过期以及续约机制,用于监控和服务发现,总而言之,Redis能干的,ETCD也能干</p>
+<h2 id="3-项目的架构说明"><a href="#3-项目的架构说明" class="headerlink" title="3. 项目的架构说明"></a>3. 项目的架构说明</h2><p><strong>中控节点</strong>:负责接收前台请求,处理正常的普通业务请求,作为消费端,消费计算节点上的服务,负载均衡也是在消费端上做的,通过消费者选择性能最佳的计算节点,进行业务的处理</p>
+<p><strong>计算节点</strong>:负责接收中控节点的请求,定期上报机器负载,机器中的容器负载,统计容器使用情况</p>
+<p><strong>数据库MySQL</strong>:归档数据处理</p>
+<p><strong>动态数据处理Redis</strong></p>
+<p><strong>核心组件Docker</strong>:用于处理应用程序的创建和调度</p>
+<h2 id="4-难点解析1-如何设计客户端镜像"><a href="#4-难点解析1-如何设计客户端镜像" class="headerlink" title="4. 难点解析1:如何设计客户端镜像?"></a>4. 难点解析1:如何设计客户端镜像?</h2><p><strong>首先就是要明确客户端镜像的相关功能</strong></p>
+<ul>
+<li>需要定期获取机器负载,可以通过直接在Java中连接系统终端,执行top、df、free等指令来查看负载,然后将负载信息封装为一个类提交到Redis上</li>
+<li>需要定期获取容器列表的负载,然后以<code>nodeId+ip</code>为key,存到一个<code>Hash结构中</code>,总的key是<code>node:ip</code></li>
+<li>需要能够接收到中控节点经过负载均衡后的信息,要使用某种通信手段,使得主从节点之间可以进行通信</li>
+</ul>
+<h2 id="5-难点解析2-如何设计机器负载信息的获取"><a href="#5-难点解析2-如何设计机器负载信息的获取" class="headerlink" title="5. 难点解析2:如何设计机器负载信息的获取?"></a>5. 难点解析2:如何设计机器负载信息的获取?</h2><p>这边的话是设计了三个指标,分别是CPU、内存、磁盘数据,这三个数据是通过以下指令来获取的</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">top</span> <span class="token parameter variable">-n1</span> <span class="token operator">|</span> <span class="token function">grep</span> CPU <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print 100-$8&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>首先核心指令是<code>top</code>,它的作用是将当前CPU利用率最高的进程进行一次罗列</p>
+<ul>
+<li>n1:由于top是实时回显的,因此会造成阻塞,因此加了这个参数就让它显示一次就好了</li>
+<li>grep命令可以根据关键字按行查找信息,这时候命令就变成了<code>top -n1 | grep CPU</code></li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">%Cpu<span class="token punctuation">(</span>s<span class="token punctuation">)</span>: <span class="token number">0.0</span> us, <span class="token number">0.0</span> sy, <span class="token number">0.0</span> ni,100.0 id, <span class="token number">0.0</span> wa, <span class="token number">0.0</span> hi, <span class="token number">0.0</span> si, <span class="token number">0.0</span> st<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>us</strong>:用户空间占用CPU百分比</p>
+<p><strong>sy</strong>:内核空间占用CPU百分比</p>
+<p><strong>ni</strong>:用户进程空间内改变过优先级的进程的CPU百分比</p>
+<p><strong>id</strong>:空闲CPU百分比</p>
+<p><strong>wa</strong>:等待输入输出的CPU时间百分比</p>
+<p><strong>hi</strong>:硬件中断</p>
+<p><strong>si</strong>:软件中断</p>
+<p>通过<code>free</code>指令可以查看当前内存的使用情况,使用<code>-m</code>可以将数据以<code>MB</code>大小显示出来,这样的话就能够将当前的内存信息个拿出来</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">              total        used        <span class="token function">free</span>      shared  buff/cache   available
+Mem:            <span class="token number">972</span>         <span class="token number">178</span>         <span class="token number">475</span>           <span class="token number">7</span>         <span class="token number">318</span>         <span class="token number">646</span>
+Swap:          <span class="token number">2047</span>           <span class="token number">0</span>        <span class="token number">2047</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<ul>
+<li>Men:物理内存</li>
+<li>Swap:交换内存</li>
+<li>total:总内存大小</li>
+<li>used:已经使用的大小</li>
+<li>free:空闲大小</li>
+<li>shared:被共享使用的物理内存大小</li>
+<li>buff&#x2F;cache:显示被buffer和cache使用的物理内存大小</li>
+<li>available:显示还可以使用的内存</li>
+</ul>
+<p><code>total</code>和<code>available</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">free</span> <span class="token parameter variable">-m</span> <span class="token operator">|</span> <span class="token function">grep</span> Mem <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;printf $7&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>获取磁盘空间</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">df</span> <span class="token parameter variable">-h</span> /dev/sda1
+<span class="token function">df</span> <span class="token parameter variable">-h</span> /dev/sda1 <span class="token operator">|</span> <span class="token function">grep</span> /dev/sda1 <span class="token operator">|</span> <span class="token function">awk</span> <span class="token string">'&#123;print&#125;'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<h2 id="6-难点解析3-如何设计容器负载信息的获取"><a href="#6-难点解析3-如何设计容器负载信息的获取" class="headerlink" title="6. 难点解析3:如何设计容器负载信息的获取?"></a>6. 难点解析3:如何设计容器负载信息的获取?</h2><p>可以通过docker的status指令来实现</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">docker</span> status dockerId<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>然后通过计算节点将这些数据推送到redis上,然后中控节点就能够读取这些数据,然后将数据推送到前端了</p>
+<p>具体是如何设计的?就是通过一个键值对:<code>&#123;nodeId=&gt;&#123;&#123;containerId=>&#123;info&#125;&#125;,&#123;containerId=&gt;&#123;info&#125;&#125;,&#123;containerId=&gt;&#123;info&#125;&#125;&#125;</code></p>
+<h2 id="7-难点解析4-如何设计中控节点和计算节点之间的交互"><a href="#7-难点解析4-如何设计中控节点和计算节点之间的交互" class="headerlink" title="7. 难点解析4:如何设计中控节点和计算节点之间的交互?"></a>7. 难点解析4:如何设计中控节点和计算节点之间的交互?</h2><p><strong>中控节点和计算节点</strong>之间的交互,主要就是创建容器、删除容器的这些操作,要怎么分发到对应的节点上?</p>
+<p>具体地来说,就是我们希望提供一种自动路由的功能,当创建容器的时候,就将通过负载均衡算法之后计算出来的节点IP拿出来,然后将创建容器的请求发到这个节点上去就可以了</p>
+<p>然后就是删除容器的,可以通过在中间数据库中查询这个容器所在的节点,然后向这个节点发送指令就可以了</p>
+<p>在初始的时候是采用<code>HTTP</code>请求来做这个事情的,但是在后来发现HTTP请求有很多弊端,第一个,调试复杂,只能够通过HTTP状态码来显示交互数据,调试信息不够充分,第二个,代码冗余,不够优雅,在服务端中,每个服务类都需要编写一个发HTTP请求的相关功能,还要求开放80端口,如果端口+ip被获知了,那么可能导致信息的泄漏。</p>
+<p>这样的话无论是谁,它只要知道了远程的URL和端口ip,就能够获取到信息了</p>
+<p>总归来说,HTTP请求都是用来做外部的远程访问为主的,因此在这样的情况下,最好使用内部通信RPC,通过RPC,首先第一点能够避免额外端口的暴露导致信息泄漏,第二点就是能够在编程中,调用一个远程方法就好像调用本地的方法一样,这样的话就能够更加灵活地处理程序执行中的异常。</p>
+<p>因此最终使用了RPC的手段,RPC通过远程封装传输,可以实现异常信息的完整封装,通过RPC远程调用,简化了开发流程,同时以插件的形式引入负载均衡算法。</p>
+<h2 id="8-难点解析5-如何设计计算节点的自动部署"><a href="#8-难点解析5-如何设计计算节点的自动部署" class="headerlink" title="8. 难点解析5:如何设计计算节点的自动部署?"></a>8. 难点解析5:如何设计计算节点的自动部署?</h2><p>这个难点主要是难在如何设计部署流程,目前设计的流程是:</p>
+<p>将部署脚本统一上传到公有仓库中,然后在初始化节点的时候,就拉取这些脚本到本地,然后执行这些脚本,传入必要的参数,其中一个比较重要的信息就是节点的ID</p>
+<p>因为在计算节点中,如果守护容器想要访问计算节点中的信息,那么就要通过ssh连接到宿主机,那么密钥的管理就需要通过<code>nodeId</code>来获取了,获取了这些信息之后,就可以通过ssh连接,与宿主机建立联系了</p>
+<p>而这个nodeId需要在自动部署的时候,以参数的形式传入脚本,然后执行即可</p>
+<h2 id="9-难点解析6-如何设计负载信息自动推送"><a href="#9-难点解析6-如何设计负载信息自动推送" class="headerlink" title="9. 难点解析6:如何设计负载信息自动推送?"></a>9. 难点解析6:如何设计负载信息自动推送?</h2><p>可以使用<code>webSocket</code>,这里简单说一下负载信息自动推送的业务场景,具体就是说:计算节点定期采集数据推送到公共的中间数据库上,然后中控节点定期从中间数据库中获取数据,然后将数据发送到前台</p>
+<p>一般来说有两种机制:<code>轮询机制</code>,就是前端写一个定时器,定期向后端去请求数据就可以了,但是这种前端定时发请求的是有一定弊端的,比如说是一个扫码登录的环节,你用手机去扫码,那么前端压根就不知道你扫过码没有,只能够是由后端去不断轮询,有谁扫过码了?但是后端是不能够主动发数据到前端的,因此在这种情况下,设计了一种<code>长轮询</code>的机制,这种机制就是延长了请求响应的超时时间,也就是前端一来就给你发一个请求,然后后端不断轮询数据库之类的,看有没有人扫过码了,扫过码了就返回响应，网页跳转</p>
+<p>这样做的实时性好,而且不会导致大量的无效请求</p>
+<p>第二种机制就是项目中使用到的<code>Websocket</code>技术,首先我们知道<code>HTTP</code>请求底层的<code>TCP</code>是全双工的,但是以上这些方法都属于一种半双工的机制,因此在这样的情况下,提出了<code>WebSocker</code>协议,具体来说,就是当客户端和服务端建立起会话的时候,双方能够互相发消息,在服务端中,描述这个会话信息是一个叫做<code>session</code>、<code>httpSession</code>的对象,然后在项目中的需求就是当有一个管理员&#x2F;用户到了这个监控界面的时候,这时候前台就要携带用户的ID发送到后台,它的原理是通过SpringMvc中提供的<code>ServerEndPoint</code>中的URL,来确定这个WebSocket创建时的一些必须的参数,比如说携带的参数是<code>&#123;userId&#125;</code>,然后通过这个<code>&#123;userId&#125;</code>加入到服务端中设定的一个<code>set</code>中,加入到这个set之后,在发送单点消息的时候,就可以通过<code>&#123;userId&#125;</code>来get到这个会话对象,然后就可以向这个会话中写入数据了</p>
+<h2 id="10-难点解析7-如何设计负载均衡算法"><a href="#10-难点解析7-如何设计负载均衡算法" class="headerlink" title="10. 难点解析7:如何设计负载均衡算法?"></a>10. 难点解析7:如何设计负载均衡算法?</h2><p>基于加权轮询和一致性哈希算法</p>
+<blockquote>
+<p>负载均衡算法</p>
+</blockquote>
+<p><strong>随机负载均衡</strong>:默认情况下,<code>dubbo</code>是<code>RandomLoadBalance</code>,也就是随机调用实现负载均衡,可以对<code>provider</code>的不同实例是设置不同的权重,会按照权重进行负载均衡,权重越大的分配流量越高</p>
+<p>算法的思想很简单,假设有一组服务器,<code>[A,B,C]</code>,他们所对应的权重是<code>[5,3,2]</code>,权重总和为10,然后为这些服务划分一个区间,比如说A是<code>[0,5)</code>这个区间,假设产生一个随机数落在这个区间,那么就选中这台服务器</p>
+<p>比如说<code>[5,8)</code>这个区间,那么就选中B,比如说<code>[8,10)</code>这个区间,那么就选中C</p>
+<p><strong>轮询算法</strong>:这个的话就默认均匀地将流量打到各个机器上去，如果各个机器的性能不一样,容易导致性能差的机器负载较高,所以此时需要调整权重,让性能差的机器的权重负载小一点,流量少一点</p>
+<p><strong>最小活跃数负载均衡</strong>:活跃调用数越小,表明该服务器提供者的效率越高,单位时间内可以处理更多的请求,那么此时请求会优先分配给该服务提供者,基本思路:</p>
+<p><strong>每个服务提供者会对应着一个活跃数active,初始情况下,所有服务提供者的active&#x3D;0,每当收到一个请求,对应的服务提供者的active++,处理完成请求后,active–,所以如果服务提供者性能较好,那么处理请求的性能就越高,active下降地就会越快,因此可以这样给服务提供者优先分配请求</strong></p>
+<p><strong>一致性哈希算法</strong>:一致性哈希算法,它要实现的是相同的参数的一定要分发到一个<code>provider</code>上去,当<code>provider</code>挂掉的时候,会基于虚拟节点分配剩余的流量,抖动不会太大,是要一类请求都到一个节点,那么就走这高一致性的 Hash策略</p>
+<p>具体的原理是这样的:首先构造一个长度为<code>2^32</code>的整数环,也就是一致性哈希环,然后根据节点名称的<code>Hash值(分布在0-2^32-1)</code>,将服务器节点放置在这个哈希环上,然后最后根据数据的<code>key</code>值来计算得到它的<code>Hash</code>值,在<code>Hash</code>环上顺时针查找距离这个Key最近的服务节点,完成Key到服务器的映射查找</p>
+<p>一致性哈希算法也是使用取模的方式执行的,但是取模算法是对服务器的数量进行取模,而一致性哈希算法则是对<code>2^32</code>进行取模,具体的步骤是:</p>
+<ul>
+<li>一致性哈希算法将整个哈希空间顺时针组织成一个虚拟的圆环,称为是Hash环</li>
+<li>接着将各个服务器使用<code>Hash函数</code>进行哈希,具体来说可以选择服务的IP或主机名进行哈希,从而确定每台机器在哈希环上的位置</li>
+<li>最后使用定位数据访问到相应的服务器,将数据key使用相同的函数Hash计算出哈希值,并且确定此数据环上的位置,从这个位置沿着顺时针寻找,第一台遇到的服务器就是这个算法定位到的服务器</li>
+</ul>
+<p>如果简单对服务器的数量进行取模,那么服务器数量发生变化的时候,就会发生缓存雪崩,这个所谓的缓存雪崩就是说,当服务的数量变多&#x2F;变少了之后,那么就导致哈希函数发生变化,然后就需要对这些节点的数据&#x2F;服务实例进行迁移,如果变动大的话,那么就会导致是大批量的数据需要迁移,可能导致阻塞</p>
+<p>那么一致性哈希算法对于节点的增删只需要重定位环空间中的一小部分数据,只有部分缓存会失效,不至于将所有的压力都在同一个时间集中到后台服务器,具有很好的容错性和可扩张性</p>
+<p><strong>如何解决Hash环倾斜的问题</strong></p>
+<p>所谓哈希环倾斜,指的是因为节点太少了,容易因为节点分布不均匀的情况而而导致请求被频繁转发到同一个实例上,因此引入了虚拟节点,所谓虚拟节点就是一个物理节点的映射,通过虚拟节点可以将物理节点分散到环上的不同位置,这样的话缓存被均匀分布的概率越大</p>
+<h2 id="11-难点解析8-如何保证DockerClient的安全性"><a href="#11-难点解析8-如何保证DockerClient的安全性" class="headerlink" title="11. 难点解析8:如何保证DockerClient的安全性?"></a>11. 难点解析8:如何保证DockerClient的安全性?</h2><p>不安全的原因分析以及解决思路,当<code>Docker</code>开放了2375端口后,可能会被扫描,扫描结束后,如果发现这个端口没有加密,那么就可能导致扫描出来的这个端口被黑客所利用,一般来说这个端口是用在内网环境中的,此时没有任何的加密和认证的过程,只要知道Docker主机的IP地址,任何人都可以管理这台主机上的容器和镜像,黑客可以扫描出主机上暴露的端口,因为没有加密,知道了主机IP之后,黑客就可以为所欲为了,比如说创建一个<code>--priviledge=true</code>的容器,然后修改<code>sudo</code>下的信息,这样就可能导致整台服务器都被黑了</p>
+<p>那么怎么来保证<code>DockerClient</code>的安全性呢?</p>
+<p>从实践的角度上来讲,要求客户端和服务端各自创建公钥和私钥,然后通过这些证书进行通信,本质上就是基于TLS协议完成通信的过程,那么具体的原理是这样的:</p>
+<p>首先先来讲讲一次安全的连接是如何建立:</p>
+<p><strong>首先客户端请求服务器的连接,于是要先看看对方和我能不能建立连接,首先它会向服务端发送一个ClientHello,其中内容包括有客户端支持的密码套件,客户端支持的TLS版本号协议,以及客户端生产的一个随机数,这个随机数在之后进行加密通信的时候会被用到</strong></p>
+<p><strong>服务端接收到客户端的请求之后,然后验证对方所有的密码套件,TLS版本号协议等自己支不支持,如果支持的话就,确定下来要使用什么密码套件,比如说有RAS密码套件,然后这时候会回复一个响应,表示说愿意和客户端建立安全连接,并且返回一个<code>服务端的证书过去,方便客户端验证服务端的身份</code></strong></p>
+<p><strong>客户端回应,客户端收到服务器的回应之后,通过浏览器或者操作系统的CA公钥,确认服务器的数字证书的真实性,如果证书没有问题,那么客户端就会从数字证书中取出公钥,然后用这个公钥来加密报文,向服务器发送信息:(1)一个随机数,该随机数会被服务器公钥加密(2)加密通信算法改变了,此后信息都将采用会话密钥,然后将之前的所有的数据做一个摘要,让服务端验证一下是否有中间人参与了</strong></p>
+<p><strong>此时产生了三个随机数,然后根据这三个随机数,依据双方的协商算法,生成本次通信的密钥</strong></p>
+<p><strong>然后服务端收到这个第三个随机数之后,通过协商加密算法,计算出本次通信的会话密钥,然后发送最后的确认(1)通信方式改变通知(2)握手结束,然后对之前的内容做一个摘要。</strong></p>
+<p>通过上面的过程,我们了解到要进行这样的加密通信,服务端中必须要有服务器自己的证书,并且服务器要有公钥和私钥,于是在配置加密通信的准备步骤,就是在准备这些东西</p>
+<p><strong>如果本机没有CA颁发的证书的话,那么就需要自己创建一个了</strong></p>
+<ul>
+<li><p>先基于openssl创建一个CA的密钥,之后就可以通过这个密钥来验证是否是本服务端产生的证书</p>
+</li>
+<li><p>然后创建CA证书,主要操作就是将服务器的一些基础信息打包成一个文件</p>
+</li>
+<li><p>然后创建服务器的私钥</p>
+</li>
+<li><p>然后创建服务端的证书,签名请求文件,用CA证书给服务端证书签名,里面包含有服务器的公钥</p>
+</li>
+<li><p>创建CA证书签名好的服务端证书</p>
+</li>
+<li><p>创建客户端私钥，生成文件为key.pem</p>
+</li>
+<li><p>创建客户端证书签名请求文件，用于CA证书给客户证书签名，</p>
+</li>
+</ul>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ca.pem CA证书
+ca-key.pem CA证书私钥
+server-cert.pem 服务端证书
+server-key.pem 服务端证书私钥
+cert.pem 客户端证书
+key.pem 客户端证书私钥<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="12-难点解析9-如何测试QPS-网站承载人数如何测试-容器池技术怎么使用的"><a href="#12-难点解析9-如何测试QPS-网站承载人数如何测试-容器池技术怎么使用的" class="headerlink" title="12. 难点解析9:如何测试QPS?网站承载人数如何测试?容器池技术怎么使用的?"></a>12. 难点解析9:如何测试QPS?网站承载人数如何测试?容器池技术怎么使用的?</h2><p>容器池技术就是提前在docker中手动为即将要使用的用户添加一个容器,这样就减免了实时创建的弊端,具体来说就是在Redis中添加一个集合,这个集合都是已经创建好的容器,但是还没有被使用,然后通过查询这个集合的方式,将容器的相关信息推送给用户,用户就可以直接用这些相关信息使用容器了。</p>
+<blockquote>
+<p>问题延伸:以下是没有解决,待解决的问题,基于<code>k8s</code>改造</p>
+</blockquote>
+<h2 id="13-延伸扩展1-如果中控节点挂掉了-那么怎么办呢"><a href="#13-延伸扩展1-如果中控节点挂掉了-那么怎么办呢" class="headerlink" title="13. 延伸扩展1:如果中控节点挂掉了,那么怎么办呢?"></a>13. 延伸扩展1:如果中控节点挂掉了,那么怎么办呢?</h2><h2 id="14-延伸扩展2-负载均衡是选择负载最低的节点来使用-如果一直很低呢-怎么来避免过热"><a href="#14-延伸扩展2-负载均衡是选择负载最低的节点来使用-如果一直很低呢-怎么来避免过热" class="headerlink" title="14. 延伸扩展2:负载均衡是选择负载最低的节点来使用?如果一直很低呢?怎么来避免过热?"></a>14. 延伸扩展2:负载均衡是选择负载最低的节点来使用?如果一直很低呢?怎么来避免过热?</h2><h2 id="15-延伸扩展3-如何充分利用SPI机制-如何实现服务的平滑动态热插拔"><a href="#15-延伸扩展3-如何充分利用SPI机制-如何实现服务的平滑动态热插拔" class="headerlink" title="15. 延伸扩展3:如何充分利用SPI机制?如何实现服务的平滑动态热插拔?"></a>15. 延伸扩展3:如何充分利用SPI机制?如何实现服务的平滑动态热插拔?</h2><h2 id="16-延伸扩展4-如何挑选合适的存储插件"><a href="#16-延伸扩展4-如何挑选合适的存储插件" class="headerlink" title="16. 延伸扩展4:如何挑选合适的存储插件?"></a>16. 延伸扩展4:如何挑选合适的存储插件?</h2><h2 id="17-延伸扩展5-如果容器违规使用了资源怎么办"><a href="#17-延伸扩展5-如果容器违规使用了资源怎么办" class="headerlink" title="17. 延伸扩展5:如果容器违规使用了资源怎么办?"></a>17. 延伸扩展5:如果容器违规使用了资源怎么办?</h2>
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">穿山甲</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lumxi.github.io/2023/04/15/project/vm_summrize/">https://lumxi.github.io/2023/04/15/project/vm_summrize/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">穿山甲</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%80%BB%E7%BB%93/">
+                                    <span class="chip bg-color">总结</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/04/16/project/dp_summrize/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="点评项目总结">
+                        
+                        <span class="card-title">点评项目总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-04-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" class="post-category">
+                                    项目开发
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%80%BB%E7%BB%93/">
+                        <span class="chip bg-color">总结</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/04/14/Linux/Linux-1/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Linux命令系统总结">
+                        
+                        <span class="card-title">Linux命令系统总结</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">计算机基础</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%BF%90%E7%BB%B4/">
+                        <span class="chip bg-color">运维</span>
+                    </a>
+                    
+                    <a href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/">
+                        <span class="chip bg-color">云计算</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <a href="/about" target="_blank">穿山甲</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
