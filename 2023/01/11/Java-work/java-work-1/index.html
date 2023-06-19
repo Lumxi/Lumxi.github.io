@@ -5,12 +5,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="keywords" content="Java基础专题(一), 后端工程师之路">
-    <meta name="description" content="1.请你简述 Java语言的特点
-是一门典型的面向对象的语言,而面向对象的特征就是封装继承多态
-平台无关,Java虚拟机实现的,编写的Java代码所生成的字节码只要经过Java虚拟机的加载,就能够运行,一次编写,到处运行
-支持多线程
-可靠
-">
+    <meta name="description" content="1.请你简述Java语言的特点关于Java语言的特点,可以这样描述
+(1)Java是一门典型的面向对象语言,它是最典型的设计就是class,通过class这个关键字来实现面向对象
+(2)编译与解释并存型语言
+(3)基于JVM以及.class">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -417,23 +415,28 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-请你简述-Java语言的特点"><a href="#1-请你简述-Java语言的特点" class="headerlink" title="1.请你简述 Java语言的特点"></a>1.请你简述 Java语言的特点</h2><ul>
-<li>是一门典型的面向对象的语言,而面向对象的特征就是封装继承多态</li>
-<li>平台无关,Java虚拟机实现的,编写的Java代码所生成的字节码只要经过Java虚拟机的加载,就能够运行,一次编写,到处运行</li>
-<li>支持多线程</li>
-<li>可靠</li>
-<li>安全</li>
-<li>支持网络编程,比如说很容易地就能够写出Echo server</li>
-<li>编译与解释并存</li>
-</ul>
-<h2 id="2-请你解释一下JVM-JDK-JRE三者的区别"><a href="#2-请你解释一下JVM-JDK-JRE三者的区别" class="headerlink" title="2. 请你解释一下JVM JDK JRE三者的区别"></a>2. 请你解释一下JVM JDK JRE三者的区别</h2><p><code>JVM</code></p>
-<p>Java虚拟机是运行Java字节码的虚拟机,JVM针对不同的os有不同的特定实现,目的是为了使用相同的字节码,都能够产生相同的结果,字节码和不同系统的JVM实现是Java语言一次编译随处可以运行的关键所在</p>
+                <h2 id="1-请你简述Java语言的特点"><a href="#1-请你简述Java语言的特点" class="headerlink" title="1.请你简述Java语言的特点"></a>1.请你简述Java语言的特点</h2><p>关于Java语言的特点,可以这样描述</p>
+<p>(1)Java是一门典型的面向对象语言,它是最典型的设计就是<code>class</code>,通过<code>class</code>这个关键字来实现面向对象</p>
+<p>(2)编译与解释并存型语言</p>
+<p>(3)基于JVM以及<code>.class</code>文件实现了一次编译到处运行,因此它是平台无关的</p>
+<p>(4)支持网络编程</p>
+<h2 id="2-请你解释一下JVM-JDK-JRE三者的区别"><a href="#2-请你解释一下JVM-JDK-JRE三者的区别" class="headerlink" title="2. 请你解释一下JVM JDK JRE三者的区别"></a>2. 请你解释一下JVM JDK JRE三者的区别</h2><blockquote>
+<p>什么是JVM?</p>
+</blockquote>
+<p>Java虚拟机是运行Java字节码的虚拟机,JVM针对不同的操作系统都有不同的实现,这个不同的实现,主要就是说能够根据不同的系统架构以及其硬件所支持的指令集,基于JVM对<code>.class</code>文件的翻译,能够得到一套这个系统架构下能够完全支持的机器码指令集,通过<code>JVM</code>这个翻译者,就可以实现<code>一次编译,到处可以运行</code>的关键所在</p>
 <p><strong>只要满足JVM的规范,都可以开发出属于自己的JVM</strong></p>
 <p>JVM的实现有很多,平常比较常用的是hotspot VM</p>
-<p><code>JDK</code></p>
-<p>JavaDevelopmentKit,拥有JRE所拥有的一切,还有编译器javac和工具javadoc和jdb,它能够创建和编译程序,是程序员使用Java语言编写并且编译运行Java程序所必须的开发工具包,</p>
-<p><code>JRE</code></p>
-<p>JavaRuntimeEnvironment,编译java程序所需要的内容的集合,包括有Java虚拟机,Java类库,java命令和一些基础构件,但是它不能够用于创建新程序</p>
+<blockquote>
+<p>什么是JDK</p>
+</blockquote>
+<p>JDK的全称叫做是<code>JavaDevelopmentKit</code>,它的主要功能有:</p>
+<ul>
+<li>创建和编译Java程序,包含了JRE,包含了编译Java源代码<code>javac</code>以及其他工具,比如说有<code>javadoc</code>、<code>jdb</code>、<code>jconsole(基于JMX的可视化监控工具)</code>、<code>javap</code>反编译工具</li>
+</ul>
+<blockquote>
+<p>什么是JRE</p>
+</blockquote>
+<p><code>JavaRuntimeEnvironment</code>,它是Java运行时的环境,仅仅包含了Java应用程序运行时环境,以及必要的类库,但是JDK还包含有<code>javac</code>、<code>javadoc</code>、<code>jdb</code>等工具,可以用<code>Java</code>程序的开发和调试</p>
 <blockquote>
 <p>如果只是为了运行Java程序,那么只需要安装JRE就足够了</p>
 <p>如果是需要进行Java开发的工作,那么就需要安装JDK</p>
@@ -452,15 +455,17 @@
 <p>需要格外注意的是<code>.class-&gt;机器码</code>这一步,JVM的类加载器首先会加载字节码文件,然后通过解释器逐行解释执行,这种方式的执行速度就会相对较慢,而且有些方法和代码是需要经常被调用的<code>热点代码</code>,于是在后面引进了<code>JIT</code>技术</p>
 <blockquote>
 <p>JIT<code>(Just-In-Time compliation)</code></p>
-<p>而JIT属于运行时编译,所谓运行时编译就是在运行到指定代码段的时候,才会进行代码的编译,与之相对的有事前编译,事前编译就是在程序运行前将代码完整地进行编译,当JIT编译器完成第一次的编译之后,就会将字节码所对应的机器码保存下来,下一次可以直接使用,而我们知道机器码的运行效率肯定是高于Java解释器的,因此通常说Java是编译与解释共存的语言</p>
+<p>而JIT属于运行时编译,所谓运行时编译就是在运行到指定代码段的时候,才会进行代码的编译</p>
+<p>与之相对的有,事前编译,事前编译就是在程序运行前将代码完整地进行编译,当JIT编译器完成第一次的编译之后,就会将字节码所对应的机器码保存下来,下一次可以直接使用,而我们知道机器码的运行效率肯定是高于Java解释器的,因此通常说Java是编译与解释共存的语言</p>
 </blockquote>
 <blockquote>
-<p>AOT(Ahead of Time Compilation)</p>
+<p>AOT<code>(Ahead of Time Compilation)</code></p>
 <p>它直接将字节码编译为机器码,避免了JIT预热等各方面的开销</p>
 </blockquote>
 <p>就比如说,原本你的机器性能是全部用来运行机器码的,但是现在你的机器还要消耗一部分性能去编译产生机器码,这样造成的性能均摊,肯定会造成性能的下降。</p>
 <h2 id="4-为什么不全部使用AOT呢"><a href="#4-为什么不全部使用AOT呢" class="headerlink" title="4. 为什么不全部使用AOT呢?"></a>4. 为什么不全部使用AOT呢?</h2><p>既然AOT可以提前编译节省启动的时间,那为什么不全部使用这种方式呢?</p>
 <p>比如说<code>CGLIB</code>使用的是<code>ASM</code>技术,这种技术大致的原理就是在运行时,根据用户的需求将某段代码生成在内存中,以.class的形式存在,如果使用AOT的时候,就不能使用这种技术了,如果没有这种技术,就没有了我们后来的JDK实现动态代理或者CGLIB实现动态代理了,这时候Spring的AOP就无法找到合适的技术进行实现了</p>
+<p>简单来说,AOT技术就是直接将字节码编译为机器码,不需要在运行的时候再对<code>.class</code>文件进行翻译了,但是有时候需要动态生成类,这时候生成类的时候,类的内容是不确定的,如果全部采用<code>AOT</code>技术的话,就不能够实现这种效果了</p>
 <h2 id="5-为什么说Java是编译与解释并存的语言"><a href="#5-为什么说Java是编译与解释并存的语言" class="headerlink" title="5. 为什么说Java是编译与解释并存的语言?"></a>5. 为什么说Java是编译与解释并存的语言?</h2><p>可以将高级编程语言按照程序的执行方式分为两种</p>
 <ul>
 <li>编译型语言:编译型语言会通过编译器将源代码一次性翻译为该平台可执行的机器码,一般情况下,编译型语言的执行速度是比较快的,开发效率比较低,常见的编译型语言有Go,C++</li>
@@ -477,6 +482,7 @@
 <li>Java不存在多继承,但是支持多接口的继承,</li>
 <li>Java支持自动的GC,不需要程序员手动管理内存,在C++中需要通过malloc、free、new、delete进行内存的管理</li>
 <li>C++支持方法重载和操作符重载,Java只支持方法的重载</li>
+<li>最主要的还是跨平台的支持,由于Java语言中存在有JVM+<code>.class</code>文件这样的组件,因此无论底层的硬件如何变化,系统架构如何变化,只要安装了JRE,JVM中的解释器就能根据底层的结构,翻译成具体的代码,以此来实现跨平台,而C++代码,在基于<code>gcc/g++</code>编译器编译了之后,这时候就生成了可执行文件,这个可执行文件其实里面就包含了一系列的<code>机器码</code>,不同的机器对这些机器码的支持是不同的,因此在这样的情况下,有可能在机器A上可以执行这个文件,而在机器B上就无法执行这个文件了</li>
 </ul>
 <h2 id="7-讲讲移位运算符以及它的应用"><a href="#7-讲讲移位运算符以及它的应用" class="headerlink" title="7. 讲讲移位运算符以及它的应用"></a>7. 讲讲移位运算符以及它的应用</h2><p>移位运算符是最基本的运算符之一,在移位操作运算符中,被操作的数据被看作为二进制的数据,移位就是将其向左或者向右移动若干位的运算,如在<code>HashMap</code>中的<code>hash</code>方法的源码就用到了:</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> <span class="token function">hash</span><span class="token punctuation">(</span><span class="token class-name">Object</span> key<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
@@ -510,34 +516,16 @@
 <li>字符常量相当于一个整形值,可以参加表达式的运算,字符串常量代表的是一个地址值,该字符串在内存中存放的位置</li>
 <li>占内存的大小:char在Java中是占2个字节的,字符串常量占若干个字节</li>
 </ul>
-<h2 id="10-重载和重写有什么区别"><a href="#10-重载和重写有什么区别" class="headerlink" title="10. 重载和重写有什么区别?"></a>10. 重载和重写有什么区别?</h2><blockquote>
-<p>重载就是说:同样的一个方法,能够根据输入数据的不同,做出不同的处理</p>
-<p>重写就是说:当子类继承自父类的方法,输入的数据一样,但是要做出有别于父类的响应,你就覆盖父类的方法</p>
-</blockquote>
-<p><strong>重载</strong>:同一个类中,多个同名方法根据不同的传参做出不同的响应,重载必须使得编译器在做重载解析的过程中,能够挑选出具体是哪一个方法被执行</p>
-<p>发生在同一个类中<code>(或者父类和子类之间)</code></p>
+<h2 id="10-重载和重写有什么区别"><a href="#10-重载和重写有什么区别" class="headerlink" title="10. 重载和重写有什么区别?"></a>10. 重载和重写有什么区别?</h2><p>关于重载和重写,先可以这样简单的理解</p>
 <ul>
-<li>方法名相同</li>
-<li>参数类型不同</li>
-<li>参数个数不同</li>
-<li>顺序不同</li>
-<li>仅返回值和修饰符不同会造成歧义,无法构成重载</li>
+<li>重载可以改变函数的签名,也就是说方法的重载的实现可以改变方法的入参,通过改变函数的入参,就可以实现相同的方法名称,但是根据入参的不同实现不同的响应,它通常发生在同一个类中,或者是发生在子类和父类之间,因此总结来说,<code>当需要根据函数的入参的不同,来调整相同方法的实现的时候,这时候就可以使用重载这种技术</code></li>
+<li>重写可以改变函数的签名,但是要注意,重写改变的函数签名是在这个返回值上,入参是必须和被重写的方法保持一致的,因此在这样的情况下,它不能发生在同一个类中,因为在同一个类中,在重载解析这一步中,它的方法名相同,入参相同,会被看作是同一个方法,它发生在父类和子类之间,当父类定义了一个方法,然后子类定义了一个函数签名和函数入参完全相同的方法,这时候就是一个重写的操作了</li>
 </ul>
+<p>那么之前讲的这个可以改变函数签名是怎么回事呢?这是因为重写的时候,可以将返回值类型修改为原方法的子类,这是允许的</p>
 <blockquote>
-<p>如果多个方法具有相同的名字,但具有不同的参数(类型、个数、顺序),这就产生了重载</p>
-<p>编译器必须挑选出具体执行哪个方法,这个过程叫做<code>重载解析</code>,如果编译器找不到匹配的参数,那么就会产生编译错误,因为根本不存在匹配,Java允许重载任何方法,而不只是构造器</p>
+<p>什么叫重载解析</p>
 </blockquote>
-<p><strong>重写</strong>:重写发生在运行期,是子类对父类的允许访问的方法的实现的重写&#x2F;覆盖,就是子类对父类方法的重新改造,外部样子不能够发生改变,内部逻辑可以发生改变</p>
-<ul>
-<li>方法名、参数列表必须相同,子类方法返回值类型应该要比父类方法返回值类型更小或者相等,抛出异常的范围小于等于父类,访问修饰符的范围大于等于父类</li>
-</ul>
-<blockquote>
-<p>如果方法的返回类型是 void 和基本数据类型，则返回值重写时不可修改。但是如果方法的返回值是引用类型，重写时是可以返回该引用类型的子类的。</p>
-</blockquote>
-<ul>
-<li>如果父类访问修饰符为<code>private/final/static</code>那么子类就不能够重写该方法,但是被<code>static</code>修饰的方法是可以被再次声明的</li>
-<li>构造方法无法被重写</li>
-</ul>
+<p>所谓的重载解析,就是在程序执行的时候,当发生了存在多个重名函数的时候,这时候会根据函数入参来确定到底要调用哪一段代码,就是根据函数的实际入参来确定函数的入口地址,</p>
 <h2 id="11-可变长参数在开发的时候用过吗-说说是怎么回事"><a href="#11-可变长参数在开发的时候用过吗-说说是怎么回事" class="headerlink" title="11. 可变长参数在开发的时候用过吗?说说是怎么回事?"></a>11. 可变长参数在开发的时候用过吗?说说是怎么回事?</h2><p>可变长参数就是允许在调用方法的时候传入不定长度的参数,声明如下</p>
 <pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">method1</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> args<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
     
@@ -577,15 +565,8 @@
 
 <p>这样也是可以的</p>
 <h2 id="12-谈一下Java的基本数据类型吧"><a href="#12-谈一下Java的基本数据类型吧" class="headerlink" title="12. 谈一下Java的基本数据类型吧"></a>12. 谈一下Java的基本数据类型吧</h2><p>Java中有八大基本数据类型</p>
-<ul>
-<li>6种数字类型<ul>
-<li>4种整形:byte、short、int、long</li>
-<li>2种浮点型:double、float</li>
-</ul>
-</li>
-<li>1种字符类型:char(‘u0000’)</li>
-<li>1种布尔型:boolean</li>
-</ul>
+<p>首先有6大基本数字类型,有用来表示整数的int,用来表示单精度浮点数的float,用来表示双精度浮点数的double,用来表示大整数类型的long类型,用来表示一个字节的byte,用来表示一个字符的char,用来表示小整数的short</p>
+<p>用来表示布尔值的boolean</p>
 <blockquote>
 <p>Java中的每种基本类型所占存储空间的大小不会像其他大多数语言随着机器硬件架构的变化而变化,存储空间不变是Java程序比其他程序语言更具有移植性的原因之一</p>
 </blockquote>
@@ -601,6 +582,9 @@
 <li>从存储上看,基本数据类型的局部变量存放在Java虚拟机栈中的局部变量表中,而基本数据类型的成员变量<code>(未被static)</code>修饰的那些就放在<code>JVM的堆内存中</code>,包装类型属于对象类型,几乎所有的对象实例都位于堆中</li>
 <li>相比于对象类型,基本数据类型占用的空间非常小</li>
 </ul>
+<blockquote>
+<p>要记住关于static修饰之后的变量是存放在堆内存中的</p>
+</blockquote>
 <h2 id="14-对象实例一定位于堆中吗-什么时候不会位于堆中-逃逸分析"><a href="#14-对象实例一定位于堆中吗-什么时候不会位于堆中-逃逸分析" class="headerlink" title="14.对象实例一定位于堆中吗?什么时候不会位于堆中?(逃逸分析)"></a>14.对象实例一定位于堆中吗?什么时候不会位于堆中?(逃逸分析)</h2><p>在<code>HotSpot</code>虚拟机引入了<code>JIT</code>优化之后,会对对象进行逃逸分析,如果发现某一个对象并没有逃逸到外部,那么就可能通过标量替换来实现栈上的分配,从而避免堆中上分配内存</p>
 <blockquote>
 <p>注意基本数据类型存放在栈中是一个常见的误区,存放在哪个内存区域,是根据变量的声明区域来决定的。</p>
@@ -878,6 +862,27 @@
 <h2 id="18-超过-long-整型的数据应该如何表示？"><a href="#18-超过-long-整型的数据应该如何表示？" class="headerlink" title="18. 超过 long 整型的数据应该如何表示？"></a>18. 超过 long 整型的数据应该如何表示？</h2><p>基本数值类型都有一个表达范围，如果超过这个范围就会有数值溢出的风险。</p>
 <p>在 Java 中，64 位 long 整型是最大的整数类型。</p>
 <p>可以使用<code>BigInteger</code>进行数的表达</p>
+<h2 id="19-面向对象和面向过程有什么区别"><a href="#19-面向对象和面向过程有什么区别" class="headerlink" title="19. 面向对象和面向过程有什么区别?"></a>19. 面向对象和面向过程有什么区别?</h2><p>关于面向对象和面向过程的区别,主要可以这样讲</p>
+<p>面向对象的设计通常会对程序的需求做一个<code>抽象</code>,会抽象出来一个类,然后基于这个类执行各种各样的操作</p>
+<p>面向过程的设计通常是对程序的需求做一个步骤分析,通常就是抽象出来很多个步骤,然后基于这些步骤来执行操作</p>
+<p>比如说当我们做一个圆的操作的时候,如果采用面向对象的形式,就是直接定义两个变量,然后通过这两个变量来计算,而使用面向对象的方式的时候,这时候是直接使用一个对象来解决这个问题</p>
+<h2 id="20-对象的相等和引用的相等有什么区别"><a href="#20-对象的相等和引用的相等有什么区别" class="headerlink" title="20. 对象的相等和引用的相等有什么区别?"></a>20. 对象的相等和引用的相等有什么区别?</h2><p>对象的相等通常比较的是内存中存放的地址是否是相等的</p>
+<p>而引用的相等通常比较的是指向的内存是否是相当的</p>
+<h2 id="21-面向对象的三大特征"><a href="#21-面向对象的三大特征" class="headerlink" title="21. 面向对象的三大特征"></a>21. 面向对象的三大特征</h2><p><strong>封装</strong>:封装是说将接对象内部的属性隐藏起来,然后通过向提供<code>API</code>的方式来操作这些属性,也就是不允许外部对象直接访问对象的内部信息,但是可以在类定义的限定下操作这个对象</p>
+<p><strong>继承</strong>:不同类型的对象,相互之间有一定相同的特点,通过继承这样的方式,可以抽象出一段通用的代码以及接口定义,从从而提供工程的抽象以及可维护性,比如说动物,然后猫和狗可以继承自这个类,然后重写父类的方法,或者添加自己的方法,从而实现代码重用以及接口的重用</p>
+<p><strong>多态</strong>:表示一个对象具有多种状态,具体表现为父类引用子类的对象,比如说有<code>IService</code>这个接口,然后我实现了<code>IServiceImpl1</code>和<code>IServiceImpl2</code>,然后让父类来引用这两个子类,这样的话,在程序中我们看到好像一直都是在使用<code>IService</code>,但是它真正的实现却是这两个实现类,这就形成了一种局面,同一个对象,在给不同的子类的实现的时候,具有不同的响应。</p>
+<h2 id="22-接口和抽象类有什么共同点和区别"><a href="#22-接口和抽象类有什么共同点和区别" class="headerlink" title="22. 接口和抽象类有什么共同点和区别?"></a>22. 接口和抽象类有什么共同点和区别?</h2><p>共同点</p>
+<ul>
+<li>都无法被实例化</li>
+<li>可以包含抽象方法</li>
+<li>都可以有默认实现的方法,Java8可以用<code>default</code>在接口中定义方法</li>
+</ul>
+<p>区别</p>
+<ul>
+<li>接口主要用来对类的行为进行约束,实现了某个接口就有了对应的行为,抽象类主要用于代码的复用,强调的是所属的关系</li>
+<li>一个类只能够继承一个类,但是可以实现多个接口</li>
+<li>接口中的成员只能是<code>public static final</code>类型的,不能被修改而且必须有初始化,而抽象类的成员变量默认<code>default</code>,可以在子类中被重新定义,也可以重新赋值</li>
+</ul>
 
                 
             </div>

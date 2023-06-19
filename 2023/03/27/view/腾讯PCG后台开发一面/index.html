@@ -1,0 +1,1251 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="腾讯PCG后台开发一面, 后端工程师之路">
+    <meta name="description" content="面试人张庭杰
+面试时间2023.6.1
+背景介绍
+
+
+面试公司
+腾讯
+
+
+
+部门
+腾讯PCG
+
+
+岗位类型
+暑期实习
+
+
+第几面
+一面(进入复试流程后没有给二面就挂掉了)
+
+
+方向
+后台开发
+
+
+语言
+Java,部门用的是GO
+
+
+投递渠道">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>腾讯PCG后台开发一面 | 后端工程师之路</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    
+
+
+    <!-- bg-cover style     -->
+
+
+
+<link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+<link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+<link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+<link rel="stylesheet" type="text/css" href="/css/matery.css">
+<link rel="stylesheet" type="text/css" href="/css/my.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" media="none" onload="if(media!='all')media='all'">
+
+
+
+
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+    <link rel="stylesheet" href="/css/post.css">
+
+
+
+
+    
+        <link rel="stylesheet" type="text/css" href="/css/reward.css">
+    
+
+
+
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">后端工程师之路</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+  <li>
+    <a href="javascript:;" class="waves-effect waves-light" onclick="switchNightMode()" title="深色/浅色模式" >
+      <i id="sum-moon-icon" class="fas fa-sun" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">后端工程师之路</div>
+        <div class="logo-desc">
+            
+            华南农业大学软件工程学生博客
+            
+        </div>
+    </div>
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">腾讯PCG后台开发一面</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E6%A0%A1%E6%8B%9B/">
+                                <span class="chip bg-color">校招</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
+                                面经
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-03-27
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.min.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="面试人"><a href="#面试人" class="headerlink" title="面试人"></a>面试人</h1><p>张庭杰</p>
+<h1 id="面试时间"><a href="#面试时间" class="headerlink" title="面试时间"></a>面试时间</h1><p>2023.6.1</p>
+<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><table>
+<thead>
+<tr>
+<th>面试公司</th>
+<th>腾讯</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>部门</td>
+<td>腾讯PCG</td>
+</tr>
+<tr>
+<td>岗位类型</td>
+<td>暑期实习</td>
+</tr>
+<tr>
+<td>第几面</td>
+<td>一面(进入复试流程后没有给二面就挂掉了)</td>
+</tr>
+<tr>
+<td>方向</td>
+<td>后台开发</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Java,部门用的是GO</td>
+</tr>
+<tr>
+<td>投递渠道</td>
+<td>官网</td>
+</tr>
+</tbody></table>
+<p>面试录音以及飞书文档:<a target="_blank" rel="noopener" href="https://om5sarkt8t.feishu.cn/minutes/obcnhjd3mh8fd8jyl2y98557?from_source=finish_transcripting">https://om5sarkt8t.feishu.cn/minutes/obcnhjd3mh8fd8jyl2y98557?from_source=finish_transcripting</a></p>
+<h1 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h1><p>(1)<strong>面试官介绍部门业务, 自我介绍环节</strong></p>
+<p>(2)<strong>Java和Go有什么区别?</strong></p>
+<p><strong>这里的话因为他们部门是用Go的,所以应该想看看我对Go的了解程度</strong></p>
+<p>回答:</p>
+<p>第一点,从<strong>语法糖</strong>的角度上来讲,像JDK8的Java它的语法糖是比较少的,因此整体来看语法比较工整,Golang的语法糖比较多,所以看起来它的代码也会比较简洁。</p>
+<p>第二点,从<strong>提供的内置集合来看</strong>,Java提供的集合会更加丰富一些,像Java的话会提供一个优先级队列这样的数据结构,其实它本质上就是在内部实现了一个堆,然后我们可以通过定义比较器这样的方式来自定义堆,但是像Go的话就没有提供了。</p>
+<p>第三点,从<strong>垃圾回收</strong>的角度上来讲,像Java里面有很多不同的虚拟机实现,因此它的垃圾回收机制也是多种多样的,比如说有串行化垃圾回收器,有并发收集垃圾回收器,对于判断对象是否死亡这样的方法有引用计数法,有可达性分析,然后像Go语言的话我了解到它内部会使用到三色标记法这样的方法,以及在执行垃圾回收的时候是用了类似了Java中CMS垃圾回收器这样的机制</p>
+<p>(2)<strong>讲讲虚拟内存是什么</strong></p>
+<p>答:这边的话我结合硬件的情况说了一下,目前市场上的内存大概都是<code>8GB</code>为主流的,但是像现在大部分的游戏可能都达到了上百G的规模,那么这样一个上百G的程序,怎么依托于8GB的内存来实现程序的运行呢?这就是虚拟内存起到的作用。</p>
+<p>然后讲了底层的实现:它在底层实际上是通过一个页表的结构来实现,这个页表里面存着一个个的页表项,页表项的内容大概是有一个<code>&lt;有效位(指明这个页是否在主存中),页号(其实就是页表的索引),物理块号(实际物理地址)&gt;</code>,当程序去读取内存的时候,这时候就会去读取页表,如果发现这个页不在内存中,那么就会发起一个系统调用,这个过程就会使得我们的<code>系统从用户态转为系统态</code>,将这个页从磁盘调度到内存中,所以这样的话,就可以看到其实并不是程序一次性全部被加载到内存的,而是根据程序的需要将内存页读取到主存中,其中有一个著名的定律叫做二八定律,简单来说就是其实在一个程序运行的过程中,在一段时间内只有20%的内容是会被用到的,其余80%的内容都会被存在磁盘中。</p>
+<p><strong>最后总结:通过这样的机制,就可以实现将一个大程序装入到一个小内存中</strong></p>
+<p>(3)<strong>系统态和用户态是什么?为什么要有这种东西?</strong></p>
+<p>答:首先讲讲系统态和用户态分别是什么,关于系统态的话,<code>它实际上是我们的操作系统内核程序运行过程中的一种状态,而用户态则是我们用户自己编写的程序运行过程中的一种状态</code>。</p>
+<p><strong>至于为什么需要有这种东西,我们可以假设如果没有这种东西会怎么样?(然后开始扯)</strong></p>
+<p>如果没有系统态,那么就是系统中可以运行任意的用户程序,然后这些用户程序执行过程中会需要去读取内存,操作内存,因为没有系统态,那么也就意味着操作内存的权限下放到了我们的用户程序。</p>
+<p>这样的话用户程序就可能会产生一些危险的行为,比如说有:第一个,操作了其他程序所属的内存,第二个,访问了其他程序所属的内存,这两种操作都可能导致一个程序运行得好好的,突然就挂掉了,比如另外一个程序覆盖了另外一个程序的变量,导致空指针异常之类的,因此为了避免这种情况,就设定了系统态,通过系统态这个状态,就可以安全地执行一些危险的操作,避免运行过程中崩溃。</p>
+<p>(4)<strong>系统调用为什么是安全的?</strong></p>
+<p>答:这个问题其实没有接触过,然后凭着自己的理解说了。</p>
+<p>系统调用本质上就是操作系统内核程序提供的一套接口程序,这是因为用户程序在运行中,其实都是依托于硬件的,硬件会暴露出来一些接口给上位机使用,但是如果直接这样使用的话,那么就会导致一个情况,就是每更换一套硬件,就需要重写编写程序,这肯定是不行的。</p>
+<p>所以的话就需要有系统调用,通过系统调用,第一个,用户对诸如内存,磁盘以及外设的操作全部都被封装好了,在这之上做了例如内存保护之类的机制,可以防止程序之间互相访问、修改各自的内存空间。</p>
+<p>其次,对于外部设备这一类可能引起竞争的资源,当发起系统调用来使用这些设备的时候,会通过一定的资源保护机制,来保证外部设备的使用正常,比如说当一个程序正在使用打印机的时候,另一个设备不能够使用。</p>
+<p>总而言之,系统调用通过提前定义好对硬件的使用规则以及定义了内存保护机制等操作来实现安全性。</p>
+<p>(5)<strong>零拷贝技术是什么?</strong></p>
+<p>答:备注:问这个问题之前,面试官问了我用没用过消息队列,估计想问卡夫卡的底层原理。</p>
+<p>回答原文:就是<code>零拷贝</code>它并不是说机器没有真正发生的任何一次拷贝，而是说<code>没有发生两个空间的这样的一个相互拷贝</code>。</p>
+<p>就是比如说我们路由器接收一个网卡包，那么呢它首先是要从网卡的那个缓冲区里面把我们的数据，把它复制到我们的内核缓存区，<code>而注意到这两个这个复制它其实都是在我们的内核中完成的，所以的话它这个不算就是不算我们那个意义上的拷贝。</code></p>
+<p>然后的话,当我们的用户程序通过<code>socket</code>的系统调用来读取内核缓冲区中的数据,这时候其实就是将内核缓冲区的数据传入到用户缓冲区中,这个过程其实就是真正意义上的拷贝,零拷贝想要减少的就是这样的拷贝。</p>
+<p>那么零拷贝技术就是它通过一个叫做 MMAP 的技术，通过这个技术来减少这一次的拷贝。</p>
+<p>具体来说就是我们刚才讲了，就是这个<code>虚拟内存</code>，<code>虚拟内存</code>它里面有个页表，通过页表,就可以将同一块物理内存地址同时映射到两张页表上,这样的话,两个程序只要读取自己的页表,尽管他们的逻辑地址是不同的,但是由于页表中存储的物理地址都是相同的,所以这样的话就实现了一种共享内存的效果,通过这种方式,就减少了两个空间之间的相互拷贝,这个过程的优点主要就是,避免了CPU来干预数据复制,减少开销,第二个的话就是可以避免系统调用的开销。</p>
+<p>(6)<strong>HTTPS连接建立的过程?</strong></p>
+<p>HTTPS，它其实在OSI的七层模型里面，在我们的这一个TCP层到我们的HTTP层，对中间加了一层 TLS&#x2F;SSL 协议。那么它具体是怎么操作？首先它是先建立了一个TCP连接，也就是说经过一个三次握手，三次握手完了之后还要经历一次TLS&#x2F;SSL握手。</p>
+<p>具体的流程是这样子的:比如说我们现在有一个客户端和一个服务端，然后我们这个客户端要先发起一个<code>ClientHello</code>，这个的话意思就是说我要发起一个HTTPS连接了，然后的话它会携带几个信息，首先<code>第一个是一个客户端携带一个随机数</code>,还有<code>我要使用的密码套件</code>，比如说他要使用的是 RSA 这样的技术，还是说DES这样的技术，还有一个是我<code>当前要执行的一个TLS/SSL协议的一个版本号</code>,比如说1.1这样的版本,然后他就把这个打包成一个包，然后发给这个服务端。</p>
+<p>收到之后就会回复一个<code>server reply</code>，server reply主要是对于这个我们的客户端做一个就是做一个回应，就是说就是说比如说我确认你的协议了，你的TLS&#x2F;SSL协议是1.1,然后我服务端这边支持就把然后我就可以确认版本号,然后的话密码套件我这也有，所以话我们可以达成这个协议，否则的话就会终止本次的连接，之后还会加上一个这个服务端产生的随机数，然后接着的话就会把这个包返还给客户端。</p>
+<p>然后这个客户端收到这个包之后,会做一个<code>公钥的校验和共享密钥的生成</code>。</p>
+<p>首先把它的这一个发送过来这个<code> CA 证书</code>进行一个验证，那它的这个 CA 证书里面会包含一个公钥,通过CA的公钥对其中的公钥进行验证通过之后,就会使用这个公钥进行加密</p>
+<p>然后会把它本地产生的一个<code>pre master key </code>这个东西用CA证书中包含的公钥进行加密，然后发送给服务端。然后再发送一个通知，就是说以后的话我们就用这一个对称秘密钥的方式来进行一个通信，用了服务端在收到这个信息之后，自己也会产生一个对称密钥的这一个这个密钥，然后的话后续的话就会一直用这个密钥来进行后续的通信</p>
+<p>(7)<strong>为什么HTTPS后续的正常通信都要换成对称密钥?</strong></p>
+<p>回答:噢，我们讲就是像这个非对称和对称的话，它其实有它是有一定性能差距的，因为我们常说这一个非对称的它有一对公钥和私钥，那么在在这个公钥要解密的这一个过程中，那么加密和解密过程中它其实内这个性能损耗其实是还是比较严重的，而使用对称加密的话，它性能其实是比较好的。</p>
+<p>所以的话在我们的 HTTPS 里面，我们通常是就是要在这个 HTTPS 上就是经常的来回传输东西，你的性能很差的话，那么就会影响我们那个用户的体验。如果是对称密钥的话，它的这个性能比较好。</p>
+<p>(8)<strong>项目为什么要用redis?</strong></p>
+<p>首先它这个<code>demo(黑马点评)</code>的场景它是基于一个秒杀的场景的，比如说我们的这个天猫双 11 或者是什么抢购之类的，那这时候会有一个<code>千万级</code>或者是到<code>亿级并发</code>，或者是反正就很非常高的这个并发。</p>
+<p>如果说我们单纯走这个数据库的话，那么它其实性能是比较差的。在我做这个 demo 的过程中，其实也是有去测过，就是说我们去完成一次这样一个下单的请求，其实是大概要 500 毫秒左右的。那你想下来就是如果说是千万级并发，这个钱下，每一个线程都 500 毫秒，那可能会造成这个请求的积压,甚至请求的丢失之类的情况。</p>
+<p>所以的话引入 Redis 它主要是因为它最适合用来做这一个和数据库做一个缓存，同时它也能提供一些异步的能力，通过这异步能力来大幅度的改善我们数据库的表现，大概的话，这个场景就是非常适合用 Redis 来做的。</p>
+<p>(9)<strong>项目相关:Redis提升的QPS是针对什么请求?是读请求还是写请求?</strong></p>
+<p>像这个请求的话，它我觉得它是一个写的请求，因为我们刚才的假设是在这一个秒杀场景下的，秒杀场景下的话就意味着我们要向服务端提交一些数据，比如说我们这个用户的ID，这个订单号的ID，还有这一个。嗯，还有这个商品的ID，就要把这三个ID，我们把它传到服务器里面去，让服务器做一个备案，那么的话它其实就是一个写的请求。</p>
+<p>(10)<strong>项目相关:Redis是做缓存还是做实际存储?</strong></p>
+<p><code>真正的存储其实还是在我们的 MySQL 里面的</code>。那么Redis它其实上只是起到一个中转的作用，就是说我可能我 MySQL 处理不了那么快了，但是我的 Redis 它因为具有一个可以接受高并发，同时有一个持久化的功能。那么呢我可以基于这两个功能，我可以先把一些数据先放到 Redis 里面去，又让他去接收这样高的并发。在后续我们在后台在启动，就是一些比如说像一些守护线程去轮流的读取我们redis中数据，再把它回填到我们的 MySQL 里面去。</p>
+<p>(11)<strong>项目相关:Redis的消息队列?</strong></p>
+<p>答:这里面试官好像不知道Stream这种数据类型,问了我这个数据类型的操作指令是怎么样的。</p>
+<p>Stream是在Redis的新版本中提出的新的数据结构,主要是用来提供一个可靠的消息队列,支持了持久化和消息的可靠消费,其中的核心是一个叫做<code>pending-list</code>的数据结构,这个<code>pending-list</code>上存放的消息结构体,如果没有被消费完成的话,就会被设置成一个<code>pending</code>的状态,如果消费者确实消费成功了,那么就会返回一个<code>ack</code>,然后redis这边就会将其标志成消费成功。指令大概是:</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">XADD myStream * <span class="token punctuation">..</span>.<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>(12)<strong>项目相关:Redis的集群了解吗?谈谈你对高可用的理解?</strong></p>
+<p>高可用的话我理解就是像我们以前来实现这一个服务的可用性，一般是通过我们的运维工程师来实现的。</p>
+<p>比如说我们有个Redis的实例挂了，有用户反馈，然后我们运维的就加班加点就是去更新服务器，就是去启用一个新的<code>Redis</code>实例，重启起来，然后把数据恢复进去，那么这是以前的做法。</p>
+<p>那么如果我们要实现高可用，那么我们必须要实现就是可以一个<code>自动切换</code>的这样一个功能。自动切换是怎么实现呢？</p>
+<p>就是首先我们会有一台就是这<code>主的Redis</code>，<code>还有几台从的Redis</code>，因为我们主要我们的主的这个 Redis 会不断的就是去发数据,要让这<code>从的节点</code>去同步我们这个<code>主的Redis </code>里面的数据。</p>
+<p>当我们的主节点这一个 Redis 它发生了这一个宕机之后，我们的 Redis 集群它里面有一种特殊的实例叫做哨兵实例，我们通过这个哨兵实例就可以就可以将这个主节点替换下来，就判断它下线以后我们再把从节点部署上去，这样的话就可以实现一个相当于实现节点的自动切换,尽管用户会感觉到有一段时间卡顿了,但是不需要运维人员手动实现切换了，那么那么我认为这就是一种高可用，像 MySQL 里面其实它也有这样的高可用的这种场景存在。</p>
+<p>(13)<strong>用过消息队列吗(没)?谈谈你对消息队列的理解?</strong></p>
+<p>噢，这种东西它主要是实现一个我们这个生产者和消费者之间的解耦，就是说像我们传统的这一个，<code>就是这一个网络处理流程中都是有一个生产者，然后生产者去调用我们这个消费者，这样的话它其实就形成了一条链路</code>，那么在这条链路上如果说我们的消费者没有消费完成，我们生产者它也是处于一个阻塞的状态的,但是实际上这个生产者其实可以不等待消费者消费完再生产的。</p>
+<p>那么我们引入这个消息队列，相当于在他们之间架了一个桥梁，就是我们生产者不断的往里面去放数据，然后因为我们消费者就从里面取数据，当没有数据的时候，我们消费者就可以就会处于一个阻塞状态，可以等待，比如说等待我们生产者给他发消息，或者是我们这个消费者先暂时自旋，就是不断去自旋看它里面有没有数据。主要是实现这一个解耦的，就是避免它这个消费的速率或者生产的速率太低，主要我觉得是来做这件事情的,同时这个队列也可以实现一个异步通信之类的效果</p>
+<p>(14)<strong>讲讲QPS怎么测的,简历上的数据是怎么来的</strong></p>
+<p>它其实有一个叫做Jmeter的工具，像这个的工具的话就是专门用来做性能测试。</p>
+<p>一开始这个项目的版本,在实现防止超卖的问题的时候,是完全使用MySQL来实现的，那么一开始他这个QPS其实就 70- 80这样的非常低的这一个QPS,因为本身MySQL性能就比较差,而且在程序中还用到了悲观锁。</p>
+<p>然后在引入我们这个Stream队列，引入这个我们这个异步消费的这样一个机制之后，它的我们看到的其实它的QPS 能够达到 400 到 500 左右，大概是大概当时是这么测出来的。</p>
+<p>反问环节</p>
+<p>(1)<strong>对学习有什么建议?(间接套面评)</strong></p>
+<p>我觉得就是面下来。嗯，优势就是说这个表达能力还是挺不错的，然后那个知识的基础也掌握的比较牢，包括总体上平均水平应该算是在偏上的，嗯，如果要补充的一些东西的话，我个人认为就是说在一些分布式。</p>
+<p>第一是分布式的相关的信息，就比如说你像的Redis都是单机版的，对吧？然后可能要更多的了解一下这种分布式以及并发的一些在互联网常见的这种概念。</p>
+<p>然后第二点就是那个希望多能够再去多熟悉一些别的组件，像刚才聊说RocketMQ或者卡夫卡这样的，可能只是一个了解的知道这个状态，对吧？</p>
+<p>但是这种组件一旦入职之后的话，它都是非常常见的。</p>
+<p>对，然后真的要第三点的话就是，嗯，如果还是想做互联网，感觉就目前而言，你像字节以及腾讯都是在嗯全面的转go，当然 Java 也还有它的优势， Java 在了解在那个。拼多多对吧？还有美团他们还是用的比较多。</p>
+<p>对，这里确实就是看你了，看你个人就是，嗯，像如果到腾讯这边来的话，基本上go更有优势一些</p>
+<p>(<strong>凉凉。。技术栈不匹配,后来进了复试流程,然后没有给二面就流程已结束了,应该是有会Go的同学提前上了</strong>)。</p>
+<h1 id="面试总结"><a href="#面试总结" class="headerlink" title="面试总结"></a>面试总结</h1><h2 id="感觉"><a href="#感觉" class="headerlink" title="感觉"></a>感觉</h2><p>感觉回答得还是可以的,但是还是技术栈不匹配把我挂了吧。</p>
+<h2 id="不足之处"><a href="#不足之处" class="headerlink" title="不足之处"></a>不足之处</h2><p>语速略微有点快,下次可以放慢速度。</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">穿山甲</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://lumxi.github.io/2023/03/27/view/%E8%85%BE%E8%AE%AFPCG%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E4%B8%80%E9%9D%A2/">https://lumxi.github.io/2023/03/27/view/%E8%85%BE%E8%AE%AFPCG%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E4%B8%80%E9%9D%A2/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">穿山甲</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E6%A0%A1%E6%8B%9B/">
+                                    <span class="chip bg-color">校招</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/03/27/view/3.27%E7%BE%8E%E5%9B%A2%E6%80%BB%E7%BB%93/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="美团平台一面凉经">
+                        
+                        <span class="card-title">美团平台一面凉经</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
+                                    面经
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E6%A0%A1%E6%8B%9B/">
+                        <span class="chip bg-color">校招</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/03/19/Redis/Redis-6/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="深入学习Redis-集群与淘汰策略">
+                        
+                        <span class="card-title">深入学习Redis-集群与淘汰策略</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-03-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E4%B8%8E%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="post-category">
+                                    分布式与中间件
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/Redis/">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+
+  <!-- 是否加载使用自带的 prismjs. -->
+  <script type="text/javascript" src="/libs/prism/prism.min.js"></script>
+
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="/libs/aplayer/Meting.min.js"></script>
+
+    
+
+    <div class="container row center-align"
+         style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2023</span>
+            
+            <a href="/about" target="_blank">穿山甲</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+                
+            
+            
+                <span id="busuanzi_container_site_pv">
+                &nbsp;|&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;
+                    <span id="busuanzi_value_site_pv" class="white-color"></span>
+            </span>
+            
+            
+                <span id="busuanzi_container_site_uv">
+                &nbsp;|&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;
+                    <span id="busuanzi_value_site_uv" class="white-color"></span>
+            </span>
+            
+            <br>
+
+            <!-- 运行天数提醒. -->
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 白天和黑夜主题 -->
+<div class="stars-con">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>  
+</div>
+
+<script>
+    function switchNightMode() {
+        $('<div class="Cuteen_DarkSky"><div class="Cuteen_DarkPlanet"></div></div>').appendTo($('body')),
+        setTimeout(function () {
+            $('body').hasClass('DarkMode') 
+            ? ($('body').removeClass('DarkMode'), localStorage.setItem('isDark', '0'), $('#sum-moon-icon').removeClass("fa-sun").addClass('fa-moon')) 
+            : ($('body').addClass('DarkMode'), localStorage.setItem('isDark', '1'), $('#sum-moon-icon').addClass("fa-sun").removeClass('fa-moon')),
+            
+            setTimeout(function () {
+            $('.Cuteen_DarkSky').fadeOut(1e3, function () {
+                $(this).remove()
+            })
+            }, 2e3)
+        })
+    }
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    
+
+    
+
+    <!-- 雪花特效 -->
+    
+
+    <!-- 鼠标星星特效 -->
+    
+
+     
+        <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+        <script src="/libs/others/TencentCaptcha.js"></script>
+        <button id="TencentCaptcha" data-appid="xxxxxxxxxx" data-cbfn="callback" type="button" hidden></button>
+    
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

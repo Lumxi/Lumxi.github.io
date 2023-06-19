@@ -4,11 +4,38 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="计算机网络基础知识复习, 后端工程师之路">
-    <meta name="description" content="1. TCP&amp;#x2F;IP网络模型有哪几层?
-为什么要有TCP&amp;#x2F;IP网络模型?
+    <meta name="keywords" content="腾讯云测开一面, 后端工程师之路">
+    <meta name="description" content="面试人张庭杰
+面试时间2023.4.25
+背景介绍
 
-首先,由于网络通信是非常复杂的,在网络设计的时候,我们希望达到这样一种效果,就是在网络的最高层是可以提供一个用户接口&amp;#x2F;用户专属协议,用户">
+
+面试公司
+腾讯
+
+
+
+部门
+腾讯云(CSIG)
+
+
+岗位类型
+暑期实习
+
+
+第几面
+一面(已通过)
+
+
+方向
+测试开发
+
+
+语言
+Java,部门用的是GO&amp;#x2F;Python
+
+
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +47,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>计算机网络基础知识复习 | 后端工程师之路</title>
+    <title>腾讯云测开一面 | 后端工程师之路</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -337,12 +364,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">计算机网络基础知识复习</h1>
+                    <h1 class="description center-align post-title">腾讯云测开一面</h1>
                 </div>
             </div>
         </div>
@@ -391,7 +418,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-04-21
+                    2023-04-25
                 </div>
                 
 
@@ -415,27 +442,88 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-TCP-x2F-IP网络模型有哪几层"><a href="#1-TCP-x2F-IP网络模型有哪几层" class="headerlink" title="1. TCP&#x2F;IP网络模型有哪几层?"></a>1. TCP&#x2F;IP网络模型有哪几层?</h2><blockquote>
-<p>为什么要有TCP&#x2F;IP网络模型?</p>
-</blockquote>
-<p>首先,由于网络通信是非常复杂的,在网络设计的时候,我们希望达到这样一种效果,就是在网络的最高层是可以提供一个用户接口&#x2F;用户专属协议,用户只需要通过这个接口&#x2F;协议定义网络通信的数据和规则,就可以实现两个网络进程间的数据通信,听起来非常简单,但是非常复杂,因为网络传输需要通过各种各种的设备的软件的支持,才能够实现,那么在不同的进程之间的通信,由于通信细节的不同,因此可能出现异构的网络、异构的软件、异构的硬件设备,如果将这些通信的细节全部挤到到一层中来实现,那么最终就会导致牵一发而动全身,因此我为了降低系统的复杂度,并且使得网络之间的通信维护起来比较简单,那么通过分层,就是一个比较好的主意</p>
-<h2 id="2-应用层是干啥的"><a href="#2-应用层是干啥的" class="headerlink" title="2. 应用层是干啥的?"></a>2. 应用层是干啥的?</h2><p><strong>应用层</strong>是用户能够直接接触到的层面,将电脑和手机使用的应用软件都在应用层实现的,那么当两个不同设备的应用需要通信的时候,应用层就将用户的数据传递到下一层,由下一层来完成可靠的通用传输</p>
-<p>因此应用层只需要专注于为用户提供引用功能,也就是编写一些功能程序,用来快速收发用户的数据</p>
-<p>应用层不需要关心数据是如何传输的,它只关心如何完成用户的功能</p>
-<p>比如说如何完成超文本协议传输?如果要传文本怎么办?如果要发请求怎么办?它做的是这个事情</p>
-<p><strong>应用层</strong>是工作在操作系统中的用户态,<strong>传输层以及以下是工作在内核态的</strong></p>
-<h2 id="3-传输层是干啥的"><a href="#3-传输层是干啥的" class="headerlink" title="3. 传输层是干啥的?"></a>3. 传输层是干啥的?</h2><p>传输层主要负责两个进程间数据传输的通用协议协定,简单来说,就是不管上层交付了什么数据,传输层负责管理这一条两端的数据传输,比如说有TCP协议,它负责数据的可靠传输,提供了流量控制,超时重传,拥塞控制等功能</p>
-<p>而UDP协议是尽最大努力地完成数据的传输,它并不负责数据的可靠传输,而是提供了一个简单的传输协议,负责将用户下发下来的数据包分发到不同的机器上,它的特点是无论网络中如何拥堵了,它都会以恒定的速率注入数据包到网络中,而且它也没有超时重传,流量控制,拥塞控制等复杂功能,因此它的头部控制字段比较简单</p>
-<p>总得来说,传输层是用来抽象底层的物理连接的,传输层通过将底层的物理连接抽象成逻辑连接,通过这个逻辑连接来感知当前两端数据的传输情况,通过对这些数据传输情况的感知,可以实现可靠传输,也可以实现实时的面向数据报的传输</p>
-<h2 id="4-网络层是用来干啥的"><a href="#4-网络层是用来干啥的" class="headerlink" title="4. 网络层是用来干啥的?"></a>4. 网络层是用来干啥的?</h2><p><code>网络层</code>的功能可以总结为<code>路由选择</code>、<code>分组转换</code>,简单来说,由于数据报从不同的主机上发出后,中间通过的线路是错综复杂的,主要是用来处理异构网络的问题,比如说一个网络中的传输需要依赖网桥,而在另一个网络中并没有网桥,在网络传输过程中,可能会通过很多个这样的异构网络,那么这些数据报要怎么从一个网络中传递到其他网络,这就是问题所在了</p>
-<p>网络层的关键是路由器以及<code>IP</code>协议,<code>IP</code>协议提供了一层逻辑层抽象,它将实际的物理设备的地址抽象成了一串IP地址,然后通过在路由表中记录要到达这个物理设备所对应的IP地址以及转发端口,从而实现路由选择的功能,那么分组转发的功能就是路由器完成的事情,一般来说,这个功能就是整个网络的瓶颈,这是因为路由器的缓冲区满了之后,这时候就会导致分组丢失,需要上层的传输重新组装数据包重新发送</p>
-<h2 id="3-数据链路层-amp-物理层是用来干嘛的"><a href="#3-数据链路层-amp-物理层是用来干嘛的" class="headerlink" title="3. 数据链路层&amp;物理层是用来干嘛的?"></a>3. 数据链路层&amp;物理层是用来干嘛的?</h2><p>数据链路层以及物理层通常是分开来描述的,但是在TCP&#x2F;IP网络模型中,它们被归并为<code>网络接口层</code>,首先我们知道IP协议提供的IP只是一个逻辑地址,如果要完成具体的通信,只有逻辑地址是不行的,这是因为最终的数据传输都是要基于物理设备完成的,物理设备的标识是通过<code>MAC</code>地址来实现的,那么数据链路层就是通过解析来自网络层的包,然后将IP地址通过<code>ARP</code>协议转换成MAC地址,然后就可以实现底层的物理传输了,那么它在底层完成了对目标物理设备的解析,最终就会将这些数据报转换成<code>信号</code>,比如说有数字信号,频带信号,然后通过调频之类的手段,将信号传递到具体的物理设备上,物理设备再完成解析,就能够还原出一个MAC帧了</p>
-<h2 id="4-TCP头部的格式有哪些"><a href="#4-TCP头部的格式有哪些" class="headerlink" title="4. TCP头部的格式有哪些?"></a>4. TCP头部的格式有哪些?</h2><p>TCP首部的格式主要有<strong>源端口号</strong>、<strong>目标端口号</strong>、<strong>序列号</strong>、<strong>确认应答号</strong>、<strong>ACK</strong>、<strong>RST</strong>、<strong>SYN</strong>、<strong>FIN</strong></p>
-<p>还包括有一些例如窗口大小这些关于滑动窗口的参数</p>
-<p>其中ACK的位为1的时候,代表是一个确认应答包</p>
-<p>当RST的位为1的时候,表示TCP连接中出现了异常必须强制断开连接</p>
-<p>SYN表示建立连接,并在其序列号的字段进行序列号的初始化值的设定</p>
-<p>FIN表示断开连接,当通信结束的时候,通信双方就可以相互交换位为1的TCP段</p>
+                <h1 id="面试人"><a href="#面试人" class="headerlink" title="面试人"></a>面试人</h1><p>张庭杰</p>
+<h1 id="面试时间"><a href="#面试时间" class="headerlink" title="面试时间"></a>面试时间</h1><p>2023.4.25</p>
+<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><table>
+<thead>
+<tr>
+<th>面试公司</th>
+<th>腾讯</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>部门</td>
+<td>腾讯云(CSIG)</td>
+</tr>
+<tr>
+<td>岗位类型</td>
+<td>暑期实习</td>
+</tr>
+<tr>
+<td>第几面</td>
+<td>一面(已通过)</td>
+</tr>
+<tr>
+<td>方向</td>
+<td>测试开发</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>Java,部门用的是GO&#x2F;Python</td>
+</tr>
+<tr>
+<td>投递渠道</td>
+<td>官网</td>
+</tr>
+</tbody></table>
+<h1 id="问题记录"><a href="#问题记录" class="headerlink" title="问题记录"></a>问题记录</h1><p>(1)自我介绍环节</p>
+<p>略</p>
+<p>(2)对go了解吗?部门主要是偏go语言的</p>
+<p>说了之前学过一段时间,但是太长时间没有接触了,如果给一个礼拜的话就可以将相关知识捡回来</p>
+<p>(3)项目问答:说的是项目中写了用<code>Redis</code>提高了QPS,那么如果QPS提高了,<strong>用户客户端无限制地请求服务器,那么会导致Redis的连接打满吗?比如说能承载的QPS极限是10W,来了12W的请求,该怎么办呢?</strong></p>
+<p>说了使用限流的思路,可以使用其他中间件,比如说使用令牌桶,每秒钟以一定的速率放入令牌,然后只有取到令牌的请求线程才能执行秒杀操作,否则的话就可以让这个线程暂停,或者是执行自动重试、退出</p>
+<p>面试官补充:可以设置一个队列,就是将获得令牌失败的线程放入到一个队列中,然后的等待令牌有空余的时候,这时候就唤醒线程去重新竞争令牌,同时要考虑队列是否会产生内存溢出问题</p>
+<p>(4)项目问答:Redis中有遇到并发竞争问题吗?</p>
+<p>答:说了秒杀优惠券的引发的并发竞争的问题,引出分布式锁,通过分布式锁来解决并发竞争问题,说了使用Redission来实现这个分布式锁</p>
+<p>(5)项目问答:分布式锁的实现是怎么样的?</p>
+<p>回答:1.互斥,只有一个线程能够在一个时间段内操作这个线程,通过setnx实现。</p>
+<p>2.可重入,可以通过一个设置一个<code>hash结构</code>,这个哈希结构是这样设置的<code>&#123;线程ID&#125;=&gt;&#123;锁的重入次数&#125;</code>,当线程到来的时候就判断有没有这个数据,如果有这个数据的话,那么就检查线程ID是否和自己的ID一样,如果一样的话就锁重试次数++,当重入结束的时候,就让这个锁的重入次数–,当锁的重入次数&#x3D;&#x3D;0的时候,删除这个键值对。</p>
+<p>3.实现锁的自动续期,通过看门狗机制,这个点有点记不清了,于是凭着印象简单说了一下,就是开辟一个守护线程,然后这个守护线程定期去更新锁的过期时间,当业务没有结束的时候就一直更新这个锁的过期时间</p>
+<p>4.实现锁的自动重试,当线程获取锁失败后,可以让线程自旋等待锁</p>
+<p>5.防止死锁,设置锁的过期时间</p>
+<p>(6)项目问答:守护线程是什么意思?</p>
+<p>答:就是为了防止锁在业务没有执行完成后就释放掉了,开启一个线程来定期对这把锁进行延期操作</p>
+<p>(7)项目问答:假设这样一个场景,就是业务线程挂掉了,然后守护线程一直还在更新这把锁的延期时间,会怎么样?怎么办?<code>(不会)</code></p>
+<p>答:猜的….从业务线程的角度回答,可以通过语言的特性,就是<code>try-catch-finally</code>的特性,来保证这把锁一定会释放,从守护线程的角度来看,可以通过统计这个业务的执行时长,定义一个最长的业务执行时间,如果在这个时间内一直还在更新这把锁的过期时间,那么就释放这个锁,然后上报业务层</p>
+<p>(8)信号量的工作原理是什么?</p>
+<p>答:从底层的数据结构来说,信号量包含两个字段,第一个字段是这个信号量代表的资源个数,当&gt;0的时候,比如说是n,那么就代表说有n个资源可用,当&lt;0,代表说有有n个线程因为这个资源被阻塞了,第二个字段是阻塞队列,当有线程释放资源的时候,就会唤醒这个阻塞队列中的线程</p>
+<p>(9)为什么有HTTP协议了?还要用RPC?</p>
+<p>答:1.从项目实践的角度上来讲,使用HTTP协议规定的协议码对于RPC框架提供的异常信息返回的角度来说,HTTP所蕴含的信息不够丰富,不够直观,比如说通信双方的执行状态只能够通过状态码来描述,而RPC框架可以返回完整的异常信息</p>
+<p>2.从编码的角度上来看,HTTP的编码比较冗余,也就是说需要通过定义一大堆的状态码来定义当前的状态,对于不同的服务,这些编码可能还有不同的含义,不合适</p>
+<p>3.HTTP通常来说前端和后端通信使用的,包含了大量的浏览器跳转状态定义,这些状态对于后端服务器之间的联调是没有意义的,因此在这样的情况下,而RPC自定义的协议,可以免去这些冗余的状态,更加定制化地是设定这个后端服务联调</p>
+<p>(10)项目负载均衡是怎么实现的?</p>
+<p>答:通过计算节点定期上报负载信息,然后通过中控节点计算这些负载信息,得出一个得分,最终选中一个计算节点作为一个最终选用的服务器</p>
+<p>(11)go的map底层原理是什么?</p>
+<p>答:不会…问面试官能不能说Java的HashMap,说可以。</p>
+<p>HashMap的底层是基于数组+<code>链表/红黑树</code>来实现的,其中数组是<code>HashMap</code>的主体,而链表和红黑树是为了解决哈希冲突而实现的,哈希冲突指的是多个不同的key,通过hash()计算出来的index是一致的,为了解决这个问题,可以使用拉链法来实现,也就是发现通过key计算出来的位置有元素的时候,这时候就将<code>&#123;value&#125;</code>插入到这个下标上的链表或者红黑树,除此之外,还有再哈希法,开放寻址法等方法来解决这个问题</p>
+<p>(12)写代码中用到并发吗?说了项目中用到线程池</p>
+<p>(13)Git用过吗?Git上有敏感数据吗?比如说docker-compose或者是脚本文件中有敏感信息,你怎么来管理?</p>
+<p>答:说了通过本地配置文件,比如说<code>docker-compose</code>中配置密钥资源的时候,将敏感数据部署在物理机本地,然后在文件内部通过引用的方式来引用这个密钥,这样的话就可以避免密钥上传到git上,导致泄露,还有的话就是可以通过合理配置权限,具体来说就是在<code>docker-compose</code>的目录中配置一个<code>.ini</code>文件,然后将键值对,例如<code>MYSQL_PASSWORD=123456</code>填入到这个文件中,然后在<code>docker-compose</code>中通过<code>$MYSQL_PASSWORD</code>来引用这个数据,因此<code>docker-compose</code>这些要上git的数据就不会部署到git上了</p>
+<p>(14)知道测试开发是怎么做的吗?</p>
+<p>答:1.写测试用例,设计测试用例 2.</p>
+<p>(15)Linux操作过吗?说一说常见的指令</p>
+<p>答:1.文件相关(mv mkdir cd ls)</p>
+<p>2.docker相关(docker container ls docker ps -a )</p>
+<p>3.权限相关(chmod chown useradd groupadd)</p>
+<p>4.网络相关(netstat ip addr)</p>
+<p>5.测试相关(测试连通性:ping 测试端口连通性:telnet)</p>
+<p>(16)智力题:屋里四盏灯，屋外四个开关，一个开关仅控制一盏灯，屋外看不到屋里，怎样只进屋一次，就知道哪个开关控制哪盏</p>
+<p>(17)算法题:10w个字的文章,都是小写字母,求其中出现次数最多的字母</p>
+<p>统计词频+排序+输出</p>
+<p>反问:</p>
+<p>部门技术栈是什么?测开具体做啥?</p>
+<h1 id="面试总结"><a href="#面试总结" class="headerlink" title="面试总结"></a>面试总结</h1><h2 id="感觉"><a href="#感觉" class="headerlink" title="感觉"></a>感觉</h2><p>有些问题回答得不是很清晰,对项目还是不太熟</p>
+<h2 id="不足之处"><a href="#不足之处" class="headerlink" title="不足之处"></a>不足之处</h2><p>智力题没什么思路,应该还要</p>
 
                 
             </div>
@@ -462,7 +550,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lumxi.github.io/2023/04/21/view/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/">https://lumxi.github.io/2023/04/21/view/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/</a>
+                    <a href="https://lumxi.github.io/2023/04/25/view/%E8%85%BE%E8%AE%AF%E4%BA%91%E6%B5%8B%E5%BC%80%E4%B8%80%E9%9D%A2/">https://lumxi.github.io/2023/04/25/view/%E8%85%BE%E8%AE%AF%E4%BA%91%E6%B5%8B%E5%BC%80%E4%B8%80%E9%9D%A2/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -580,18 +668,17 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/04/21/view/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%A4%8D%E4%B9%A0/">
+                <a href="/2023/05/08/springcloud/springcloud-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="计算机网络基础知识复习">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="SpringBoot知识总结">
                         
-                        <span class="card-title">计算机网络基础知识复习</span>
+                        <span class="card-title">SpringBoot知识总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -601,27 +688,34 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-21
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-05-08
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                    面经
+                            <a href="/categories/SpringCloud/" class="post-category">
+                                    SpringCloud
+                                </a>
+                            
+                            <a href="/categories/SpringCloud/%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91/" class="post-category">
+                                    高级开发
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%A0%A1%E6%8B%9B/">
-                        <span class="chip bg-color">校招</span>
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">后端开发基础</span>
                     </a>
                     
                 </div>
@@ -635,13 +729,13 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/04/17/docker/docker(5)/">
+                <a href="/2023/04/22/k8s/k8s-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="容器编排工具入门">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="K8S是什么?">
                         
-                        <span class="card-title">容器编排工具入门</span>
+                        <span class="card-title">K8S是什么?</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -652,14 +746,14 @@
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-17
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-22
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/k8s/" class="post-category">
-                                    k8s
+                            <a href="/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    云计算
                                 </a>
                             
                             
@@ -669,8 +763,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">后端开发基础</span>
+                    <a href="/tags/Docker/">
+                        <span class="chip bg-color">Docker</span>
+                    </a>
+                    
+                    <a href="/tags/K8S/">
+                        <span class="chip bg-color">K8S</span>
                     </a>
                     
                 </div>

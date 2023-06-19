@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="4-11日知识回顾, 后端工程师之路">
+    <meta name="keywords" content="Redis知识回顾, 后端工程师之路">
     <meta name="description" content="Redis1. Redis和Memcache有什么区别?Memcache本身也是基于内存的数据库,那么为什么不选它作为缓存呢?这个的话就要搞清楚它的区别:
 
 首先他们都是基于内存的数据库,因此他们一般都用来做缓存
@@ -21,7 +21,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>4-11日知识回顾 | 后端工程师之路</title>
+    <title>Redis知识回顾 | 后端工程师之路</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -338,12 +338,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">4-11日知识回顾</h1>
+                    <h1 class="description center-align post-title">Redis知识回顾</h1>
                 </div>
             </div>
         </div>
@@ -450,7 +450,7 @@
 <p><code>Zset</code>类型,排序类型,比如说排行榜,电话和姓名等</p>
 <p><code>BitMap</code>:二值状态统计的场景,比如说签到,判断用户登录状态,连续签到用户总数等</p>
 <p><code>HyperLogLog</code>:海量数据基数统计的场景,比如说百万级UV计数</p>
-<p><code>GET</code>:滴滴打车</p>
+<p><code>GEO</code>:滴滴打车</p>
 <p><code>Stream</code>:Redis实现的消息队列,相比于List实现的消息队列,它可以自动生成全局唯一性ID,支持以消费者组形式消费数据</p>
 <h2 id="4-五种常见的数据类型是怎么实现的"><a href="#4-五种常见的数据类型是怎么实现的" class="headerlink" title="4. 五种常见的数据类型是怎么实现的?"></a>4. 五种常见的数据类型是怎么实现的?</h2><blockquote>
 <p><code>String类型的内部实现</code></p>
@@ -480,7 +480,7 @@
 <p>为什么要这样做?</p>
 </blockquote>
 <p>当字符串的长度太长的时候,就需要将ptr指向一个SDS的头部,这个过程涉及到一次内存分配,然后SDS头部的buf指针又需要指向一个字符串的首部,这个过程涉及到一次内存分配</p>
-<p>当发生了内存回收的时候,这时候就需要两次内存回收了</p>
+<p>当发生了内存回收的时候,这时候就需要0两次内存回收了</p>
 <p>因此为了解决这个问题,<code>embstr</code>的编码会使用<code>SDS</code>来保存值,但是不同之处在于<code>embstr</code>会通过一次内存分配函数来分配一个连续空间,这个连续的空间可以存储下一个完整的SDS头部,而<code>raw</code>编码则是会通过分配出一个空间,然后存储SDS的头部,然后这个头部中buf指针再申请一块自己使用的空间</p>
 <p>有什么好处?</p>
 <p><strong>embstr的使用</strong>可以使得内存分配次数降低,然后减少了指针寻址的次数</p>
@@ -537,7 +537,7 @@
 </ul>
 <p>同时,对于不同的数据类型,它也有不同的保存策略</p>
 <ul>
-<li>首先,如果当前节点的数据类型是整数,那么会在encoding中对整数类型进行标记,<code>encoding</code>长度为1字节,通过encoding确认了整数类型,就可以确认整数数据的实际大小了,比如如果encoding编码确定了数据是<code>int16</code>整数,那么data的传唱度就是<code>int16</code>的大小</li>
+<li>首先,如果当前节点的数据类型是整数,那么会在encoding中对整数类型进行标记,<code>encoding</code>长度为1字节,通过encoding确认了整数类型,就可以确认整数数据的实际大小了,比如如果encoding编码确定了数据是<code>int16</code>整数,那么data的长度就是<code>int16</code>的大小</li>
 <li>如果当前节点的数据类型是字符串,那么根据字符串的长度大小,<code>encoding</code>会使用<code>1byte/2byte/5byte</code>的空间进行编码,<code>encoding</code>编码的前两个bit来表示数据的类型,后续的其他bit表示字符串数据的实际长度,也就是data的长度</li>
 </ul>
 <p><strong>解释一下连锁更新问题</strong></p>
@@ -585,7 +585,7 @@
 <p>注:每次使用哈希表只会使用下标为0的哈希表,因此在每次rehash结束后,就会将迁移完毕的哈希表设置为ht[0],然后重置ht[1]的空间为空</p>
 </blockquote>
 <p>第一步,设置一个变量叫做<code>rehashIndex = 0</code>,标记开始<code>rehash</code>,注意这个变量就是<code>rehashIndex=-1</code>的时候,此时标志着<code>rehash</code>结束了或者是还没有开始</p>
-<p>第二步,每次执行新增、查询、修改、删除等操作的时候,都会检查一下<code>dict.rehashIdx</code>是否大于-1,如果是的话,那么就将这个<code>dict.ht[0].table[rehashIndex]</code>的<code>entry</code>链表<code>rehash</code>到<code>dict.ht[1]</code>,然后将<code>rehashIndex</code></p>
+<p>第二步,每次执行新增、查询、修改、删除等操作的时候,都会检查一下<code>dict.rehashIdx</code>是否大于-1,如果是的话,那么就将这个<code>dict.ht[0].table[rehashIndex]</code>的<code>entry</code>链表<code>rehash</code>到<code>dict.ht[1]</code>,然后将<code>rehashIndex++</code></p>
 <p>比如说数组有<code>&#123;0,1,2,3,4&#125;</code>,然后就会将<code>0</code>的位置迁移到新表上的<code>0</code>,然后index++,继续迁移1…直到迁移到4</p>
 <p><strong>迁移过程如何保障新表和旧表的数据一致性?</strong></p>
 <p>在做rehash的时候是将旧的数据迁移到新表上,这个数据要么在新表上,要么在旧表上,在rehash的过程中</p>
@@ -689,11 +689,11 @@
 <p>在并发环境下skiplist有另外一个优势，红黑树在插入和删除的时候可能需要做一些rebalance的操作，这样的操作可能会涉及到整个树的其他部分，而skiplist的操作显然更加局部性一些，锁需要盯住的节点更少，因此在这样的情况下性能好一些。</p>
 <h2 id="6-Redis是单线程的吗"><a href="#6-Redis是单线程的吗" class="headerlink" title="6. Redis是单线程的吗?"></a>6. Redis是单线程的吗?</h2><p>单线程指的是Redis中处理命令是单线程的,也就是说从<code>服务器接收客户端请求=&gt;解析请求=&gt;进行数据库的读写操作=&gt;发送数据到客户端</code>这个过程是由一个线程来完成的,这也就是常说Redis是单线程的原因</p>
 <p>但是实际上Redis是多线程的,Redis在启动的时候,是有后台线程,注意到Redis完成一个完整指令的过程是有存在一个网络IO的过程的,涉及到IO,那么就有可能导致线程阻塞的风险,因此为了避免阻塞的问题,Redis通过后台线程的方式来解耦处理指令、接收指令、发送结果集的过程,通过将那些可能造成阻塞的问题加入到不同的任务队列中,将处理好的任务结果存储在内存中,然后交给主线程来进行读取,这样的话就可以避免线程阻塞了</p>
-<p>Redis中主要存在的耗时任务有:<code>关闭任务</code>、<code>AOF刷盘</code>、<code>释放内存</code>,这些任务创建单独的线程来处理,如果把这些任务都交给主线程来做,那么可能导致主线程阻塞,后台线程相当于一个消费者,生产者把耗时任务丢到任务队列中,消费者不断轮询这个队列,拿出这个任务就去执行对应的方法就可以了</p>
+<p>Redis中主要存在的耗时任务有:<code>关闭文件</code>、<code>AOF刷盘</code>、<code>释放内存</code>,这些任务创建单独的线程来处理,如果把这些任务都交给主线程来做,那么可能导致主线程阻塞,后台线程相当于一个消费者,生产者把耗时任务丢到任务队列中,消费者不断轮询这个队列,拿出这个任务就去执行对应的方法就可以了</p>
 <p><strong>BIO_CLOSE_FILE</strong>:关闭文件任务队列,当队列有任务之后,后台线程会调用<code>close(fd)</code>,将文件关闭</p>
 <p><strong>BIO_AOF_FSYNC</strong>:AOF刷盘任务队列,当AOF日志配置成<code>everysec</code>选项后,主线程会将AOF写日志操作封装成一个任务,也放到队列中,当发现队列有任务的时候,后台线程就会调用<code>fsync(fd)</code>,将AOF文件刷盘</p>
 <p><strong>BIO_LAZY_FREE</strong>:lazy free任务队列,当队列中有任务的时候,后台线程就会<code>free(obj)</code>释放对象&#x2F;<code>free(dict)</code>删除数据库所有对象&#x2F;free(skiplist)释放跳表对象</p>
-<h2 id="7-Redis单线程模式是怎么执行的"><a href="#7-Redis单线程模式是怎么执行的" class="headerlink" title="7. Redis单线程模式是怎么执行的?"></a>7. Redis单线程模式是怎么执行的?</h2><p>首先要了解什么叫IO多路复,<strong>程序注册一组socket文件描述给操作系统,表示说程序想要操作内核帮忙监视这一批fd是否产生了IO事件,有了就告诉程序去处理</strong></p>
+<h2 id="7-Redis单线程模式是怎么执行的"><a href="#7-Redis单线程模式是怎么执行的" class="headerlink" title="7. Redis单线程模式是怎么执行的?"></a>7. Redis单线程模式是怎么执行的?</h2><p>首先要了解什么叫IO多路复用,<strong>程序注册一组socket文件描述给操作系统,表示说程序想要操作内核帮忙监视这一批fd是否产生了IO事件,有了就告诉程序去处理</strong></p>
 <p>这样这样理解,一个socket就对应一个fd,假设在网络环境中,但需要传送数据的时候,就可以将数据写入到这个fd中,然后网络适配器通过读取这个fd中的内容,组装TCP&#x2F;UDP报文发送出去</p>
 <p>然后当接收方的网卡接收到数据的时候,就将这些数据写入到fd中,当写入完毕的时候,就会发出一个IO就绪的事件</p>
 <p><code>epoll</code>相比于<code>select/poll</code>,节省了fd集合复制到内核的时间<code>(只需要epoll_create)</code>在内核中创建红黑树,后续通过<code>epoll_ctl</code>在红黑树上注册fd,轮询监听就需要<code>epoll_wait</code>,节省了遍历所有fd的时间,<code>内核中callback机制将已经就绪的fd写入到一个链表中再copy到用户空间</code></p>
@@ -714,7 +714,7 @@
 </ul>
 <h2 id="8-Redis为什么使用单线程还这么快"><a href="#8-Redis为什么使用单线程还这么快" class="headerlink" title="8. Redis为什么使用单线程还这么快?"></a>8. Redis为什么使用单线程还这么快?</h2><p>原因主要有:</p>
 <p><strong>基于内存的操作</strong>:Redis的操作都是基于内存实现的,内存的读写速度非常快,并且设计了非常高效的数据结构,因此它的命令处理速度非常快,而我们说Redis的单线程是模型说的是处理指令是单线程的,因此单线程的操作不会是Redis的瓶颈所在,既然CPU不是瓶颈,那么自然就采用单线程的解决方案了</p>
-<p><strong>避免了多线程的竞争操作</strong>:在单线程指令处理的速度已经很快的情况下,就没有必要去用多线程了,因为多线程的创建,本身就意味着创建线程,切换线程的这些开销,</p>
+<p><strong>避免了多线程的竞争操作</strong>:在单线程指令处理的速度已经很快的情况下,就没有必要去用多线程了,因为多线程的创建,本身就意味着创建线程,切换线程的这些开销</p>
 <p><strong>Redis基于IO多路复用模型解决了Redis的瓶颈</strong>:这是因为<code>Redis</code>的瓶颈不在它的指令处理速度,而是在它的网络IO中的相关情况,如果将主线程用于处理网络IO事件,那么就可能导致主线程阻塞而无法处理命令,为此Redis使用了IO多路复用模型来处理网络IO事件,通过这个方式来解决主线程阻塞的问题</p>
 <blockquote>
 <p>IO多路复用模型是什么?</p>
@@ -724,7 +724,7 @@
 <h2 id="9-Redis6-0之前为什么使用单线程"><a href="#9-Redis6-0之前为什么使用单线程" class="headerlink" title="9. Redis6.0之前为什么使用单线程?"></a>9. Redis6.0之前为什么使用单线程?</h2><p><strong>制约Redis性能表现瓶颈并不是CPU,我们采用多线程的最大目的就是为了提高CPU的利用率</strong></p>
 <p>在<strong>单线程+内存操作</strong>的基础上,就已经能够发挥出CPU的最大利用率,当引入多线程</p>
 <p>由于<strong>本身创建线程维护线程</strong>就需要一定的成本,当发生<strong>线程上下文切换调度</strong>的时候,带来的成本是更加沉重的,同时为了维护共享内存的线程安全问题,还要考虑加锁,以及内存可见性的问题,如此一套下来,就可能导致CPU的利用率提高不多,甚至出现无效工作量导致CPU忙等的情况,但是内核的工作量提升很多的情况</p>
-<p>而Redis的性能表现瓶颈更多情况下是受到内存大小和网络IO的限制,所以Redis核心网络模型使用单线程并没有什么问题,如果想要使用服务的多核CPU, 可以在一台服务器上启动多个节点或者采用分片集群的方式</p>
+<p>而Redis的性能表现瓶颈更多情况下是受到内存大小和网络IO的限制,所以Redis核心线程模型使用单线程并没有什么问题,如果想要使用服务的多核CPU, 可以在一台服务器上启动多个节点或者采用分片集群的方式</p>
 <h2 id="10-Redis6-0之后为什么引入了多线程"><a href="#10-Redis6-0之后为什么引入了多线程" class="headerlink" title="10. Redis6.0之后为什么引入了多线程"></a>10. Redis6.0之后为什么引入了多线程</h2><p>这是因为Redis在远程服务器上的访问通常需要承受10w的TPS,这意味着大量的网络IO请求,如果只有一个线程负责请求的接收,假设请求的参数很多,那么可能导致一个线程阻塞,如果只有一个线程来处理请求,那么可能导致后续的请求都被积压了,引入多线程的话,有以下的好处:</p>
 <p>随着网络硬件的性能提升,网络设备的接收速度很快,因此可能出现这样的一种情况,就是说网络设备接收数据包的速度很快,但是线程处理的速度还不如网络设备的处理速度,当多开几个线程的时候,就可以充分利用多核CPU的优势,同时从网络设备缓冲区中取数据,这样的话就能够尽最大程度地去执行相关指令</p>
 <p><code>Redis6.0</code>版本支持的IO多线程的特性,默认情况下IO多线程只针对发送响应数据,并不会以多线程的方式处理读请求,要想开启多线程处理客户端读请求,就需要将<code>Redis.conf</code>配置文件中的<code>io-threads-do-reads</code>的配置项设置为yes</p>
@@ -742,7 +742,7 @@
 <p>第三种方式:混合持久化,它的特点是混合了AOF和RDB的方式。</p>
 <h2 id="12-AOF日志是如何实现的"><a href="#12-AOF日志是如何实现的" class="headerlink" title="12. AOF日志是如何实现的?"></a>12. AOF日志是如何实现的?</h2><p><strong>实现的具体流程</strong>:Redis在执行完一条写操作命令后,就会将该命令以追加写的方式写入到AOF文件中,在Redis重启的时候,会读取该文件记录的命令,然后逐一执行该指令</p>
 <blockquote>
-<p>为什么是先执行命令,再把命令写入日志呢?</p>
+<p>为什么是先执行命令,再把命令写入日志呢?   </p>
 </blockquote>
 <p><strong>避免额外的开销</strong>:如果是先写入日志再执行命令,那么可能导致一个情况,如果写操作指令是不合法的,那么之前写入日志的指令就是不合法的,就需要做一个撤销的操作</p>
 <p><strong>不会阻塞当前指令的执行</strong>:无论怎么说,写入日志文件的操作的速度总归是不如内存处理的速度的,因此从用户的体验来看或者是从系统的吞吐量来看,先写日志再写指令,可能导致后续指令的阻塞</p>
@@ -793,7 +793,7 @@
 <p>主进程收到该信号之后,会调用一个信号处理函数,这个函数主要完成以下的工作</p>
 <ul>
 <li>将AOF重写缓冲区中的所有内存内容追加到新的AOF文件中,使得新旧两个AOF文件所保存的数据库状态保持一致</li>
-<li>新的AOF的文件进行改名,覆盖原来的额AOF文件</li>
+<li>新的AOF的文件进行改名,覆盖原来的AOF文件</li>
 </ul>
 <p>信号函数执行完毕后,主进程就可以继续像往常一样处理命令了</p>
 <h2 id="13-RDB快照是如何实现的"><a href="#13-RDB快照是如何实现的" class="headerlink" title="13. RDB快照是如何实现的?"></a>13. RDB快照是如何实现的?</h2><p>因为AOF日志记录的是操作命令,不是实际的数据,所以在使用AOF方法做故障恢复的时候,需要全量把日志执行一遍,一旦AOF日志非常多,那么Redis的恢复操作就会非常缓慢了</p>
@@ -813,7 +813,7 @@
 save <span class="token number">300</span> <span class="token number">10</span><span class="token comment">#300秒之内做了一次修改,就会执行保存</span>
 save <span class="token number">60</span> <span class="token number">10000</span><span class="token comment">#60秒之内做了10000次修改,就会执行保存</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>Redis的快照是全量块照,也就是说每次执行快照的时候,都是吧内存中的所有数据都记录到磁盘中,所以执行快照是一个比较重量级的过程,如果太频繁了,可能会被Redis的性能产生影响,如果频率太低,服务器故障的时候,服务器会丢失很多数据</p>
+<p>Redis的快照是全量快照,也就是说每次执行快照的时候,都是吧内存中的所有数据都记录到磁盘中,所以执行快照是一个比较重量级的过程,如果太频繁了,可能会对Redis的性能产生影响,如果频率太低,服务器故障的时候,服务器会丢失很多数据</p>
 <blockquote>
 <p>RDB在执行快照的时候,数据能够修改吗?</p>
 </blockquote>
@@ -822,7 +822,8 @@ save <span class="token number">60</span> <span class="token number">10000</span
 <p>但是如果是执行了写操作,那么就会新创建一个新的页框,然后将修改后的数据写进去,然后将父进程页表中的页表项执行修改就可以了</p>
 <h2 id="14-为什么会有混合持久化？"><a href="#14-为什么会有混合持久化？" class="headerlink" title="14. 为什么会有混合持久化？"></a>14. 为什么会有混合持久化？</h2><p><code>RDB</code>的优点是数据恢复速度快,但是快照的频率不好把握,频率太低,丢失的数据就会比较多,频率太高,就会影响性能,<code>AOF</code>优点就是丢失数据少,但是数据恢复不快</p>
 <p>为了集成两者的优点,<code>Redis</code>提出了混合使用<code>AOF日志和内存快照</code>,也叫做混合持久化,及保证了Redis的重启速度,又降低了数据丢失的风险</p>
-<p><strong>混合持久化</strong>发生在AOF日志重写的过程,当开启了混合持久化之后,在AOF重写日志的时候,<code>fork()</code>出来的重写子进程会先将与主线程共享的内存数据以<code>RDB</code>的方式写入到<code>AOF</code>文件中,然后主线程处理的操作命令会被记录在重写缓冲区中,重写缓冲区中的增量命令以<code>AOF</code>方式写入到<code>AOF</code>文件中,写入完成后通知主进程将新的含有RDB格式和AOF格式的AOF文件替换AOF文件</p>
+<p><strong>混合持久化</strong>发生在AOF日志重写的过程,当开启了混合持久化之后,在AOF重写日志的时候,<code>fork()</code>出来的重写子进程会先将与主线程共享的内存数据以<code>RDB</code>的方式写入到<code>AOF</code>文件中</p>
+<p>然后主线程处理的操作命令会被记录在重写缓冲区中,重写缓冲区中的增量命令以<code>AOF</code>方式写入到<code>AOF</code>文件中,写入完成后通知主进程将新的含有RDB格式和AOF格式的AOF文件替换AOF文件</p>
 <p>那么也就是说,当使用了混合持久化之后,AOF文件的前半部分就是RDB的全量数据,后半部分就是AOF格式的增量数据。</p>
 <p>这样的好处就在于,重启Redis加载数据的时候,由于前半部分是RDB内容,这样加载的时候速度会很快</p>
 <p>加载完RDB的内容后,才会加载后半部分的AOF内容</p>
@@ -836,7 +837,7 @@ save <span class="token number">60</span> <span class="token number">10000</span
 <blockquote>
 <p>什么叫主从复制?</p>
 </blockquote>
-<p>主从复制在MySQL中是用来实现读写分离的,具体来说就是通过读写请求分流,将读请求分发到从节点上,从写请求分发到主节点上,然后在这期间基于<code>binlog日志</code>来实现主从节点的数据同步</p>
+<p>主从复制在MySQL中是用来实现读写分离的,具体来说就是通过读写请求分流,将读请求分发到从节点上,写请求分发到主节点上,然后在这期间基于<code>binlog日志</code>来实现主从节点的数据同步</p>
 <p>那么在Redis的基本模型也是这样的,主从复制是高可用服务最基础的保障,实现方案就是将从前的一台Redis服务器,同步数据多台从Redis服务器上,也就是一主多从的模式,而且主从服务器之间采用的是读写分离的模式</p>
 <p>主服务器可以进行读写操作,当发生写操作的时候自动将写操作同步给从服务器，而从服务器通常都是只读的,并且接收主服务器同步过来的写操作指令,然后执行这条指令</p>
 <p><img src="data:image/webp;base64,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"></p>
@@ -1030,7 +1031,7 @@ save <span class="token number">60</span> <span class="token number">10000</span
 <h2 id="31-Redis故障宕机了怎么办"><a href="#31-Redis故障宕机了怎么办" class="headerlink" title="31. Redis故障宕机了怎么办?"></a>31. Redis故障宕机了怎么办?</h2><p><code>Redis</code>故障宕机后,如果Redis的宕机后很长时间无法启动起来,那么大量的请求就会落入数据库中</p>
 <p><strong>服务熔断或者请求限流机制</strong></p>
 <p>因为Redis故障宕机而导致缓存雪崩问题,可以启动服务熔断机制,暂停业务应用对缓存服务的访问,直接返回错误,不再继续访问数据库,从而降低对数据库的访问压力,保证数据库系统的正确运行,然后在Redis恢复正常运行后,再允许业务应用访问缓存服务</p>
-<p>服务熔断机制是保护数据库的正常允许,但是暂停了业务应用访问缓存服务系统,全部业务都无法正常工作,为了减对业务的隐形,可以启用请求限流机制,只将少部分请求交给数据库进行处理,再多的请求就在入口直接拒绝服务,等到Redis恢复正常并把缓存预热完后,再接待处请求限流的极值</p>
+<p>服务熔断机制是保护数据库的正常运行,但是暂停了业务应用访问缓存服务系统,全部业务都无法正常工作,为了减对业务的隐形,可以启用请求限流机制,只将少部分请求交给数据库进行处理,再多的请求就在入口直接拒绝服务,等到Redis恢复正常并把缓存预热完后,再接待处请求限流的极值</p>
 <p><strong>构建Redis缓存高可靠的集群</strong></p>
 <p>服务熔断或者请求限流机制是缓存雪崩发生后的应对方案,我们最好通过主从节点构建Redis缓存高可靠集群</p>
 <p>如果Redis缓存的主节点故障宕机,从节点可以切换成主节点,继续提供缓存服务,避免了由于Redis故障宕机而导致的缓存雪崩的问题</p>
@@ -1046,10 +1047,10 @@ save <span class="token number">60</span> <span class="token number">10000</span
 <p>第三种:基于布隆过滤器解决缓存穿透问题,在写入数据库的时候,使用布隆过滤器做个标记,然后在用户请求到来的时候,业务线程确认缓存失效后,可以通过布隆过滤器快速判断数据是否存在,如果不存在,那么就不用通过查询数据来判断数据是否存在。</p>
 <p>如果发生了缓存穿透,大量请求只会查询Redis和布隆过滤器,而不会查询数据库,保证了数据库能够正常运行,Redis自身也是支持布过滤器</p>
 <p>布隆过滤器的原理是这样的:它基于一个bitmap和若干个哈希函数来进行实现</p>
-<p>第一步会通过这N个哈希函数粉笔对数据作哈希计算,得到N个哈希值</p>
+<p>第一步会通过这N个哈希函数分别对数据作 哈希计算,得到N个哈希值</p>
 <p>第二步会通过这个N个哈希值对位图的数组长度取模,得到每个哈希值在位图数组的对应位置</p>
 <p>第三步,将每个哈希值在位图数组的对应位置的值设置为1</p>
-<p><strong>布隆过滤器说这个数据不存在,它一定不存在,但是查询数据不存在的时候,它一定不存在</strong></p>
+<p><strong>布隆过滤器说这个数据不存在,它一定不存在,但是查询数据存在的时候,它不一定存在</strong></p>
 <h2 id="34-如何设计一个缓存策略-可以动态地缓存热点数据呢"><a href="#34-如何设计一个缓存策略-可以动态地缓存热点数据呢" class="headerlink" title="34. 如何设计一个缓存策略,可以动态地缓存热点数据呢?"></a>34. 如何设计一个缓存策略,可以动态地缓存热点数据呢?</h2><p>由于数据存储受限,系统无法将所有的数据都存放到缓存中,而是只是将其中一部分热点数据缓存其来,所以要设计一个热点数据动态缓存的策略</p>
 <p>热点数据动态缓存的策略的总体思路是:通过数据最新访问的时间来做排名,然后过滤掉那些不常访问的数据,只留下那些经常访问的数据</p>
 <p>以电商平台为例,现在要求只缓存用户经常访问的TOP1000的商品,具体的细节如下</p>
@@ -1082,7 +1083,7 @@ save <span class="token number">60</span> <span class="token number">10000</span
 <p><strong>Write Back策略</strong></p>
 <p>所谓写回策略就是在更新数据的时候,只更新缓存,同时将缓存数据设置为脏的,然后交给后台线程执行刷盘操作,WriteBack特别适合写多的场景,因为当发生了写操作者的时候,只需要更新缓存,就立即返回了。持久化的任务是交给后台线程的</p>
 <p>但是它不是强一致性的</p>
-<h2 id="36-Redis如何实现延迟队列"><a href="#36-Redis如何实现延迟队列" class="headerlink" title="36. Redis如何实现延迟队列?"></a>36. Redis如何实现延迟队列?</h2><p><strong>延迟队列</strong>可以看成是线程池中的阻塞任务队列,比如说平台上支付任务,超过10min没有支付就自动取消,这个功能可以基于一个<code>ZSet</code>来实现,简单来说就是将订单等信息放到ZSet中,然后按照将时间戳作为score进行排序，开辟一个后台线程不断轮询是否超时，如果超时就马上删除这个订单。</p>
+<h2 id="36-Redis如何实现延迟队列"><a href="#36-Redis如何实现延迟队列" class="headerlink" title="36. Redis如何实现延迟队列?"></a>36. Redis如何实现延迟队列?</h2><p><strong>延迟队列</strong>可以看成是线程池中的阻塞任务队列,比如说平台上支付任务,超过10min没有支付就自动取消,这个功能可以基于一个<code>ZSet</code>来实现,简单来说就是将订单等信息放到ZSet中,然后按照将时间戳作为score进行排序，开辟一个后台线程不断轮询是否超时,如果超时就马上删除这个订单。</p>
 <h2 id="37-Redis的大Key要如何处理"><a href="#37-Redis的大Key要如何处理" class="headerlink" title="37. Redis的大Key要如何处理?"></a>37. Redis的大Key要如何处理?</h2><blockquote>
 <p>什么是BigKey?</p>
 </blockquote>

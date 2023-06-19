@@ -4,11 +4,8 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="存储原理, 后端工程师之路">
-    <meta name="description" content="1. 行存储和列存储的区别及其使用行存储和列存储是存储系统中常用的存储模型,具体来说,就是在存储的时候,就会将存储单位Block内存储的数据进行一个区分
-
-行存储的一个Block中,可能一个Block中含有多条数据
-列存储的一个Block中">
+    <meta name="keywords" content="Java语言层面基础面试题, 后端工程师之路">
+    <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -20,7 +17,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>存储原理 | 后端工程师之路</title>
+    <title>Java语言层面基础面试题 | 后端工程师之路</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     
 
@@ -337,12 +334,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/23.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">存储原理</h1>
+                    <h1 class="description center-align post-title">Java语言层面基础面试题</h1>
                 </div>
             </div>
         </div>
@@ -415,42 +412,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-行存储和列存储的区别及其使用"><a href="#1-行存储和列存储的区别及其使用" class="headerlink" title="1. 行存储和列存储的区别及其使用"></a>1. 行存储和列存储的区别及其使用</h2><p>行存储和列存储是存储系统中常用的存储模型,具体来说,就是在存储的时候,就会将存储单位<code>Block</code>内存储的数据进行一个区分</p>
-<ul>
-<li>行存储的一个<code>Block</code>中,可能一个<code>Block</code>中含有多条数据</li>
-<li>列存储的一个<code>Block</code>中,可能一个<code>Block</code>中含有一个列中的多条数据</li>
-</ul>
-<p>问题:<strong>1G的数据,查询需求是查询第10w条数据到第20w数据中的name和sex列,问你如何来区分行存储和列存储?</strong></p>
-<p><strong>行存储</strong>:它需要将第<code>10w</code>条数据和<code>20w</code>条件数据在<code>buffer(4M)</code>大小许可的情况下,将这些数据载入<code>buffer</code>,假设<code>一条记录占10kb</code>,10w条数据大约是<code>10w*10kb = 100wkb=1G</code>的数据</p>
-<p>那么需要填满<code>这个Buffer</code>256次,并且对于每一条记录都要执行一次过滤的操作</p>
-<p>成本:<code>256次IO读写</code>、<code>10w次的过滤操作</code></p>
-<p><strong>列存储</strong>:它需要将第<code>10w</code>条数据和第<code>20w</code>条件数据在<code>buffer(4M)</code>带下许可的情况下,将这些数据载入<code>buffer</code>,假设两个字段占<code>10byte</code>,10w条件大约是<code>100wbyte=2M</code>,仅一次IO读写,没有过滤操作</p>
-<p><strong>更新一行的多个值</strong>:这种情况下使用行存储合适,更新的是很多个列</p>
-<p><strong>添加一行数据</strong>:这种情况下使用行存储合适,追加行,如果是列存储,每一列都要填写一个数据,读写多个Block</p>
-<p><strong>事务</strong>:通常是锁一行数据,如果是行存储的话,只需要锁定一个<code>Block</code>中记录,如果是列存储的话,那么需要锁定多个<code>Block</code>中的数据</p>
-<h2 id="2-Hash、B-和B-树的区别以及应用场景"><a href="#2-Hash、B-和B-树的区别以及应用场景" class="headerlink" title="2. Hash、B-和B+树的区别以及应用场景"></a>2. Hash、B-和B+树的区别以及应用场景</h2><p>全文索引的正排和倒排是什么含义?</p>
-<p><strong>所谓倒排索引,就是讲通过文章中的只言片语,去找到这篇文章在哪,索引格式:&lt;词,文档编号&gt;</strong></p>
-<p><strong>而所谓正排索引,就是将通过完整的一篇文章,去查找到这篇文章有哪些只言片语,比如说Ctrl+F的这个功能,这个功能就是正排索引的具体应用,索引格式:&lt;文档,List.of(词)&gt;</strong></p>
-<p><strong>InnoDB的索引</strong></p>
-<p>如果不用索引会怎么样?不用索引,需要手动维护<code>ID</code>,通过查询的时候可以通过二分搜索,但是如果是插入&#x2F;删除的时候,如果接受碎片的话,那么就可以用<code>O(1)</code>的复杂度来删除元素,如果不接受碎片的话,那么就可以使用<code>O(n)</code>的复杂度。</p>
-<p><strong>红黑树</strong></p>
-<p>红黑树本质上来说就是一棵二叉搜索树,因为外部在使用它的时候调用的接口都是二叉搜索树相关的操作,但是在内部,为了保证<code>O(logn)</code>的查询复杂度,因此就必须要保持其搜索的平衡,因此在它实践的时候,它需要通过红黑树相关的操作来保持平衡</p>
-<p>红黑树的基本特征:</p>
-<ul>
-<li>首先它的根节点是黑色的</li>
-<li>它会保证从根节点到所有叶子上的路径上的黑色节点的总数差不会超过1</li>
-<li>红色节点周边节点都是黑色的节点</li>
-</ul>
-<p>为什么不用红黑树?</p>
-<p><strong>1G个行,2^30&#x3D; 1G,最多30次查询</strong></p>
-<p><strong>1G行,索引大小1G*32byte&#x3D;16G,&lt;ID,行号,指针x2&gt;</strong></p>
-<p><strong>B树&#x2F;B-树</strong></p>
-<p>假设有<code>1G个行</code>,树从<code>1G</code>到<code>4K</code>会有多少层?</p>
-<p>一个索引有多大?<code>16byte</code>,那么4k就能装256个索引</p>
-<p><code>1G除于2多少次等于256?22次</code>,树的节点数有<code>2^22-1</code></p>
-<p>大小&#x3D;节点数*节点大小&#x3D;4Mx16byte&#x3D;64M</p>
-<p><strong>4K:内存的页框大小是4K为主</strong></p>
-
+                
                 
             </div>
             <hr/>
@@ -602,9 +564,9 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="4-9日知识回顾">
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="MySQL知识回顾">
                         
-                        <span class="card-title">4-9日知识回顾</span>
+                        <span class="card-title">MySQL知识回顾</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
