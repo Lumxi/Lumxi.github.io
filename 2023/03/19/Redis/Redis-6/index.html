@@ -741,7 +741,7 @@ slaveof masterip masterport<span aria-hidden="true" class="line-numbers-rows"><s
 <li>LFU</li>
 <li>LRU</li>
 </ol>
-<h2 id="12-LRU算法是什么-Redis是如何实现"><a href="#12-LRU算法是什么-Redis是如何实现" class="headerlink" title="12. LRU算法是什么?Redis是如何实现?"></a>12. LRU算法是什么?Redis是如何实现?</h2><p><code>LRU</code>算法叫做是最近最少使用优先淘汰算法,它是根据键值对的访问时间来决定要淘汰谁的</p>
+<h2 id="12-LRU算法是什么-Redis是如何实现的"><a href="#12-LRU算法是什么-Redis是如何实现的" class="headerlink" title="12. LRU算法是什么?Redis是如何实现的?"></a>12. LRU算法是什么?Redis是如何实现的?</h2><p><code>LRU</code>算法叫做是最近最少使用优先淘汰算法,它是根据键值对的访问时间来决定要淘汰谁的</p>
 <p>一般来说,我们实现是通过一个<code>哈希链表</code>来实现的,当需要查询的时候,只需要输入一个<code>key</code>,就可以得到相应的<code>value</code>,并且由于插入都是在尾部,而删除在中间和头部可能发生,因此要使用一个链表来维护插入的次序</p>
 <blockquote>
 <p>但是Redis并没有采用这样的实现</p>

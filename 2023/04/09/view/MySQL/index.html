@@ -442,7 +442,7 @@
 <ul>
 <li>原子性,它在<code>InnoDB</code>是基于<code>undo log</code>实现的,<code>undo log</code>的具体功能就是撤销数据的操作,比如说在SQL中执行<code>insert</code>、<code>update</code>、<code>delete</code>等语句的时候,它就会相对的,记录下来这条记录的ID,如果要回滚,那么就删除,如果是<code>update</code>,那么就相关的字段修改回来,如果是<code>delete</code>,那么就将原来的记录插入回来,由此实现了原子性</li>
 <li>持久性,它在<code>InnoDB</code>是基于<code>redo log</code>实现的,<code>redo log</code>相比于<code>undo log</code>,它更加底层,它记录的是某个数据块中具体的操作,比如说修改了某个表空间中的某个位置上的物理量,那么它就会将这个<code>redo log</code>写入到磁盘文件中,然后基于这个文件执行初始化</li>
-<li>隔离性:简单地说,就是控制多个事务并发执行的时候,数据库中的这些共享的数据的访问不会错乱,通常它解决的是读写冲突&#x2F;写写冲突的问题,写写冲突是脏写问题,因此是不 允许发生的,但是在数据库中,一定程度的读写冲突是允许的,因此就有了事务的不同隔离级别,也就是<code>可串行化</code>、<code>可重复读</code>、<code>已提交读</code>、<code>未提交读</code>,在串行化的隔离级别下不会产生并发问题,可重复读会带来幻读问题,已经提交读会带来不可重复读的问题,未提交读会导致脏读的问题</li>
+<li>隔离性:简单地说,就是控制多个事务并发执行的时候,数据库中的这些共享的数据的访问不会错乱,通常它解决的是读写冲突&#x2F;写写冲突的问题,写写冲突是脏写问题,因此是不允许发生的,但是在数据库中,一定程度的读写冲突是允许的,因此就有了事务的不同隔离级别,也就是<code>可串行化</code>、<code>可重复读</code>、<code>已提交读</code>、<code>未提交读</code>,在串行化的隔离级别下不会产生并发问题,可重复读会带来幻读问题,已经提交读会带来不可重复读的问题,未提交读会导致脏读的问题</li>
 <li>一致性:一致性是通过上面三个特性来实现的</li>
 </ul>
 <h2 id="4-不可重复读和幻读有什么区别"><a href="#4-不可重复读和幻读有什么区别" class="headerlink" title="4. 不可重复读和幻读有什么区别?"></a>4. 不可重复读和幻读有什么区别?</h2><p>首先要了解什么是不可重复读和幻读</p>
@@ -455,7 +455,7 @@
 <blockquote>
 <p>那么MySQL是如何解决幻读问题的?</p>
 </blockquote>
-<p><code>MySQL</code>是基于<code>行级锁+MVCC</code>来解决幻读问题的,行级锁一般分为有<code>next-key lock</code>、<code>redocrd lock</code>、<code>gap lock</code>,这些锁锁住的是一个区间,从现象上来讲这些区间中不允许插入别的数据,但是它其实是锁住了索引,避免了数据的插入而已,同时在多事务并发查询+快照读的机制下,实现了MVCC,基于undo log版本链就可以实现不同的事务在一定的启动时机内,看到的数据内容和事务刚启动时的一样</p>
+<p><code>MySQL行级锁+MVCC</code>来解决幻读问题的,行级锁一般分为有<code>next-key lock</code>、<code>redocrd lock</code>、<code>gap lock</code>,这些锁锁住的是一个区间,从现象上来讲这些区间中不允许插入别的数据,但是它其实是锁住了索引,避免了数据的插入而已,同时在多事务并发查询+快照读的机制下,实现了MVCC,基于undo log版本链就可以实现不同的事务在一定的启动时机内,看到的数据内容和事务刚启动时的一样</p>
 <p>这样就解决了在其他事务并发穿插执行的时候,对数据进行新写入的时候,本事务还能看到的问题</p>
 <p>注意,但是它并没有彻底解决幻读问题,在当前事务存在一个当前读的情况下,还是不能够解决幻读问题,比如:</p>
 <pre class="line-numbers language-sql" data-language="sql"><code class="language-sql">trx1:<span class="token keyword">select</span> <span class="token operator">*</span> <span class="token keyword">from</span> tb <span class="token keyword">where</span> id <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">#查询为null</span>
@@ -495,10 +495,10 @@ trx1:<span class="token keyword">update</span> tb <span class="token keyword">se
 <p>使用<code>MyISAM</code>会更快,首先先来了解一下<code>count()</code>函数的执行流程,在通过<code>count()</code>函数来统计有多少个记录的时候,<code>MySQL</code>的<code>server</code>层会维护一个<code>count</code>的变量,在<code>InnoDB</code>下,它会通过调用底层存取数据的API,通过这个API,如果指定的字段的值不为NULL,那么就会将变量+1,直到退出循环,最后将count的值发送给客户端</p>
 <p>而在<code>MyISAM</code>中,执行<code>count()</code>函数的方式是不一样的,通常在没有任何查询条件下的<code>count(*)</code>,MyISAM速度要快于<code>InnoDB</code>,这是因为在底层的<code>MyISAM</code>所驱动的表中,表的元数据都会存储一个<code>row_count</code>的值,因此具体的查询只需要读取这个变量即可</p>
 <p>当使用<code>where</code>的时候,两个的执行逻辑都需要对表进行全表扫描</p>
-<h2 id="8-表级锁和行级锁有什么区别"><a href="#8-表级锁和行级锁有什么区别" class="headerlink" title="8. 表级锁和行级锁有什么区别?"></a>8. 表级锁和行级锁有什么区别?</h2><p>表级锁和行级锁的区别在于锁的作用范围,通常来说表级锁是一个大类,下面包含了不同的实现,具体来说就是针对不同场景的实现</p>
+<h2 id="8-表级锁和行级锁有什么区别"><a href="#8-表级锁和行级锁有什么区别" class="headerlink" title="8. 表级锁和行级锁有什么区别?"></a>8. 表级锁和行级锁有什么区别?</h2><p><code>表级锁</code>和<code>行级锁</code>的区别在于锁的作用范围,通常来说表级锁是一个大类,下面包含了不同的实现,具体来说就是针对不同场景的实现</p>
 <ul>
-<li>当需要对表的结构进行修改的数据,那么就是上<code>元数据锁</code></li>
-<li>当需要对全表的数据进行修改的话,那么就是上<code>表锁</code></li>
+<li>当需要对<code>表的结构</code>进行修改的数据,那么就是上<code>元数据锁</code></li>
+<li>当需要对<code>全表的数据</code>进行修改的话,那么就是上<code>表锁</code></li>
 <li>当需要对全表的一个公共字段,比如说自增ID进行共享访问的时候,这时候就是上一个<code>AUTO-INC</code>锁</li>
 </ul>
 <p>具体的,当给表上一个S锁的时候,那么其他任何线程都可以做一个读操作,并让自己持有这把锁,当有线程试图对这个表申请一个X锁的时候,就会被阻塞,当线程持有读锁,但是尝试进行写操作的时候,此时就会提示非法操作</p>
@@ -553,12 +553,12 @@ commit;
 txB:
 insert into tb(id,name) values(4,&#39;b&#39;);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在插入这条记录的时候,它看到已经被上了一个<code>(1,5)</code>的锁,这时候就会被阻塞,底层原理是先在内存中生成这个锁的结果,然后将这个锁的结构,然后将这个锁的锁状态设置为等待,然后加入到等待队列中</p>
+<p>在插入这条记录的时候,它看到已经被上了一个<code>(1,5)</code>的锁,这时候就会被阻塞,底层原理是先在内存中生成这个锁的结构,然后将这个锁的锁状态设置为等待,然后加入到等待队列中</p>
 <p>当事务A提交了事务,释放锁的时候,就会将等待的锁的状态设置为就绪,此时就可以使用了</p>
 <h2 id="13-什么SQL语句会加行级锁"><a href="#13-什么SQL语句会加行级锁" class="headerlink" title="13. 什么SQL语句会加行级锁?"></a>13. 什么SQL语句会加行级锁?</h2><pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select * from tb where id &#x3D; 1 for update;#加的是独占写锁
 select * from tb where id &#x3D; 1 in share mode;#加一个写锁
 update tb set name &#x3D; &#39;haha&#39; where id &#x3D; 1;
-delete from tb where id &#x3D;1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+delete from tb where id &#x3D; 1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h2 id="14-到底是如何加锁的"><a href="#14-到底是如何加锁的" class="headerlink" title="14. 到底是如何加锁的?"></a>14. 到底是如何加锁的?</h2><blockquote>
 <p>MySQL的加锁原则</p>
@@ -607,13 +607,13 @@ delete from tb where id &#x3D;1;<span aria-hidden="true" class="line-numbers-row
 <p>非唯一索引的等值查询</p>
 </blockquote>
 <p> 假设一条SQL</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select * from tb where number &lt;&#x3D;1 for update;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select * from tb where id &lt;&#x3D; 1 for update;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>那么这时候加锁会发生什么呢?这时候数据是<code>id=&gt;&#123;0,1,2&#125;</code></p>
 <p>首先从左到右执行</p>
 <p>第一阶段加锁,先加上<code>(-无穷,0]</code></p>
 <p>第二阶段加锁,加上<code>(0,1]</code></p>
-<p>第三节阶段加锁<code>(1,2)</code>注意上一个间隙锁</p>
+<p>第三节阶段加锁<code>(1,2)</code>注意上一个间隙锁,这里是因为非唯一索引,可能会插入两条相同的记录 </p>
 <h2 id="15-没加索引会锁全表吗"><a href="#15-没加索引会锁全表吗" class="headerlink" title="15. 没加索引会锁全表吗?"></a>15. 没加索引会锁全表吗?</h2><blockquote>
 <p>update没加索引会导致锁全表</p>
 </blockquote>
@@ -761,7 +761,9 @@ where b &#x3D; 2 and c &#x3D;3;<span aria-hidden="true" class="line-numbers-rows
 <p>所谓区分度,其实也是一个指标,就是<code>某个字段的值的取值范围除于表的总行数就是区分度</code></p>
 <p>比如,性别的区分度就很小,不适合建立索引或者不适合排在联合索引列靠前的位置,而UUID这类字段就比较做索引或者排在联合索引的靠前的位置</p>
 <p>如果索引的区分度很小,假设字段的值分布很均匀,那么无论搜索哪个值都可能得到一半的数据,在这种情况下,还不如不用索引,因为MySQL有一个查询优化器,查询优化器发现某个值出现在表中的数据行的百分比很高的时候,它一般会忽略索引,进行全表索引</p>
-<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select * from tb where status &#x3D; 1 order by create_time asc;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">select * from tb 
+where status &#x3D; 1 
+order by create_time asc;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>这个字段要怎么建立联合索引?</p>
 <p>最佳的选择是给<code>(status,create_time)</code>建立一个联合索引,因为这样可以避免MySQL数据库发生文件排序,因为在查询的时候,如果只用到status的索引,但是这条语句还要对<code>create_time</code>排序,这时候就会用到文件排序了,所谓文件排序需要对扫描出来的记录进行重排,但是如果我们建立了<code>status,create_time</code>这样的索引,那么在检索出来<code>status = 1</code>的情况,<code>create_time</code>就是天然有序的,因此就不需要文件排序了</p>
@@ -835,7 +837,7 @@ where b &#x3D; 2 and c &#x3D;3;<span aria-hidden="true" class="line-numbers-rows
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">show VARIABLES like &#39;%slow_query_log%&#39;;
 show VARIABLES like &#39;%log_output%&#39;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<p>通过这个指令来看出这哪些SQL的耗时严重,或者是通过开启慢查询日志的方式,然后查询这个日志就能够知道哪个SQL是十分耗时的</p>
+<p>通过这个指令来看出这哪些SQL的耗时严重,或者是通过开启慢查询日志的方式,然 后查询这个日志就能够知道哪个SQL是十分耗时的</p>
 <p>然后再通过</p>
 <pre class="line-numbers language-mysql" data-language="mysql"><code class="language-mysql">explain SQL;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
@@ -1028,7 +1030,7 @@ show VARIABLES like &#39;%log_output%&#39;;<span aria-hidden="true" class="line-
 <ul>
 <li>写入binlog:主库写入binlog日志,提交事务,更新本地缓存</li>
 <li>同步binlog:通过dump线程,将binlog发送到从库上,然后从库上的IO线程读取dump线程发来的日志信息</li>
-<li>回放binlog:从库中的SQL线程读取relay log,然后执行</li>
+<li>回放binlog:从库中的SQL线程读取replay log,然后执行</li>
 </ul>
 <p><strong>bin log什么时候刷盘</strong></p>
 <p>在事务提交的时候,执行器把binlogcache中的完整事务写入到binlog中</p>

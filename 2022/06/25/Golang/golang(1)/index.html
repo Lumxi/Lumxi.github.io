@@ -385,6 +385,10 @@
                                 Golang
                             </a>
                         
+                            <a href="/categories/Golang/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category">
+                                计算机基础
+                            </a>
+                        
                     </div>
                     
                 </div>
@@ -394,7 +398,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-10-22
+                    2022-06-25
                 </div>
                 
 
@@ -418,7 +422,7 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="1-golang的优点"><a href="#1-golang的优点" class="headerlink" title="1.golang的优点"></a>1.golang的优点</h1><ol>
+                <h2 id="1-golang的优点"><a href="#1-golang的优点" class="headerlink" title="1.golang的优点"></a>1.golang的优点</h2><ol>
 <li>天生支持高并发,<strong>适合电商平台等网页后端的开发</strong></li>
 <li>功能上有内存安全、<strong>GC（垃圾回收）</strong>、结构形态以及<strong>CSP-style</strong>并发计算</li>
 <li>内存runtime,支持垃圾回收</li>
@@ -426,7 +430,7 @@
 <li><code>丰富的标准库</code></li>
 <li>可以跨平台编译</li>
 </ol>
-<h1 id="2-go语言结构"><a href="#2-go语言结构" class="headerlink" title="2.go语言结构"></a>2.go语言结构</h1><p> 以下用hello_world例程来解释</p>
+<h2 id="2-go语言结构"><a href="#2-go语言结构" class="headerlink" title="2.go语言结构"></a>2.go语言结构</h2><p> 以下用hello_world例程来解释</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//程序的第一部分,这一行代码定义了包名,必须在源文件中非注释的第一行指明这个文件属于哪个包</span>
 <span class="token comment">//package main表示一个可独立执行的程序,每个Go应用都包含一个名为main的包</span>
 <span class="token keyword">package</span> main
@@ -440,11 +444,15 @@
 	fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span><span class="token string">"Hello world!"</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span>
 <span class="token comment">//需要注意的是 &#123; 不能单独放在一行</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>当标识符（包括<code>常量</code>、<code>变量</code>、<code>类型</code>、<code>函数名</code>、<code>结构字段</code>等等）<code>以一个大写字母开头</code>，如：Group1，那么使用这种形式的标识符的对象就<code>可以被外部包的代码所使用</code>（客户端程序需要先导入这个包），这被称为<code>导出</code>（像面向对象语言中的 public）；标识符如果以小写字母开头，<code>则对包外是不可见的</code>，但是他们在整个包的内部是可见并且可用的（像面向对象语言中的<code>protected</code>）。</p>
-<h1 id="3-go基本语法"><a href="#3-go基本语法" class="headerlink" title="3.go基本语法"></a>3.go基本语法</h1><h2 id="3-1-关于标识符命名"><a href="#3-1-关于标识符命名" class="headerlink" title="3.1 关于标识符命名"></a>3.1 关于标识符命名</h2><p>第一个字符必须是字母或下划线而不能是数字。</p>
+<p>当标识符（包括<code>常量</code>、<code>变量</code>、<code>类型</code>、<code>函数名</code>、<code>结构字段</code>等等）<code>以一个大写字母开头</code></p>
+<p>如：Group1，那么使用这种形式的标识符的对象就<code>可以被外部包的代码所使用</code>（客户端程序需要先导入这个包），这被称为<code>导出</code>（像面向对象语言中的 public）；</p>
+<p>标识符如果以小写字母开头，<code>则对包外是不可见的</code>，但是他们在整个包的内部是可见并且可用的（像面向对象语言中的<code>protected</code>）。</p>
+<h2 id="3-go基本语法"><a href="#3-go基本语法" class="headerlink" title="3.go基本语法"></a>3.go基本语法</h2><h3 id="3-1-关于标识符命名"><a href="#3-1-关于标识符命名" class="headerlink" title="3.1 关于标识符命名"></a>3.1 关于标识符命名</h3><p>第一个字符必须是字母或下划线而不能是数字。</p>
 <h2 id="3-2-字符串命名"><a href="#3-2-字符串命名" class="headerlink" title="3.2 字符串命名"></a>3.2 字符串命名</h2><p>Go的字符串可以通过<code>+</code>来连接</p>
-<h2 id="3-3-go语言空格"><a href="#3-3-go语言空格" class="headerlink" title="3.3 go语言空格"></a>3.3 go语言空格</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//Go 语言中变量的声明必须使用空格隔开</span>
-<span class="token keyword">var</span> age <span class="token builtin">int</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="3-3-go语言空格"><a href="#3-3-go语言空格" class="headerlink" title="3.3 go语言空格"></a>3.3 go语言空格</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">// Go 语言中变量的声明必须使用空格隔开</span>
+<span class="token comment">// 声明变量的格式var 变量名 变量的类型</span>
+<span class="token keyword">var</span> age <span class="token builtin">int</span>
+<span class="token keyword">var</span> name <span class="token builtin">string</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 <h2 id="3-4-格式化字符串"><a href="#3-4-格式化字符串" class="headerlink" title="3.4 格式化字符串"></a>3.4 格式化字符串</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> <span class="token punctuation">(</span>
@@ -455,21 +463,23 @@
 	<span class="token keyword">var</span> stockCode <span class="token operator">=</span> <span class="token number">123</span>
 	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> stockCode<span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h1 id="4-golang语言变量类型"><a href="#4-golang语言变量类型" class="headerlink" title="4. golang语言变量类型"></a>4. golang语言变量类型</h1><h2 id="4-1-数字类型"><a href="#4-1-数字类型" class="headerlink" title="4.1 数字类型"></a>4.1 数字类型</h2><p>整形int和浮点型float32和float64,Go语言支持整形和浮点型数字，并且支持复数，其中位的运算采用补码</p>
-<h2 id="4-2字符串类型"><a href="#4-2字符串类型" class="headerlink" title="4.2字符串类型"></a>4.2字符串类型</h2><p>字符串就是一串固定的字符连接起来的字符序列，Go的字符串是由单个字节连接起来的，Go语言的字符串的字节使用<code>UTF-8</code>编码标识<code>UNICODE</code>文本</p>
-<h2 id="4-3派生类型"><a href="#4-3派生类型" class="headerlink" title="4.3派生类型"></a>4.3派生类型</h2><p>(a)<code>指针</code>类型(pointer)<br>(b)数组类型<br>(c)结构化类型(struct)<br>(d)Channel类型<br>(e)函数类型<br>(f)切片类型<br>(g)接口类型(interface)<br>(h)map类型</p>
-<h1 id="5-变量声明类型"><a href="#5-变量声明类型" class="headerlink" title="5.变量声明类型"></a>5.变量声明类型</h1><h2 id="5-1-第一种-指定变量类型-如果没有初始化-则变量默认为零值"><a href="#5-1-第一种-指定变量类型-如果没有初始化-则变量默认为零值" class="headerlink" title="5.1 第一种,指定变量类型,如果没有初始化,则变量默认为零值"></a>5.1 第一种,指定变量类型,如果没有初始化,则变量默认为零值</h2><p>其中,零值所对应的值为:<br>数值类型（包括complex64&#x2F;128）为 0<br>布尔类型为 false<br>字符串为 “”（空字符串）<br>以下几种类型为 nil：</p>
-<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> a <span class="token operator">*</span><span class="token builtin">int</span>
-<span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span>
-<span class="token keyword">var</span> a <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span> <span class="token builtin">int</span>
+<h2 id="4-golang语言变量类型"><a href="#4-golang语言变量类型" class="headerlink" title="4. golang语言变量类型"></a>4. golang语言变量类型</h2><h3 id="4-1-数字类型"><a href="#4-1-数字类型" class="headerlink" title="4.1 数字类型"></a>4.1 数字类型</h3><p><code>float32</code>就类似于Java中的float,而<code>float64</code>就类似于Java中的double</p>
+<p>整形int和浮点型float32和float64,Go语言支持整形和浮点型数字，并且支持复数，其中位的运算采用补码</p>
+<h3 id="4-2-字符串类型"><a href="#4-2-字符串类型" class="headerlink" title="4.2 字符串类型"></a>4.2 字符串类型</h3><p>字符串就是一串固定的字符连接起来的字符序列，Go的字符串是由单个字节连接起来的，Go语言的字符串的字节使用<code>UTF-8</code>编码标识<code>UNICODE</code>文本</p>
+<h3 id="4-3-派生类型"><a href="#4-3-派生类型" class="headerlink" title="4.3 派生类型"></a>4.3 派生类型</h3><p>(a)<code>指针</code>类型(pointer),是C&#x2F;C++中的指针的概念<br>(b)数组类型<br>(c)结构化类型(struct)<br>(d)Channel类型<br>(e)函数类型<br>(f)切片类型<br>(g)接口类型(interface)<br>(h)map类型</p>
+<h2 id="5-变量声明类型"><a href="#5-变量声明类型" class="headerlink" title="5.变量声明类型"></a>5.变量声明类型</h2><h3 id="5-1-第一种-指定变量类型-如果没有初始化-则变量默认为零值"><a href="#5-1-第一种-指定变量类型-如果没有初始化-则变量默认为零值" class="headerlink" title="5.1 第一种,指定变量类型,如果没有初始化,则变量默认为零值"></a>5.1 第一种,指定变量类型,如果没有初始化,则变量默认为零值</h3><p>其中,零值所对应的值为:<br>数值类型（包括complex64&#x2F;128）为 0<br>布尔类型为 false<br>字符串为 “”（空字符串）<br>以下几种类型为 nil：</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> a <span class="token operator">*</span><span class="token builtin">int</span><span class="token comment">//空指针</span>
+<span class="token keyword">var</span> a <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">int</span><span class="token comment">//这个与Java中不同的是[]在前面</span>
+<span class="token keyword">var</span> a <span class="token keyword">map</span><span class="token punctuation">[</span><span class="token builtin">string</span><span class="token punctuation">]</span> <span class="token builtin">int</span><span class="token comment">//这个定义与Java中的Map&lt;String,int>类似</span>
 <span class="token keyword">var</span> a <span class="token keyword">chan</span> <span class="token builtin">int</span>
-<span class="token keyword">var</span> a <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">int</span>
+<span class="token keyword">var</span> a <span class="token keyword">func</span><span class="token punctuation">(</span><span class="token builtin">string</span><span class="token punctuation">)</span> <span class="token builtin">int</span><span class="token comment">//定义一个函数指针类型,func(string) int</span>
 <span class="token keyword">var</span> a <span class="token builtin">error</span> <span class="token comment">// error 是接口</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="第二种-根据赋值类型自行判断变量类型"><a href="#第二种-根据赋值类型自行判断变量类型" class="headerlink" title="第二种,根据赋值类型自行判断变量类型"></a>第二种,根据赋值类型自行判断变量类型</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">123</span><span class="token comment">//自动判断为整形123</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<h2 id="第三种-使用-x3D-赋值符对已经赋值的变量再次赋值则编译会报错"><a href="#第三种-使用-x3D-赋值符对已经赋值的变量再次赋值则编译会报错" class="headerlink" title="第三种,使用 :&#x3D; 赋值符对已经赋值的变量再次赋值则编译会报错"></a>第三种,使用 :&#x3D; 赋值符对已经赋值的变量再次赋值则编译会报错</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go">s <span class="token operator">:=</span> <span class="token string">"string"</span>
+<h3 id="5-2-第二种-根据赋值类型自行判断变量类型"><a href="#5-2-第二种-根据赋值类型自行判断变量类型" class="headerlink" title="5.2 第二种,根据赋值类型自行判断变量类型"></a>5.2 第二种,根据赋值类型自行判断变量类型</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token number">123</span><span class="token comment">//自动判断为整形123</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>第三种,使用 :&#x3D; 赋值符对已经赋值的变量再次赋值则编译会报错</p>
+<pre class="line-numbers language-go" data-language="go"><code class="language-go">s <span class="token operator">:=</span> <span class="token string">"string"</span>
 fmt<span class="token punctuation">.</span><span class="token function">Print</span><span class="token punctuation">(</span>fmt<span class="token punctuation">.</span><span class="token function">Sprintf</span><span class="token punctuation">(</span><span class="token string">"%v"</span><span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">)</span>
 s <span class="token operator">:=</span> <span class="token number">123</span><span class="token comment">//编译报错</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="第四种-多变量声明"><a href="#第四种-多变量声明" class="headerlink" title="第四种,多变量声明"></a>第四种,多变量声明</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//类型相同多个变量, 非全局变量</span>
+<h3 id="5-3-第四种-多变量声明"><a href="#5-3-第四种-多变量声明" class="headerlink" title="5.3 第四种,多变量声明"></a>5.3 第四种,多变量声明</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token comment">//类型相同多个变量, 非全局变量</span>
 <span class="token keyword">var</span> vname1<span class="token punctuation">,</span> vname2<span class="token punctuation">,</span> vname3 <span class="token keyword">type</span>
 vname1<span class="token punctuation">,</span> vname2<span class="token punctuation">,</span> vname3 <span class="token operator">=</span> v1<span class="token punctuation">,</span> v2<span class="token punctuation">,</span> v3
 
@@ -477,14 +487,13 @@ vname1<span class="token punctuation">,</span> vname2<span class="token punctuat
 
 vname1<span class="token punctuation">,</span> vname2<span class="token punctuation">,</span> vname3 <span class="token operator">:=</span> v1<span class="token punctuation">,</span> v2<span class="token punctuation">,</span> v3 <span class="token comment">// 出现在 := 左侧的变量不应该是已经被声明过的，否则会导致编译错误</span>
 
-
 <span class="token comment">// 这种因式分解关键字的写法一般用于声明全局变量</span>
 <span class="token keyword">var</span> <span class="token punctuation">(</span>
     vname1 v_type1
     vname2 v_type2
-<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="关于值类型和引用类型"><a href="#关于值类型和引用类型" class="headerlink" title="关于值类型和引用类型"></a>关于值类型和引用类型</h2><p>(1)所有像 int、float、bool 和 string 这些基本类型都属于值类型，使用这些类型的变量直接<code>指向存在内存中的值</code>：<br>(2)当使用等号 &#x3D; 将一个变量的值赋值给另一个变量时，如：j &#x3D; i，实际上是<code>在内存中将 i 的值进行了拷贝</code>：<br>(3)与C++类似的,golang也支持通过&amp;运算符来计算变量的内存地址,值类型的变量存储在<code>堆</code>中</p>
-<h1 id="6-语言常量"><a href="#6-语言常量" class="headerlink" title="6.语言常量"></a>6.语言常量</h1><p>常量的定义格式</p>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="5-4-关于值类型和引用类型"><a href="#5-4-关于值类型和引用类型" class="headerlink" title="5.4 关于值类型和引用类型"></a>5.4 关于值类型和引用类型</h3><p>(1)所有像 int、float、bool 和 string 这些基本类型都属于值类型，使用这些类型的变量直接<code>指向存在内存中的值</code>：<br>(2)当使用等号 &#x3D; 将一个变量的值赋值给另一个变量时，如：j &#x3D; i，实际上是<code>在内存中将 i 的值进行了拷贝</code>：<br>(3)与C++类似的,golang也支持通过&amp;运算符来计算变量的内存地址,值类型的变量存储在<code>堆</code>中</p>
+<h2 id="6-语言常量"><a href="#6-语言常量" class="headerlink" title="6.语言常量"></a>6.语言常量</h2><p>常量的定义格式</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">const</span> arrLength <span class="token operator">=</span> <span class="token number">155</span><span class="token comment">//隐式</span>
 <span class="token keyword">const</span> arrLength <span class="token builtin">int</span> <span class="token operator">=</span> <span class="token number">155</span><span class="token comment">//显式</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>可以用函数&#x2F;方法来计算常量的值,如</p>
@@ -492,7 +501,7 @@ vname1<span class="token punctuation">,</span> vname2<span class="token punctuat
 	arrLength <span class="token operator">=</span> <span class="token function">len</span><span class="token punctuation">(</span><span class="token string">"abc"</span><span class="token punctuation">)</span>
 	brrLength <span class="token operator">=</span> unsafe<span class="token punctuation">.</span><span class="token function">Sizeof</span><span class="token punctuation">(</span><span class="token string">"abs"</span><span class="token punctuation">)</span>
 <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>要注意的是用来计算常量的值必须是在标准库中已经存在的了<br><strong><font size = 5>iota</font></strong><br>iota被认为是一个可以被编译器修改的常量,<code>iota</code>中每新增一行常量将使iota计数一次, 可理解为const语句块中的行索引</p>
+<p>要注意的是用来计算常量的值必须是在标准库中已经存在的了<br><strong>iota</strong>:iota被认为是一个可以被编译器修改的常量,<code>iota</code>中每新增一行常量将使iota计数一次, 可理解为const语句块中的行索引</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">const</span> <span class="token punctuation">(</span>
 	a <span class="token operator">=</span> <span class="token boolean">iota</span>
 	b <span class="token operator">=</span> <span class="token boolean">iota</span>
@@ -506,12 +515,18 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 <span class="token punctuation">)</span>
 fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>d<span class="token punctuation">,</span> e<span class="token punctuation">,</span> f<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>输出:<br>0 1 2<br>0 1 2</p>
-<h1 id="7-函数定义"><a href="#7-函数定义" class="headerlink" title="7.函数定义"></a>7.函数定义</h1><h2 id="7-1函数定义的基本形式"><a href="#7-1函数定义的基本形式" class="headerlink" title="7.1函数定义的基本形式"></a>7.1函数定义的基本形式</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go">	<span class="token keyword">func</span> <span class="token function">function_name</span><span class="token punctuation">(</span><span class="token punctuation">[</span>parameterlist<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token keyword">return</span> types<span class="token punctuation">]</span><span class="token punctuation">&#123;</span>
+<h2 id="7-函数定义"><a href="#7-函数定义" class="headerlink" title="7.函数定义"></a>7.函数定义</h2><h3 id="7-1函数定义的基本形式"><a href="#7-1函数定义的基本形式" class="headerlink" title="7.1函数定义的基本形式"></a>7.1函数定义的基本形式</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go">	<span class="token keyword">func</span> <span class="token function">function_name</span><span class="token punctuation">(</span><span class="token punctuation">[</span>parameterlist<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token keyword">return</span> types<span class="token punctuation">]</span><span class="token punctuation">&#123;</span>
 	<span class="token comment">//do something</span>
 <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<h2 id="7-2函数传参的类型"><a href="#7-2函数传参的类型" class="headerlink" title="7.2函数传参的类型"></a>7.2函数传参的类型</h2><p><code>值传递</code>:值传递是指在调用函数时将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，也不会影响到上一层函数中的变量<br><code>引用传递</code>:引用传递是指在调用函数时将实际参数的地址传递到函数中去，那么在函数中对参数所进行的修改，将会影响到实际的参数<br>默认情况下,go语言所使用的是值传递，也就是在调用过程中不会影响到实际参数</p>
-<h2 id="7-3函数用法介绍"><a href="#7-3函数用法介绍" class="headerlink" title="7.3函数用法介绍"></a>7.3函数用法介绍</h2><p><code>函数作为另一个函数的实参</code>(lambda):函数定义后可以作为另一个函数的实参传入<br><code>闭包</code>:闭包是匿名函数,可以在动态编程中使用<br><code>方法</code>:方法就是一个包含了接受者的函数</p>
-<h1 id="8-数组"><a href="#8-数组" class="headerlink" title="8.数组"></a>8.数组</h1><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> variable_name <span class="token punctuation">[</span>SIZE<span class="token punctuation">]</span> variable_type<span class="token comment">//定义的基本格式</span>
+<h3 id="7-2-函数传参的类型"><a href="#7-2-函数传参的类型" class="headerlink" title="7.2 函数传参的类型"></a>7.2 函数传参的类型</h3><p><code>值传递</code>:值传递是指在调用函数时将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，也不会影响到上一层函数中的变量<br><code>引用传递</code>:引用传递是指在调用函数时将实际参数的地址传递到函数中去，那么在函数中对参数所进行的修改，将会影响到实际的参数,一般来说也就是使用指针进行传值<br>默认情况下,go语言所使用的是值传递，也就是在调用过程中不会影响到实际参数</p>
+<h3 id="7-3函数用法介绍"><a href="#7-3函数用法介绍" class="headerlink" title="7.3函数用法介绍"></a>7.3函数用法介绍</h3><p><code>函数作为另一个函数的实参</code>(lambda):函数定义后可以作为另一个函数的实参传入</p>
+<p><code>闭包</code>:闭包是匿名函数,可以在动态编程中使用</p>
+<p><code>方法</code>:方法就是一个包含了接受者的函数</p>
+<h2 id="8-数组"><a href="#8-数组" class="headerlink" title="8.数组"></a>8.数组</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> variable_name <span class="token punctuation">[</span>SIZE<span class="token punctuation">]</span> variable_type<span class="token comment">//定义的基本格式</span>
+<span class="token comment">// 定义的格式就是var 变量的名称 []变量的类型</span>
+<span class="token comment">// var arr []float64</span>
+<span class="token comment">// 如何快速定义以及初始化数组</span>
+
 <span class="token keyword">var</span> balance<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span> <span class="token builtin">float32</span><span class="token comment">//定义的例子</span>
 	balance1 <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token builtin">float32</span><span class="token punctuation">&#123;</span><span class="token number">1000.0</span><span class="token punctuation">,</span> <span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">&#125;</span> <span class="token comment">//使用赋值运算符来进行快速初始化</span>
 	<span class="token keyword">var</span> balance2 <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token builtin">float32</span><span class="token punctuation">&#123;</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">4.0</span><span class="token punctuation">,</span> <span class="token number">5.0</span><span class="token punctuation">&#125;</span> <span class="token comment">//使用var运算符来进行初始化</span>
@@ -520,18 +535,18 @@ fmt<span class="token punctuation">.</span><span class="token function">Println<
 	<span class="token comment">//如果数组的长度不确定,[]内可以改成...</span>
 	<span class="token comment">//如果只是需要初始化指定索引,写法为</span>
 	balance3 <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token punctuation">]</span><span class="token builtin">float32</span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">:</span> <span class="token number">3.0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">:</span> <span class="token number">5.0</span><span class="token punctuation">&#125;</span>
-	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"balance3"</span><span class="token punctuation">,</span> balance3<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span><span class="token string">"balance3"</span><span class="token punctuation">,</span> balance3<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="9-切片-重要"><a href="#9-切片-重要" class="headerlink" title="9.切片(重要)"></a>9.切片(重要)</h1><h2 id="9-1-切片简介"><a href="#9-1-切片简介" class="headerlink" title="9.1 切片简介"></a>9.1 切片简介</h2><p><code>切片</code>:切片是对数组的抽象,go的数组长度不可改变,在特定场景中这样的集合就不太适用,Go中提供了一种灵活，功能强悍的内置类型切片,(“动态数组”),与数组相比，切片的长度不是固定的，可以<code>追加</code>元素,在追加时可能使切片的容量增大</p>
-<h2 id="9-2-切片的定义"><a href="#9-2-切片的定义" class="headerlink" title="9.2 切片的定义"></a>9.2 切片的定义</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> identifier <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">float32</span> <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">float32</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span>
+<h2 id="9-切片-重要"><a href="#9-切片-重要" class="headerlink" title="9.切片(重要)"></a>9.切片(重要)</h2><h3 id="9-1-切片简介"><a href="#9-1-切片简介" class="headerlink" title="9.1 切片简介"></a>9.1 切片简介</h3><p><code>切片</code>:切片是对数组的抽象,go的数组长度不可改变,在特定场景中这样的集合就不太适用,Go中提供了一种灵活，功能强悍的内置类型切片,(“动态数组”),与数组相比，切片的长度不是固定的，可以<code>追加</code>元素,在追加时可能使切片的容量增大</p>
+<h3 id="9-2-切片的定义"><a href="#9-2-切片的定义" class="headerlink" title="9.2 切片的定义"></a>9.2 切片的定义</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">var</span> identifier <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">float32</span> <span class="token operator">=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">float32</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span>
 <span class="token comment">//其中[]float32是创建的切片类型,5是创建的切片长度,6是创建的切片容量</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="9-3-切片的初始化"><a href="#9-3-切片的初始化" class="headerlink" title="9.3 切片的初始化"></a>9.3 切片的初始化</h2><pre class="line-numbers language-go" data-language="go"><code class="language-go">s <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h3 id="9-3-切片的初始化"><a href="#9-3-切片的初始化" class="headerlink" title="9.3 切片的初始化"></a>9.3 切片的初始化</h3><pre class="line-numbers language-go" data-language="go"><code class="language-go">s <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token builtin">int</span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p><code>[]</code>表示s是一个切片类型的变量,{1,2,3}初始化值为<code>&#123;1,2,3&#125;</code>,其中容量  &#x3D;  长度 &#x3D; 3</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go">s <span class="token operator">:=</span> arr<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
 arr <span class="token operator">:=</span> <span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token builtin">float64</span><span class="token punctuation">&#123;</span><span class="token number">1.0</span><span class="token punctuation">,</span> <span class="token number">2.0</span><span class="token punctuation">,</span> <span class="token number">3.0</span><span class="token punctuation">&#125;</span>
 s1 <span class="token operator">:=</span> arr<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token comment">//切片s1代表着对arr的引用</span>
 s2 <span class="token operator">:=</span> s1<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token function">len</span><span class="token punctuation">(</span>s1<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token comment">//从startIndex访问到endIndex-1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<h2 id="9-4-append与copy函数"><a href="#9-4-append与copy函数" class="headerlink" title="9.4 append与copy函数"></a>9.4 append与copy函数</h2><p>如果想要增加切片的容量,我们必须创建一个新的更大的切片并把原分片的内容都<code>拷贝</code>过来</p>
+<h3 id="9-4-append与copy函数"><a href="#9-4-append与copy函数" class="headerlink" title="9.4 append与copy函数"></a>9.4 append与copy函数</h3><p>如果想要增加切片的容量,我们必须创建一个新的更大的切片并把原分片的内容都<code>拷贝</code>过来</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go">s1 <span class="token operator">:=</span> <span class="token function">make</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token builtin">float32</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
 s1 <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>s1<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span>
 fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>s1<span class="token punctuation">)</span>
@@ -539,8 +554,8 @@ s2 <span class="token operator">:=</span> <span class="token function">make</spa
 <span class="token function">copy</span><span class="token punctuation">(</span>s2<span class="token punctuation">,</span> s1<span class="token punctuation">)</span>
 s2 <span class="token operator">=</span> <span class="token function">append</span><span class="token punctuation">(</span>s2<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
 fmt<span class="token punctuation">.</span><span class="token function">Println</span><span class="token punctuation">(</span>s2<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>首先我们需要知道,为什么需要容量这个东西,容量首先是有关于切片间的数据共享的，在容量允许的情况下，切片中的元素在底层中都是存在连续的内存空间的，如果底层数组没有足够的容量，这时候append会再创建一个新的底层数组。</p>
-<h1 id="10-范围Range"><a href="#10-范围Range" class="headerlink" title="10.范围Range"></a>10.范围Range</h1><p> range 关键字用于 for 循环中迭代<code>数组(array)</code>、<code>切片(slice)</code>、<code>通道(channel)</code>或<code>集合(map)</code>的元素</p>
+<p>首先我们需要知道,为什么需要容量这个东西,容量首先是有关于切片间的数据共享的，在容量允许的情况下，切片中的元素在底层中都是存在连续的内存空间的，如果底层数组没有足够的容量，这时候append会再创建一个新的底层数组,这个就类似于在Java中的<code>ArrayList</code></p>
+<h2 id="10-范围Range"><a href="#10-范围Range" class="headerlink" title="10.范围Range"></a>10.范围Range</h2><p> range 关键字用于 for 循环中迭代<code>数组(array)</code>、<code>切片(slice)</code>、<code>通道(channel)</code>或<code>集合(map)</code>的元素</p>
 <pre class="line-numbers language-go" data-language="go"><code class="language-go"><span class="token keyword">for</span> key<span class="token punctuation">,</span> value <span class="token operator">:=</span> <span class="token keyword">range</span> oldMap <span class="token punctuation">&#123;</span>
     newMap<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> value
 <span class="token punctuation">&#125;</span><span class="token comment">//遍历map</span>
@@ -2024,7 +2039,7 @@ func requestDictColor(source string, wg *sync.WaitGroup) dictResColor &#123;
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://lumxi.github.io/2022/10/22/Golang/golang(1)/">https://lumxi.github.io/2022/10/22/Golang/golang(1)/</a>
+                    <a href="https://lumxi.github.io/2022/06/25/Golang/golang(1)/">https://lumxi.github.io/2022/06/25/Golang/golang(1)/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -2146,13 +2161,13 @@ func requestDictColor(source string, wg *sync.WaitGroup) dictResColor &#123;
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/10/22/Golang/golang(2)/">
+                <a href="/2022/09/09/algorithm/zuo-eaasy/simple-sort/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Golang工程实践">
+                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="简单排序算法">
                         
-                        <span class="card-title">Golang工程实践</span>
+                        <span class="card-title">简单排序算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -2163,14 +2178,14 @@ func requestDictColor(source string, wg *sync.WaitGroup) dictResColor &#123;
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-22
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-09
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Golang/" class="post-category">
-                                    Golang
+                            <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="post-category">
+                                    数据结构与算法
                                 </a>
                             
                             
@@ -2180,8 +2195,12 @@ func requestDictColor(source string, wg *sync.WaitGroup) dictResColor &#123;
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">
-                        <span class="chip bg-color">后端开发</span>
+                    <a href="/tags/Java/">
+                        <span class="chip bg-color">Java</span>
+                    </a>
+                    
+                    <a href="/tags/leetcode/">
+                        <span class="chip bg-color">leetcode</span>
                     </a>
                     
                 </div>
@@ -2192,16 +2211,16 @@ func requestDictColor(source string, wg *sync.WaitGroup) dictResColor &#123;
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+                本篇&nbsp;<i class="far fa-dot-circle"></i>
             </div>
             <div class="card">
-                <a href="/2022/10/22/cs-network/cs-network-02/">
+                <a href="/2022/06/25/Golang/golang(1)/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="计算机网络-物理层">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="golang语言特性及其基本语法">
                         
-                        <span class="card-title">计算机网络-物理层</span>
+                        <span class="card-title">golang语言特性及其基本语法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -2212,25 +2231,30 @@ func requestDictColor(source string, wg *sync.WaitGroup) dictResColor &#123;
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-22
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-25
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" class="post-category">
-                                    计算机网络
+                            <a href="/categories/Golang/" class="post-category">
+                                    Golang
+                                </a>
+                            
+                            <a href="/categories/Golang/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    计算机基础
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
-                        <span class="chip bg-color">计算机基础</span>
+                    <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">后端开发</span>
                     </a>
                     
                 </div>

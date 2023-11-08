@@ -389,40 +389,199 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2023/05/08/javaweb/spring-boot-1/">
+                    <a href="/2023/07/30/project/asyncflow-4/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="从零开始学SpringBoot">
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                             
-                            <span class="card-title">从零开始学SpringBoot</span>
+                            <span class="card-title"></span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                1. 热部署和热加载热部署
+                                项目关键设计剖析1. 多机器&#x2F;多进程竞争问题
+问题产生的背景
 
-在服务器运行的时候重新部署项目
-直接重新加载整个项目,这种方式会释放内存,比热加载更加干净彻底,但是也更加耗时
 
-热加载
-
-在运行的时候重新加载class,从而升级应用
-热加载的实现原理主要是依赖于Java的类
+在部署了多个worker的时候,这时候可能会有多个worker同时向flow server发起hold task请求,而flow server请求的都是同一个数据库
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                穿山甲
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/07/30/project/asyncflow-3/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                            
+                            <span class="card-title"></span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                项目组件的具体实现1. 创建任务的实现创建任务这个过程可能是由前端发起,也可能是后端服务器发起RPC调用实现的
+
+flow server收到http包之后,路由到handle函数,在Java中,这一个由SpringMVC帮我们实现了
+检查参
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-30
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                穿山甲
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/07/23/project/asyncflow-2/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                            
+                            <span class="card-title"></span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                项目整体设计1. 项目整体架构
+项目的整体架构分为三层
+应用层:调用服务层写好的API
+服务层(flow svr):用于提供任务的相关接口,比如说任务创建,任务查询,查询待处理的任务,任务的治理并不单独作为服务,而是作为一个模块放在flow
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-23
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                穿山甲
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/07/20/project/asyncflow-1/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                            
+                            <span class="card-title"></span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Asyncflow项目背景1. 了解同步与异步微服务是一种架构的规范,在这种架构中,多个小型组件协同工作,从而构成一个整体,这种规范可以将复杂的系统分解为可管理的服务,这些服务更关注微观层面的问题,包括有单一职责,关注点分离,模块化等
+那么
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-07-20
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                穿山甲
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2023/06/25/Golang/golang(4)/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Golang基本特性及其语法">
+                            
+                            <span class="card-title">Golang基本特性及其语法</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                1. Go语言基础结构首先我们可以用Java的角度来看待一个class文件是如何构成的
+package scau.edu.cn;
+
+这个用来代表这个类所在的包名,那么也就是说我可以用这个包来区分相同的go文件
+但是和Java不同的是,我们一
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-06-25
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/javaWeb%E5%9F%BA%E7%A1%80/" class="post-category">
-                                    javaWeb基础
+                                <a href="/categories/Golang/" class="post-category">
+                                    Golang
+                                </a>
+                                
+                                <a href="/categories/Golang/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/" class="post-category">
+                                    计算机基础
                                 </a>
                                 
                                 
@@ -433,8 +592,8 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/Java/">
-                            <span class="chip bg-color">Java</span>
+                        <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91/">
+                            <span class="chip bg-color">后端开发</span>
                         </a>
                         
                     </div>
@@ -446,228 +605,32 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2023/05/08/springcloud/springcloud-1/">
+                    <a href="/2023/06/04/mq/1/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="SpringBoot知识总结">
+                            <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="消息队列入门知识">
                             
-                            <span class="card-title">SpringBoot知识总结</span>
+                            <span class="card-title">消息队列入门知识</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                1. 什么是微服务微服务:从字面来理解就是微小的服务
-(1)服务:指的是项目中的功能模块,它可以帮助用户解决一个或者一组问题,在开发中体现为一个Module
-(2)微小:强调的是单个服务的大小,主要体现为:
-
-微服务的体积小,复杂度低
-单个
+                                1. 什么是消息队列?从操作系统的层面上讲:消息队列是在操作系统中维护的一个内核结构,这个结构可以被用于做一个进程间通信,具体的原理是在内核中生成一条消息队列,然后供订阅它的进程取数据和放数据,但是它的缺点就是存放的消息格式具有一定的限制,
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-08
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-06-04
                             </span>
                             <span class="publish-author">
                                 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
                                 
-                                <a href="/categories/SpringCloud/" class="post-category">
-                                    SpringCloud
-                                </a>
-                                
-                                <a href="/categories/SpringCloud/%E9%AB%98%E7%BA%A7%E5%BC%80%E5%8F%91/" class="post-category">
-                                    高级开发
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Java/">
-                            <span class="chip bg-color">Java</span>
-                        </a>
-                        
-                        <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
-                            <span class="chip bg-color">后端开发基础</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2023/04/25/view/%E8%85%BE%E8%AE%AF%E4%BA%91%E6%B5%8B%E5%BC%80%E4%B8%80%E9%9D%A2/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="腾讯云测开一面">
-                            
-                            <span class="card-title">腾讯云测开一面</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                面试人张庭杰
-面试时间2023.4.25
-背景介绍
-
-
-面试公司
-腾讯
-
-
-
-部门
-腾讯云(CSIG)
-
-
-岗位类型
-暑期实习
-
-
-第几面
-一面(已通过)
-
-
-方向
-测试开发
-
-
-语言
-Java,部门用的是GO&#x2F;Python
-
-
-
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-25
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                    面经
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E6%A0%A1%E6%8B%9B/">
-                            <span class="chip bg-color">校招</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2023/04/22/k8s/k8s-1/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="K8S是什么?">
-                            
-                            <span class="card-title">K8S是什么?</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                1. 了解云计算平台可以将经典的云计算架构分为三大服务层,也就是IaaS(基础设施即服务)、PaaS(平台即服务)、SaaS(软件即服务)
-IaaS:这一层通过虚拟化技术提供计算、存储、网络等基础资源,可以在上部署各种OS以及应用程序,开发
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-22
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/" class="post-category">
-                                    云计算
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/Docker/">
-                            <span class="chip bg-color">Docker</span>
-                        </a>
-                        
-                        <a href="/tags/K8S/">
-                            <span class="chip bg-color">K8S</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2023/04/17/docker/docker(5)/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="容器编排工具入门">
-                            
-                            <span class="card-title">容器编排工具入门</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                1. docker-compose介绍docker-compose简单来说就是简化了脚本封装的过程,比如说启动容器的时候,实际上是有一个固定的方式,比如说要拉取脚本,创建容器,定义网络,然后将容器加入到网络中
-那么docker-compos
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-17
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/k8s/" class="post-category">
-                                    k8s
+                                <a href="/categories/%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" class="post-category">
+                                    分布式消息队列
                                 </a>
                                 
                                 
@@ -680,56 +643,6 @@ IaaS:这一层通过虚拟化技术提供计算、存储、网络等基础资源
                         
                         <a href="/tags/%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/">
                             <span class="chip bg-color">后端开发基础</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2023/04/16/project/dp_summrize/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="点评项目总结">
-                            
-                            <span class="card-title">点评项目总结</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                1. 项目介绍这个整体来说是这样的,首先可以通过前端向后台发送请求,然后此时会有一个代理服务器,这个代理服务器接收到请求后,就会将请求基于负载均衡算法分发到不同的Tomcat上,然后由Tomcat来完成本次请求的乡音
-当负载过重的时候,这时
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-04-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                
-                                <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91/" class="post-category">
-                                    项目开发
-                                </a>
-                                
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/%E6%80%BB%E7%BB%93/">
-                            <span class="chip bg-color">总结</span>
                         </a>
                         
                     </div>
@@ -755,7 +668,7 @@ IaaS:这一层通过虚拟化技术提供计算、存储、网络等基础资源
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">2 / 32</div>
+            <div class="center-align b-text-gray">2 / 34</div>
         </div>
         <div class="col s6 m4 l4">
             
