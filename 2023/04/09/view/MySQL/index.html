@@ -449,7 +449,7 @@
 <p><code>不可重复读</code>:相同的SQL语句,在同一个事务先后没有对相关数据做任何操作,查询出来的结果却不一样,它针对的是查询结果的记录中,这些记录的数据发生变化了</p>
 <p><code>幻读</code>:相同给的SQL语句,在同一个事务先后没有对相关数据作任何操作,查询出来的结果的条数却发生了变化,它针对的是查询结果的记录中,这些记录的条数发生了变化</p>
 <blockquote>
-<p>幻读从定义上理解,其实不就是不可重复读吗?</p>
+<p>幻读从定义上理解,其实不就是不可重复读吗? </p>
 </blockquote>
 <p>可以这么理解,但是从解决这两个问题的角度上来讲,解决不可重复读只需要对相关数据加锁就可以解决数据被其他事务篡改的问题了,但是幻读引发的症结是新插入的数据,而MySQL不可能对还不存在的记录加锁,因此解决幻读和不可重复读的方案是不一样的,一般来说,解决了幻读问题,那么也就解决了不可重复读,基于这个现象,就可以将对应的事务隔离级别进行再次划分。</p>
 <blockquote>
@@ -988,7 +988,7 @@ show VARIABLES like &#39;%log_output%&#39;;<span aria-hidden="true" class="line-
 </blockquote>
 <ul>
 <li>MySQL正常关闭的时候,这时候会将redo log buffer中内容全部写入到磁盘中</li>
-<li>当redo log buffer中记录的写入量大于redo log buffer内存空间的隔一般的时候</li>
+<li>当redo log buffer中记录的写入量大于redo log buffer内存空间的一半的时候</li>
 <li>InnoDB的后台线程每隔1s,将redo log buffer持久化到磁盘</li>
 <li>每次事务提交的时候,都会将缓存在redo log buffer中的redo log直接持久化到磁盘</li>
 </ul>
@@ -1472,7 +1472,7 @@ show VARIABLES like &#39;%log_output%&#39;;<span aria-hidden="true" class="line-
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2023</span>
+                <span id="year">2019-2024</span>
             
             <a href="/about" target="_blank">穿山甲</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>

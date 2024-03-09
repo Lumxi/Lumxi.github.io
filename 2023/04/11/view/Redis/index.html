@@ -691,7 +691,7 @@
 <p>从算法实现的角度上来看,跳表的实现更加简单</p>
 <p>在并发环境下skiplist有另外一个优势，红黑树在插入和删除的时候可能需要做一些rebalance的操作，这样的操作可能会涉及到整个树的其他部分，而skiplist的操作显然更加局部性一些，锁需要盯住的节点更少，因此在这样的情况下性能好一些。</p>
 <h2 id="6-Redis是单线程的吗"><a href="#6-Redis是单线程的吗" class="headerlink" title="6. Redis是单线程的吗?"></a>6. Redis是单线程的吗?</h2><p>单线程指的是Redis中处理命令是单线程的,也就是说从<code>服务器接收客户端请求=&gt;解析请求=&gt;进行数据库的读写操作=&gt;发送数据到客户端</code>这个过程是由一个线程来完成的,这也就是常说Redis是单线程的原因</p>
-<p>但是实际上Redis是多线程的,Redis在启动的时候,是有后台线程,注意到Redis完成一个完整指令的过程是有存在一个网络IO的过程的,涉及到IO,那么就有可能导致线程阻塞的风险,因此为了避免阻塞的问题,Redis通过后台线程的方式来解耦处理指令、接收指令、发送结果集的过程,通过将那些可能造成阻塞的问题加入到不同的任务队列中,将处理好的任务结果存储在内存中,然后交给主线程来进行读取,这样的话就可以避免线程阻塞了</p>
+<p>但是实际上Redis是多线程的,Redis在启动的时候,是有后台线程的,注意到Redis完成一个完整指令的过程是有存在一个网络IO的过程的,涉及到IO,那么就有可能导致线程阻塞的风险,因此为了避免阻塞的问题,Redis通过后台线程的方式来解耦处理指令、接收指令、发送结果集的过程,通过将那些可能造成阻塞的问题加入到不同的任务队列中,将处理好的任务结果存储在内存中,然后交给主线程来进行读取,这样的话就可以避免线程阻塞了</p>
 <p>Redis中主要存在的耗时任务有:<code>关闭文件</code>、<code>AOF刷盘</code>、<code>释放内存</code>,这些任务创建单独的线程来处理,如果把这些任务都交给主线程来做,那么可能导致主线程阻塞,后台线程相当于一个消费者,生产者把耗时任务丢到任务队列中,消费者不断轮询这个队列,拿出这个任务就去执行对应的方法就可以了</p>
 <p><strong>BIO_CLOSE_FILE</strong>:关闭文件任务队列,当队列有任务之后,后台线程会调用<code>close(fd)</code>,将文件关闭</p>
 <p><strong>BIO_AOF_FSYNC</strong>:AOF刷盘任务队列,当AOF日志配置成<code>everysec</code>选项后,主线程会将AOF写日志操作封装成一个任务,也放到队列中,当发现队列有任务的时候,后台线程就会调用<code>fsync(fd)</code>,将AOF文件刷盘</p>
@@ -1339,13 +1339,13 @@ DISCARD<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/04/13/view/%E8%85%BE%E8%AE%AF%E5%BE%AE%E4%BF%A1%E5%AE%89%E5%85%A8%E4%B8%80%E9%9D%A2%E9%9D%A2%E7%BB%8F/">
+                <a href="/2023/04/14/Linux/Linux-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="微信安全部门一面面经">
+                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="Linux命令系统总结">
                         
-                        <span class="card-title">微信安全部门一面面经</span>
+                        <span class="card-title">Linux命令系统总结</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1356,14 +1356,14 @@ DISCARD<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-04-13
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-04-14
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E9%9D%A2%E7%BB%8F/" class="post-category">
-                                    面经
+                            <a href="/categories/Linux/" class="post-category">
+                                    Linux
                                 </a>
                             
                             
@@ -1373,8 +1373,16 @@ DISCARD<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%A0%A1%E6%8B%9B/">
-                        <span class="chip bg-color">校招</span>
+                    <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80/">
+                        <span class="chip bg-color">计算机基础</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%BF%90%E7%BB%B4/">
+                        <span class="chip bg-color">运维</span>
+                    </a>
+                    
+                    <a href="/tags/%E4%BA%91%E8%AE%A1%E7%AE%97/">
+                        <span class="chip bg-color">云计算</span>
                     </a>
                     
                 </div>
@@ -1612,7 +1620,7 @@ DISCARD<span aria-hidden="true" class="line-numbers-rows"><span></span><span></s
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2023</span>
+                <span id="year">2019-2024</span>
             
             <a href="/about" target="_blank">穿山甲</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
